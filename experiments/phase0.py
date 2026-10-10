@@ -18,7 +18,7 @@ import torch
 
 from ruled import data
 from ruled.geometry import pair_metrics
-from ruled.losses import chamfer, smoothness, surface_points, sample_area_weighted
+from ruled.losses import chamfer, nearest, smoothness, surface_points, sample_area_weighted
 from ruled.reps import REPS
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -92,8 +92,11 @@ def evaluate(rep, P, patches):
     pred = sample_area_weighted(rep, P, 4096, generator=gen)
     clean = torch.tensor(np.stack([p["clean_eval"] for p in patches]), dtype=torch.float32)
     cd = chamfer(pred.double(), clean.double()).numpy()
-    d = torch.cdist(pred.double(), clean.double())
-    nn = torch.cat([d.min(-1).values, d.min(-2).values], -1)
+    pred, clean = pred.double(), clean.double()
+    ix, iy = nearest(pred, clean)          # tam matris (50×4096×4096) RAM'e sığmıyor
+    take = lambda z, i: torch.gather(z, 1, i[..., None].expand(-1, -1, 3))
+    nn = torch.cat([(pred - take(clean, ix)).norm(dim=-1),
+                    (clean - take(pred, iy)).norm(dim=-1)], -1)
     haus, haus95 = nn.max(-1).values.numpy(), torch.quantile(nn, 0.95, dim=-1).numpy()
     a, m = rep.lines(P.double())
     _, _, recip, drall = pair_metrics(a, m)
