@@ -1,4 +1,4 @@
-"""v2 Bölüm 14.7 sağlama testleri (+ S1). Numaralar v2'deki sırayı izler."""
+"""Sanity tests of v2 Section 14.7 (+ S1). Numbers follow the order in v2."""
 import numpy as np
 import pytest
 import torch
@@ -90,7 +90,7 @@ def test_discrete_identity_and_dsin():
     da, dm = a[1:] - a[:-1], m[1:] - m[:-1]
     recip = dot(a[:-1], m[1:]) + dot(a[1:], m[:-1])
     assert torch.allclose(dot(da, dm), -recip, atol=1e-12)
-    # bağımsız d sinθ: d = |⟨p2−p1, a1×a2⟩| / ‖a1×a2‖
+    # independent d sin(theta): d = |<p2-p1, a1 x a2>| / |a1 x a2|
     cr = torch.cross(a[:-1], a[1:], dim=-1)
     d = dot(p[1:] - p[:-1], cr).abs() / cr.norm(dim=-1)
     assert torch.allclose(recip.abs(), d * cr.norm(dim=-1), atol=1e-12)
@@ -106,7 +106,7 @@ def test_constraint_layer_conditions():
     assert dot(a, m).abs().max() < 1e-14
 
 
-# S1: dual normalizasyon homojendir ve konide ara doğrular tepeden geçer
+# S1: dual normalisation is homogeneous and interpolated cone lines pass through the apex
 def test_dual_normalize_homogeneous():
     a, p = random_lines(np.random.default_rng(4), 20)
     a, p = T(a), T(p)
@@ -119,7 +119,7 @@ def test_dual_normalize_homogeneous():
 def test_cone_interpolated_lines_pass_through_apex():
     rng = np.random.default_rng(6)
     w = T(rng.uniform(-1, 1, 3))
-    a = T(data.random_unit(rng, 8))           # büyük açılar: hata belirgin olsun
+    a = T(data.random_unit(rng, 8))           # large angles make the v2 error visible
     P = REPS["A"].init(a, w.expand(8, 3), torch.full((8,), 0.2), torch.ones(8))
     p0, p1 = REPS["A"].segments(P, S=4)
     u = p1 - p0
@@ -137,7 +137,7 @@ def test_representations_round_trip():
     for rep in REPS.values():
         P = rep.init(a, p, v0, v1)
         q0, q1 = rep.segments(P[None], S=1)
-        # A ve B işaret hizalaması uçları değiştirebilir; parça kümesi aynı olmalı
+        # sign alignment in A and B may swap endpoints; the segment must be the same
         same = torch.allclose(q0[0], ref0, atol=1e-10) and torch.allclose(q1[0], ref1, atol=1e-10)
         swapped = (torch.minimum((q0[0] - ref0).norm(dim=-1), (q0[0] - ref1).norm(dim=-1)).max() < 1e-10
                    and torch.minimum((q1[0] - ref1).norm(dim=-1), (q1[0] - ref0).norm(dim=-1)).max() < 1e-10)
@@ -166,7 +166,7 @@ def test_sign_alignment_preserves_surface(name):
 # 12
 def test_chamfer_self_zero():
     x = torch.randn(1, 500, 3)
-    assert chamfer(x, x).item() < 1e-14   # cdist matris çarpımı yuvarlaması
+    assert chamfer(x, x).item() < 1e-14   # rounding in nearest-neighbour arithmetic
 
 
 # 13
@@ -176,7 +176,7 @@ def test_area_weighted_sampler(family):
     surf = data.build(family, rng)
     dA = data.grid_area(surf)
     _, ts = data.sample(surf, 20000, rng, 1.05 * dA.max(), return_params=True)
-    # yoğun ızgaradan t < 0.5 bölgesinin alan payı
+    # area fraction of t < 0.5 from a dense grid
     nt, ns = 401, 64
     tt, ss = np.meshgrid(np.linspace(0, 1, nt), np.linspace(0, 1, ns), indexing="ij")
     X = data.evaluate(surf, tt.ravel(), ss.ravel()).reshape(nt, ns, 3)

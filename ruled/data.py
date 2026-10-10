@@ -1,7 +1,7 @@
-"""Sentetik regle yüzey yamaları (v2 Bölüm 4 ve 14.3), numpy.
+"""Synthetic ruled-surface patches (v2 Sections 4 and 14.3), numpy.
 
-Bir yama X(t, s) = c(t) + v a(t),  v = v_min(t) + s (v_max(t) − v_min(t)),  t, s ∈ [0, 1].
-Alan elemanı (t, s) koordinatlarında: (v_max − v_min) ‖(c' + v a') × a‖.
+A patch is X(t, s) = c(t) + v a(t),  v = v_min(t) + s (v_max(t) - v_min(t)),  t, s in [0, 1].
+Area element in (t, s): (v_max - v_min) |(c' + v a') x a|.
 """
 import numpy as np
 
@@ -11,7 +11,7 @@ FD_H = 1e-4
 
 
 def bezier(ctrl, t):
-    """Kübik Bézier; ctrl: (4, 3), t: (N,) -> (N, 3)."""
+    """Cubic Bezier; ctrl: (4, 3), t: (N,) -> (N, 3)."""
     t = t[:, None]
     b = [(1 - t) ** 3, 3 * t * (1 - t) ** 2, 3 * t ** 2 * (1 - t), t ** 3]
     return sum(bi * ci for bi, ci in zip(b, ctrl))
@@ -26,7 +26,7 @@ def random_unit(rng, n=None):
 
 
 def cap_vectors(rng, axis, half_angle, n):
-    """axis etrafında yarı açısı half_angle olan küresel başlıkta düzgün n birim vektör."""
+    """n unit vectors uniform on the spherical cap of the given half-angle around axis."""
     z = rng.uniform(np.cos(half_angle), 1.0, n)
     phi = rng.uniform(0, 2 * np.pi, n)
     r = np.sqrt(1 - z ** 2)
@@ -54,7 +54,7 @@ def spherical_bezier(rng):
 
 
 def build(family, rng):
-    """Aileye göre (c, a, v_min, v_max) fonksiyonları ve ek bilgi."""
+    """(c, a, v_min, v_max) functions for the given family."""
     if family == "general":
         cc = rng.uniform(-1, 1, (4, 3))
         c = lambda t: bezier(cc, t)
@@ -107,7 +107,7 @@ def evaluate(surf, t, s):
 
 
 def sample(surf, n, rng, dmax, return_params=False):
-    """Reddetme yöntemiyle alan ağırlıklı n nokta (v2 14.3)."""
+    """n area-weighted samples by rejection (v2 14.3)."""
     ts = []
     while sum(len(x) for x in ts) < n:
         t, s = rng.uniform(0, 1, 4 * n), rng.uniform(0, 1, 4 * n)
@@ -142,7 +142,7 @@ def acceptable(family, surf, dA):
 
 
 def make_patch(family, rng, noise=0.01, n=1024, n_eval=4096, K=32):
-    """Normalize edilmiş gürültülü bulut, temiz değerlendirme noktaları ve gerçek doğrular."""
+    """Normalised noisy cloud, clean evaluation samples and ground-truth lines."""
     while True:
         surf = build(family, rng)
         dA = grid_area(surf)

@@ -1,16 +1,16 @@
-"""Karşılaştırılan üç temsil (v2 Bölüm 9 ve 14.1).
+"""The three representations under comparison (v2 Sections 9 and 14.1).
 
-Her temsil doğru başına 8 sayı kullanır (parametre sayısı eşit):
-  A · Dual          : a_raw(3), b(3), v_min, w      v_max = v_min + softplus(w), v f'den ölçülür
-  B · Dayanak + yön : c(3), a_raw(3), v_min, w      v c'den ölçülür
-  C · İki uç nokta  : q0(3), q1(3), —, —
+Every representation uses 8 numbers per line (equal parameter count):
+  A - dual             : a_raw(3), b(3), v_min, w    v_max = v_min + softplus(w), v measured from f
+  B - base + direction : c(3), a_raw(3), v_min, w    v measured from c
+  C - two endpoints    : q0(3), q1(3), unused, unused
 
-Ortak arayüz:
-  init(a, p, v0, v1)        geometrik doğrulardan parametre (a birim, p doğru üzerinde nokta,
-                            [v0, v1] p'den ölçülen aralık)
-  segments(P, S, offset)    ara değerlenmiş doğru parçalarının uç noktaları (B, L, 3) × 2
-  lines(P)                  K doğrunun (a, a*) çifti — ölçüm için
-  smooth_vars(P)            düzgünlük kaybının ikinci farkının alındığı değişkenler
+Common interface:
+  init(a, p, v0, v1)        parameters from geometric lines (a unit, p a point on the line,
+                            [v0, v1] the interval measured from p)
+  segments(P, S, offset)    endpoints of the interpolated line segments, (B, L, 3) x 2
+  lines(P)                  (a, a*) of the K lines, for evaluation
+  smooth_vars(P)            variables whose second difference forms the smoothness loss
 """
 import torch
 import torch.nn.functional as F

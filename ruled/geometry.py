@@ -1,8 +1,8 @@
-"""Doğru geometrisi çekirdeği (torch).
+"""Line geometry core (torch).
 
-Bir yönlü doğru, dual birim vektör A = a + ε a* ile verilir:
-‖a‖ = 1, ⟨a, a*⟩ = 0, a* = c × a  (c doğru üzerinde herhangi bir nokta).
-Bütün fonksiyonlar baştaki boyutlarda (batch, K, ...) yayınlanır.
+An oriented line is the dual unit vector A = a + eps a*, with
+|a| = 1, <a, a*> = 0, a* = c x a  (c any point on the line).
+All functions broadcast over leading dimensions (batch, K, ...).
 """
 import torch
 
@@ -14,11 +14,11 @@ def dot(x, y):
 
 
 def dual_normalize(a_raw, b):
-    """A/‖A‖ (dual norm). Gerçek kısım küreye, dual kısım teğet düzleme gider.
+    """A/|A| under the dual norm: real part to the sphere, dual part to its tangent plane.
 
-    A = a + εb için ‖A‖ = ‖a‖ + ε⟨a,b⟩/‖a‖, dolayısıyla
-    A/‖A‖ = â + ε (b − ⟨b,â⟩â)/‖a‖.
-    v2'deki katman 1/‖a‖ çarpanını atlıyordu (progress.md, S1).
+    For A = a + eps b, |A| = |a| + eps <a,b>/|a|, hence
+    A/|A| = a_hat + eps (b - <b,a_hat> a_hat) / |a|.
+    The v2 constraint layer omitted the 1/|a| factor (PROGRESS.md, S1).
     """
     n = a_raw.norm(dim=-1, keepdim=True).clamp_min(EPS)
     a = a_raw / n
@@ -27,7 +27,7 @@ def dual_normalize(a_raw, b):
 
 
 def foot(a, m):
-    """Doğrunun orijine en yakın noktası f = a × a*."""
+    """Point of the line closest to the origin, f = a x a*."""
     return torch.cross(a, m, dim=-1)
 
 
@@ -36,9 +36,9 @@ def moment(c, a):
 
 
 def align_signs(a):
-    """Ardışık doğrular arasında ⟨a_k, a_{k+1}⟩ ≥ 0 olacak işaret dizisi s_k ∈ {±1}.
+    """Signs s_k in {+1, -1} such that <s_k a_k, s_{k+1} a_{k+1}> >= 0.
 
-    a: (..., K, 3). Dönen: (..., K). s_0 = 1; işaretler sabit (gradyan taşımaz).
+    a: (..., K, 3) -> (..., K), with s_0 = 1. Signs are constants (no gradient).
     """
     with torch.no_grad():
         d = dot(a[..., :-1, :], a[..., 1:, :])
@@ -48,10 +48,10 @@ def align_signs(a):
 
 
 def lerp_lines(x, S, offset=None):
-    """Ardışık satırlar arasında S ara adımla doğrusal ara değer.
+    """Linear interpolation with S sub-steps between consecutive rows.
 
-    x: (..., K, D) -> (..., (K-1)*S + 1, D). offset ∈ [0,1) ara adımları kaydırır
-    (eğitimdeki rastgele kaydırma); son doğru her zaman dahildir.
+    x: (..., K, D) -> (..., (K-1)*S + 1, D). offset in [0, 1) shifts the sub-steps
+    (the random jitter used during training); the last line is always kept.
     """
     K = x.shape[-2]
     lam = torch.arange(S, dtype=x.dtype, device=x.device) / S
@@ -72,26 +72,26 @@ def u_grid(n, dtype, device, jitter=None):
 
 
 def segment_points(p0, p1, u):
-    """p0, p1: (..., L, 3) uç noktalar; u: (U,) -> (..., L, U, 3)."""
+    """p0, p1: (..., L, 3) endpoints; u: (U,) -> (..., L, U, 3)."""
     u = u[:, None]
     return (1 - u) * p0[..., None, :] + u * p1[..., None, :]
 
 
 # ---------------------------------------------------------------------------
-# Doğru çifti ölçüleri
+# Measures on pairs of consecutive lines
 # ---------------------------------------------------------------------------
 
 def pair_metrics(a, m):
-    """Ardışık doğru çiftleri için (θ, d, |karşılıklı moment|, drall).
+    """(theta, d, |reciprocal product|, drall) for consecutive line pairs.
 
-    a, m: (..., K, 3) birim yön ve moment. Yönsüz açı kullanılır.
-    karşılıklı moment ⟨a1,m2⟩ + ⟨a2,m1⟩ = −d sinθ (işaret yönlendirmeye bağlı).
+    a, m: (..., K, 3) unit directions and moments. The angle is unoriented.
+    Reciprocal product <a1,m2> + <a2,m1> = -d sin(theta) (sign depends on orientation).
     """
     a1, a2, m1, m2 = a[..., :-1, :], a[..., 1:, :], m[..., :-1, :], m[..., 1:, :]
     recip = (dot(a1, m2) + dot(a2, m1)).abs()
     cr = torch.cross(a1, a2, dim=-1).norm(dim=-1)
     theta = torch.atan2(cr, dot(a1, a2).abs())
-    # d: kesişmeyen doğrular için |recip| / sinθ; paralelde orijine dik uzaklık farkı
+    # d: |recip| / sin(theta) for non-parallel lines; foot-point offset for parallel ones
     f1, f2 = foot(a1, m1), foot(a2, m2)
     diff = f2 - f1
     d_par = (diff - dot(diff, a1)[..., None] * a1).norm(dim=-1)

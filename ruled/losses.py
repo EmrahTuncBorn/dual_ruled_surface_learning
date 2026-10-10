@@ -1,4 +1,4 @@
-"""Kayıplar ve ölçütler (v2 Bölüm 8 ve 14.5)."""
+"""Losses and metrics (v2 Sections 8 and 14.5)."""
 import os
 from concurrent.futures import ThreadPoolExecutor
 
@@ -13,7 +13,7 @@ _POOL = ThreadPoolExecutor(os.cpu_count() or 4)
 
 @torch.no_grad()
 def nearest(x, y):
-    """Her iki yönde en yakın komşu indisleri (KD-ağacı, yama başına bir iş parçacığı)."""
+    """Nearest-neighbour indices in both directions (KD-tree, one thread per patch)."""
     X, Y = x.detach().cpu().numpy(), y.detach().cpu().numpy()
 
     def one(b):
@@ -25,7 +25,7 @@ def nearest(x, y):
 
 
 def surface_points(rep, P, S=4, U=16, jitter=False):
-    """Yüzeyden noktalar: (K-1)*S+1 doğru × U nokta. jitter: ara adım ve u kaydırılır."""
+    """Surface samples: (K-1)*S+1 lines x U points. jitter shifts the sub-steps and u."""
     off = torch.rand((), dtype=P.dtype) if jitter else None
     uj = torch.rand((), dtype=P.dtype) if jitter else None
     p0, p1 = rep.segments(P, S, off)
@@ -34,11 +34,11 @@ def surface_points(rep, P, S=4, U=16, jitter=False):
 
 
 def chamfer(x, y):
-    """İki yönlü ortalama kare en yakın uzaklık; x: (B,N,3), y: (B,M,3) -> (B,).
+    """Two-sided mean squared nearest-neighbour distance; x: (B,N,3), y: (B,M,3) -> (B,).
 
-    En yakın komşular gradyansız bulunur; kayıp yalnız eşleşen çiftlerden yeniden
-    hesaplanır. min'in gradyanı zaten yalnız argmin çiftinden geçtiği için türev
-    tam matris üzerinden alınanla aynıdır, ama geri yayılım O(N+M) olur.
+    Nearest neighbours are found without gradients and the loss is recomputed on the
+    matched pairs. The gradient of min flows only through the argmin pair anyway, so
+    the derivative equals the dense one, but backpropagation costs O(N+M).
     """
     ix, iy = nearest(x, y)                                 # (B,N), (B,M)
     gather = lambda z, i: torch.gather(z, 1, i[..., None].expand(-1, -1, 3))
@@ -54,7 +54,7 @@ def smoothness(rep, P):
 
 @torch.no_grad()
 def sample_area_weighted(rep, P, n=4096, S=8, U=64, generator=None):
-    """Tahmin edilen yüzeyden alan ağırlıklı n nokta (ince ızgaranın dörtgenleri üzerinden)."""
+    """n area-weighted samples from the predicted surface (via quads of a fine grid)."""
     p0, p1 = rep.segments(P, S)
     G = segment_points(p0, p1, torch.linspace(0, 1, U, dtype=P.dtype))   # (B, L, U, 3)
     A, Bq, Cq, Dq = G[:, :-1, :-1], G[:, 1:, :-1], G[:, :-1, 1:], G[:, 1:, 1:]
