@@ -73,3 +73,4 @@ Hesaplama bütçesi aşılırsa, **sonuçlar görülmeden** önce yama sayısı 
 
 - **2026-10-10** — Depo açıldı. v2 incelendi; S1–S8 kaydedildi. Aşama 0 ön kaydı yapıldı.
 - **2026-10-10** — Çekirdek kod: `ruled/geometry.py`, `ruled/reps.py`, `ruled/data.py`, `ruled/losses.py`. 14.7 testleri (Blaschke q testi hariç; çatı yalnız analiz içindir) ve S1 testleri: 20/20 geçti. Aşama 0 betiği: `experiments/phase0.py`, değerlendirme: `experiments/phase0_analyze.py`.
+- **2026-10-10** — Chamfer hızlandırıldı: en yakın komşular KD-ağacıyla gradyansız bulunur, kayıp eşleşen çiftlerden hesaplanır (değer ve gradyan referansla 1e-16 düzeyinde aynı). 50 yama için adım süresi 2,2 sn'den yaklaşık 0,25 sn'ye indi; ön kayıtlı yama sayısı korunur. Ayar kümesinde sağlama: üç temsil de 1000 adımda Chamfer'ı 5e-2'den yaklaşık 1e-3'e indiriyor. Ayar ve test koşuları başlatıldı.

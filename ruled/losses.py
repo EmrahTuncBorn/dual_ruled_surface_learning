@@ -1,7 +1,27 @@
 """Kayıplar ve ölçütler (v2 Bölüm 8 ve 14.5)."""
+import os
+from concurrent.futures import ThreadPoolExecutor
+
+import numpy as np
 import torch
+from scipy.spatial import cKDTree
 
 from .geometry import segment_points, u_grid
+
+_POOL = ThreadPoolExecutor(os.cpu_count() or 4)
+
+
+@torch.no_grad()
+def nearest(x, y):
+    """Her iki yönde en yakın komşu indisleri (KD-ağacı, yama başına bir iş parçacığı)."""
+    X, Y = x.detach().cpu().numpy(), y.detach().cpu().numpy()
+
+    def one(b):
+        return cKDTree(Y[b]).query(X[b])[1], cKDTree(X[b]).query(Y[b])[1]
+
+    ix, iy = zip(*_POOL.map(one, range(len(X))))
+    as_t = lambda i: torch.from_numpy(np.stack(i).astype(np.int64)).to(x.device)
+    return as_t(ix), as_t(iy)
 
 
 def surface_points(rep, P, S=4, U=16, jitter=False):
@@ -14,9 +34,16 @@ def surface_points(rep, P, S=4, U=16, jitter=False):
 
 
 def chamfer(x, y):
-    """İki yönlü ortalama kare en yakın uzaklık; x: (B,N,3), y: (B,M,3) -> (B,)."""
-    d = torch.cdist(x, y).square()
-    return d.min(-1).values.mean(-1) + d.min(-2).values.mean(-1)
+    """İki yönlü ortalama kare en yakın uzaklık; x: (B,N,3), y: (B,M,3) -> (B,).
+
+    En yakın komşular gradyansız bulunur; kayıp yalnız eşleşen çiftlerden yeniden
+    hesaplanır. min'in gradyanı zaten yalnız argmin çiftinden geçtiği için türev
+    tam matris üzerinden alınanla aynıdır, ama geri yayılım O(N+M) olur.
+    """
+    ix, iy = nearest(x, y)                                 # (B,N), (B,M)
+    gather = lambda z, i: torch.gather(z, 1, i[..., None].expand(-1, -1, 3))
+    return ((x - gather(y, ix)).square().sum(-1).mean(-1)
+            + (y - gather(x, iy)).square().sum(-1).mean(-1))
 
 
 def smoothness(rep, P):
