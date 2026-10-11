@@ -154,8 +154,24 @@ koşulunu istediği için sonuç "zayıf"tır.
   sürdürüldü. Bitmiş birimler atlandığı ve dosyalar atomik yazıldığı için sonuçlar etkilenmez.
   Kesintiden önceki son birimin süresi (20.719 sn) bilgisayarın uykuya geçmesinden kaynaklanır.
 
-**Sonraki adım (onay bekleniyor).** Ön kayda göre katkı, değişmez tabanlı kayıp/üretim ve
-hesaplama katmanı eksenine kaydırılır ve v3 belgesi yazılır.
+**Sonraki adım.** Ön kayda göre katkı, değişmez tabanlı kayıp/üretim ve hesaplama katmanı
+eksenine kaydırılır ve v3 belgesi yazılır. Ondan önce aşağıdaki keşif kontrolü yapılır.
+
+### Aşama 0 ek kontrolü: genişletilmiş lr ızgarası (keşif amaçlı, 2026-10-11)
+
+**Neden.** Seçilen lr üç temsilde de ızgaranın üst sınırındaydı. "A, C'den kötü" bulgusu
+ayar sınırından kaynaklanıyorsa v3'ün gerekçesi değişir.
+
+**Statü.** Sonuçlar görüldükten sonra tasarlandığı için **ön kayıt dışıdır** ve Aşama 0 kararını
+değiştirmez; yalnız sınırlılığın ne kadar etkili olduğunu gösterir.
+
+**Tasarım (koşudan önce sabit).** Betik: `experiments/phase0_lrext.py`; çıktı: `results/phase0_lrext/`.
+- Doğrulama taraması: `lr ∈ {3e-2, 1e-1, 3e-1}` × `λ_s ∈ {0, 1e-3}` (Aşama 0'da seçilen λ değerleri), seed 0.
+  3e-2 tekrarı yeniden üretilebilirlik denetimidir; Aşama 0 değerleriyle aynı çıkması beklenir.
+- Seçim yine yalnız doğrulamada, ortalama son Chamfer'a göre yapılır.
+- Seçimi değişen temsiller için test kümesi beş seed'le yeniden koşulur; seçimi değişmeyenlerde
+  Aşama 0 test satırları kullanılır. Karşılaştırma, aynı ölçüt ve aynı eşiklerle yapılır.
+- Bu kontrolde test kümesi ikinci kez kullanılmış olur; bu nedenle sonuç yalnız bilgi amaçlıdır.
 
 ---
 
