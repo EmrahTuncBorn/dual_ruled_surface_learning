@@ -10,6 +10,7 @@ The structure follows phase0.py: every unit of work is written atomically to its
 and skipped when present, and a run directory is bound to one git commit.
 
   python experiments/phase1.py scale      # lambda_d scale check on 5 validation patches
+  python experiments/phase1.py smooth     # folding check: A0 and H over a wider lambda_s range
   python experiments/phase1.py all        # validation sweep -> selection -> test (both inits)
 """
 import argparse
@@ -45,6 +46,7 @@ TAU = 0.00756                              # v3 Section 4.2, experiments/phase1_
 INITS = ("smooth", "phase0")               # primary, secondary (v3 Section 5.2)
 SCALE_PATCHES = (0, 10, 20, 5, 15)         # cylinder, cone, tangent, cylinder, cone
 SCALE_LAMBDA_D = tuple(10.0 ** k for k in range(-2, 7))
+SMOOTH_LAMBDA_S = (0.0, 1e-2, 1e-1, 1.0, 1e1)
 
 ARMS = {"A0": (DualRep, None), "PA": (DualRep, "A"), "PC": (EndpointRep, "C"), "H": (DevelopableDualRep, None)}
 
@@ -148,12 +150,30 @@ def meeting_inside(rep, P):
 
 
 @torch.no_grad()
+def fold_rates(rep, P, S_grid=8, U_grid=64):
+    """Two folding measures of the predicted surface.
+
+    reversal: fraction of interior lines where the path of segment midpoints turns back
+              (the step to the next midpoint points against the step from the previous one)
+    flip:     fraction of neighbouring quad pairs across a line whose normals are opposed
+    """
+    q0, q1 = rep.segments(P, S=1)
+    d = 0.5 * (q0 + q1).diff(dim=-2)
+    reversal = (dot(d[..., 1:, :], d[..., :-1, :]) < 0).double().mean(-1)
+    G = surface_grid(rep, P, S_grid, U_grid)
+    n = torch.cross(G[..., 1:, :-1, :] - G[..., :-1, :-1, :], G[..., :-1, 1:, :] - G[..., :-1, :-1, :], dim=-1)
+    flip = (dot(n[..., 1:, :, :], n[..., :-1, :, :]) < 0).double().mean((-1, -2))
+    return reversal, flip
+
+
+@torch.no_grad()
 def evaluate(arm, P, patches):
     rep = ARMS[arm][0]
     ev = p0.evaluate(rep, P, patches)
     Pd = P.double()
     ev["G"] = angle_defect_total(surface_grid(rep, Pd)).numpy()
     ev["inside"] = meeting_inside(rep, Pd).numpy()
+    ev["reversal"], ev["flip"] = (x.numpy() for x in fold_rates(rep, Pd))
     return ev
 
 
@@ -216,6 +236,26 @@ def scale_check():
     print(text, flush=True)
 
 
+def smooth_check():
+    """A0 and H over a wider lambda_s range on the scale patches (lr 1e-1, smooth init).
+
+    Validation only and not decision data: tests whether the smoothness term removes folding.
+    """
+    out = ROOT / "results" / "phase1_smooth"
+    commit = bind(out)
+    patches = [load_set("val", out)[i] for i in SCALE_PATCHES]
+    keys = ("chamfer", "G", "inside", "reversal", "flip")
+    lines = ["| arm | lambda_s | " + " | ".join(keys) + " |", "|---" * (len(keys) + 2) + "|"]
+    for arm, ls in itertools.product(("A0", "H"), SMOOTH_LAMBDA_S):
+        r = run("val", arm, 0, 1e-1, ls, 0.0, "smooth", commit, f"{arm}_lams{ls:g}", patches, out)
+        m = {k: np.mean([x[k] for x in r]) for k in keys}
+        lines.append(f"| {arm} | {ls:g} | " + " | ".join(f"{m[k]:.3e}" if k in ("chamfer", "G") else f"{m[k]:.3f}"
+                                                         for k in keys) + " |")
+    text = "\n".join(lines + ["", f"tau = {TAU}"])
+    (out / "report.md").write_text(text, encoding="utf-8")
+    print(text, flush=True)
+
+
 def select(rows):
     """v3 Section 5.3 selection rule; rows of one init (validation, seed 0)."""
     def mean(arm, lr, ls, ld, key):
@@ -269,12 +309,15 @@ def test_runs(best, commit):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("stage", choices=["scale", "all"])
+    ap.add_argument("stage", choices=["scale", "smooth", "all"])
     ap.add_argument("--threads", type=int, default=8)
     args = ap.parse_args()
     torch.set_num_threads(args.threads)
     if args.stage == "scale":
         scale_check()
+        return
+    if args.stage == "smooth":
+        smooth_check()
         return
     commit = bind(OUT)
     best = validation_sweep(commit)
