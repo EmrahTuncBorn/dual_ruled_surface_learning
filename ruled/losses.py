@@ -6,7 +6,7 @@ import numpy as np
 import torch
 from scipy.spatial import cKDTree
 
-from .geometry import segment_points, u_grid
+from .geometry import dot, segment_points, u_grid
 
 _POOL = ThreadPoolExecutor(os.cpu_count() or 4)
 
@@ -50,6 +50,31 @@ def smoothness(rep, P):
     v = rep.smooth_vars(P)
     d2 = v[..., 2:, :] - 2 * v[..., 1:-1, :] + v[..., :-2, :]
     return d2.square().sum((-1, -2))
+
+
+def developability_A(rep, P):
+    """Penalty of arm PA: sum of squared reciprocal products of consecutive lines (v2 8.3)."""
+    a, m = rep.lines(P)
+    r = dot(a[..., :-1, :], m[..., 1:, :]) + dot(a[..., 1:, :], m[..., :-1, :])
+    return r.square().sum(-1)
+
+
+def developability_C(P):
+    """Penalty of arm PC: squared coplanarity determinant of consecutive endpoint pairs.
+
+    |det(p1 - p0, r0 - p0, r1 - p0)| = |reciprocal product| * |p1 - p0| * |r1 - r0|.
+    """
+    q0, q1 = P[..., 0:3], P[..., 3:6]
+    p0, p1, r0, r1 = q0[..., :-1, :], q1[..., :-1, :], q0[..., 1:, :], q1[..., 1:, :]
+    V = dot(torch.cross(p1 - p0, r0 - p0, dim=-1), r1 - p0)
+    return V.square().sum(-1)
+
+
+@torch.no_grad()
+def surface_grid(rep, P, S=8, U=64):
+    """Evaluation grid of the predicted surface: (B, (K-1)*S+1, U, 3)."""
+    p0, p1 = rep.segments(P, S)
+    return segment_points(p0, p1, torch.linspace(0, 1, U, dtype=P.dtype, device=P.device))
 
 
 @torch.no_grad()

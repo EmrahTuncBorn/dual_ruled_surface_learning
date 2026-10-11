@@ -78,6 +78,55 @@ def segment_points(p0, p1, u):
 
 
 # ---------------------------------------------------------------------------
+# Hard developability layer (v3 Section 3)
+# ---------------------------------------------------------------------------
+
+def project_coplanar(a_prev, m_prev, a, m0, eps=1e-3):
+    """Moment closest to m0 that makes the line (a, m) coplanar with (a_prev, m_prev).
+
+    The coplanarity condition <a_prev, m> + <a, m_prev> = 0 is linear in m. With
+    n = a_prev - <a_prev, a> a (|n| = sin theta) the solution is m0 - r n / |n|^2, and
+    |m - m0| equals the shortest distance between the raw line and the previous one.
+    The denominator is clamped at eps^2, so pairs with sin theta < eps are corrected
+    only partly and the correction goes continuously to zero for parallel lines.
+    """
+    n = a_prev - dot(a_prev, a)[..., None] * a
+    r = dot(a_prev, m0) + dot(a, m_prev)
+    return m0 - (r / dot(n, n).clamp_min(eps ** 2))[..., None] * n
+
+
+def developable_lines(a, m0, eps=1e-3):
+    """Sequential hard layer: line k is projected against the projected line k-1.
+
+    a, m0: (..., K, 3) unit directions and moments with <a, m0> = 0. Directions are kept.
+    """
+    ms = [m0[..., 0, :]]
+    for k in range(1, a.shape[-2]):
+        ms.append(project_coplanar(a[..., k - 1, :], ms[-1], a[..., k, :], m0[..., k, :], eps))
+    return torch.stack(ms, dim=-2)
+
+
+def angle_defect_total(G):
+    """Discrete total absolute Gaussian curvature of a grid surface (v3 Section 4.2).
+
+    G: (..., L, U, 3). Each quad is split along the (i,j)-(i+1,j+1) diagonal; the result
+    is the sum over interior vertices of |2 pi - sum of incident triangle angles|.
+    """
+    def angle(p, q, r):
+        u, v = q - p, r - p
+        return torch.atan2(torch.cross(u, v, dim=-1).norm(dim=-1), dot(u, v))
+
+    A, B, C, D = G[..., :-1, :-1, :], G[..., 1:, :-1, :], G[..., :-1, 1:, :], G[..., 1:, 1:, :]
+    total = torch.zeros(G.shape[:-1], dtype=G.dtype, device=G.device)
+    total[..., :-1, :-1] += angle(A, B, D) + angle(A, D, C)     # triangles ABD and ADC
+    total[..., 1:, :-1] += angle(B, D, A)
+    total[..., 1:, 1:] += angle(D, A, B) + angle(D, C, A)
+    total[..., :-1, 1:] += angle(C, A, D)
+    defect = 2 * torch.pi - total[..., 1:-1, 1:-1]
+    return defect.abs().sum((-1, -2))
+
+
+# ---------------------------------------------------------------------------
 # Measures on pairs of consecutive lines
 # ---------------------------------------------------------------------------
 

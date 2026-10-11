@@ -4,6 +4,7 @@ Every representation uses 8 numbers per line (equal parameter count):
   A - dual             : a_raw(3), b(3), v_min, w    v_max = v_min + softplus(w), v measured from f
   B - base + direction : c(3), a_raw(3), v_min, w    v measured from c
   C - two endpoints    : q0(3), q1(3), unused, unused
+  H - A with the hard developability layer (v3); not part of REPS
 
 Common interface:
   init(a, p, v0, v1)        parameters from geometric lines (a unit, p a point on the line,
@@ -15,7 +16,8 @@ Common interface:
 import torch
 import torch.nn.functional as F
 
-from .geometry import dot, dual_normalize, foot, moment, align_signs, lerp_lines
+from .geometry import (dot, dual_normalize, foot, moment, align_signs, lerp_lines,
+                       developable_lines)
 
 
 def inv_softplus(y):
@@ -41,9 +43,9 @@ class DualRep:
         return torch.cat([a, moment(p, a), (v0 + s)[..., None],
                           inv_softplus(v1 - v0)[..., None]], dim=-1)
 
-    @staticmethod
-    def _aligned(P):
-        a, m = dual_normalize(P[..., 0:3], P[..., 3:6])
+    @classmethod
+    def _aligned(cls, P):
+        a, m = cls.lines(P)
         vmin, vmax = _interval(P)
         s = align_signs(a)
         vmin, vmax = _flip_interval(vmin, vmax, s)
@@ -60,6 +62,21 @@ class DualRep:
     @staticmethod
     def lines(P):
         return dual_normalize(P[..., 0:3], P[..., 3:6])
+
+
+class DevelopableDualRep(DualRep):
+    """A with the sequential hard developability layer applied to its lines (v3 Section 3).
+
+    Parameters and interpolation are those of A; with A's interpolation the lines
+    between two coplanar lines stay in their pencil, so every strip is planar.
+    """
+    name = "H"
+    eps = 1e-3
+
+    @classmethod
+    def lines(cls, P):
+        a, m0 = dual_normalize(P[..., 0:3], P[..., 3:6])
+        return a, developable_lines(a, m0, cls.eps)
 
     @classmethod
     def smooth_vars(cls, P):

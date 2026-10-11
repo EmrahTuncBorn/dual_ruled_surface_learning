@@ -117,19 +117,43 @@ açılabilirdir. Bu özellik B ve C'nin ara değer şemalarında kendiliğinden 
 
 $\sin\theta \to 0$ iken düzeltme sınırlıdır ($d_0$), ama yönü süreksizdir: tam paralel doğrular zaten aynı
 düzlemdedir ve düzeltme gerekmez, oysa küçük bir açıyla kaymış doğrular $d_0$ kadar kaydırılır. Silindir
-verisinde bu, doğru aralığı mertebesinde sıçramalara yol açabilir. Bu nedenle Tikhonov biçimi kullanılır:
+verisinde bu, doğru aralığı mertebesinde sıçramalara yol açabilir. Bu nedenle payda alttan kırpılır:
 
 $$
-m = m_0 - \frac{r}{\sin^2\theta + \varepsilon^2}\, n ,\qquad \varepsilon = 10^{-3}\ \text{rad (öneri)} .
+m = m_0 - \frac{r}{\max(\sin^2\theta,\ \varepsilon^2)}\, n ,\qquad \varepsilon = 10^{-3}\ \text{(öneri)} .
 $$
 
-$\theta \gg \varepsilon$ için katman tamdır. $\theta \lesssim \varepsilon$ olan çiftler düzeltilmeden kalır;
+$\sin\theta \ge \varepsilon$ için katman tamdır; düzeltme $\sin\theta$'nın sürekli bir fonksiyonudur ve
+$\sin\theta \to 0$ iken sıfıra iner. (İlk taslaktaki $\sin^2\theta + \varepsilon^2$ biçimi büyük açılarda da
+$\varepsilon^2/\sin^2\theta$ oranında kaçak bıraktığı için Aşama 1a'da bu biçimle değiştirildi.)
+$\sin\theta < \varepsilon$ olan çiftler yalnızca kısmen düzeltilir;
 bir şeridin Gauss tasviri (Gauss image) alanı, anadoğru tam boyunda alınsa bile açısı $\theta$ olan bir
 küresel ay (lune) ile, yani $2\theta$ ile sınırlı olduğu için, bunun açılabilirlik ölçütüne katkısı şerit
 başına en çok $2\varepsilon$ mertebesindedir. $\varepsilon$ değeri ve gradyanın
 $\theta \approx \varepsilon$ çevresindeki davranışı, Aşama 1a'daki testlerle denetlenir.
 
-### 3.4 Geometrik yorum
+### 3.4 Gerileme kenarı yamanın içine düşebilir (Aşama 1a bulgusu)
+
+Katmanın garantisi **yereldir**: her şerit düzlemseldir (rastgele doğrularda dörtgen düzlemsizliği
+< 2e-14). Ama ardışık iki doğrunun kesişme noktası, yani ayrık gerileme kenarı (edge of regression),
+yama aralığının içine düşerse şerit kendini keser (papyon biçimi); yüzey o noktada tekildir ve
+$\mathcal{G}$ bunu büyük bir değer olarak yakalar. Bu, açılabilir yüzeylerin doğasında olan bir
+tekilliktir; katmanın bir hatası değildir, ama "tam açılabilirlik garantisi" ancak kesişme noktaları
+yamanın dışında kaldığında geçerlidir.
+
+Kesişme noktasının konumu kötü koşulludur: ardışık açısı $\theta$ olan doğrularda $\delta$ büyüklüğündeki
+bir konum hatası, kesişme noktasını yaklaşık $\delta/\theta$ kadar kaydırır. Sayısal örnekler:
+
+- Koni doğruları ($\theta \approx 0{,}047$), konumda $10^{-3}$ gürültü: kesişmelerin %0'ı aralık içinde,
+  $\mathcal{G} = 4\cdot 10^{-12}$. Gürültü $10^{-2}$: kesişmelerin %21'i aralık içinde, $\mathcal{G}$ en çok 0,79.
+- Aşama 0'ın başlangıcı (doğru başına bağımsız σ = 0,1 rad bozulma), açılabilir yamalarda: sert katmandan
+  sonra kesişmelerin %57–67'si aralık içinde; başlangıç $\mathcal{G}$'si 6,3–9,5 (A'nın başlangıcında da
+  6,3–9,5).
+
+Sonuçları: (i) Aşama 1b'de "aralık içindeki kesişme oranı" H için ikincil ölçüt olarak raporlanır;
+(ii) başlangıç yüzeyinin seçimi H için belirleyicidir (Bölüm 5.2).
+
+### 3.5 Geometrik yorum
 
 Sert katman, v2'deki kısıt katmanının açılabilir yüzeyler için uzantısıdır. Kısıt katmanı ham sayıları
 dual birim küreye indirir; sert katman, dual küresel eğriyi $\mathrm{Du}\langle A', A'\rangle = 0$ koşulunun
@@ -188,8 +212,16 @@ ailelerinden doğrulama seed'i 3000 ile aile başına 10 gerçek yama üretilir.
 
 ### 5.2 Kollar (arms)
 
-Hepsi Aşama 0'daki başlangıçtan (PCA düzlemi, seed başına bozulma), Adam ve kosinüs azalmasıyla 1000
-adım optimize edilir. Kayıp `L_CD + λ_s L_s (+ λ_d L_d)`.
+Bütün kollar aynı başlangıç doğrularından, Adam ve kosinüs azalmasıyla 1000 adım optimize edilir.
+Kayıp `L_CD + λ_s L_s (+ λ_d L_d)`. H'nin başlangıç yüzeyi, aynı başlangıç doğrularının katmandan geçmiş
+hâlidir.
+
+**Başlangıç (açık karar, Aşama 1b ön kaydından önce verilir).** Aşama 0'daki doğru başına bağımsız bozulma
+(σ = 0,1 rad), H'de kesişmelerin %57–67'sini yamanın içine düşürür (Bölüm 3.4). Seçenekler:
+(i) Aşama 0 başlangıcı, Aşama 0 ile tutarlıdır ama H'yi tekil bir yüzeyden başlatır;
+(ii) düşük frekanslı bozulma (doğru indisine göre düzgün, örneğin birkaç sinüs bileşeni), bir ağın düzgün
+çıktısına daha yakındır. Hangisi seçilirse seçilsin bütün kollara aynı biçimde uygulanır ve seçim, kolların
+karşılaştırması görülmeden yapılır.
 
 | Kol | Temsil | Açılabilirlik | Rolü |
 |---|---|---|---|
@@ -214,6 +246,8 @@ adım optimize edilir. Kayıp `L_CD + λ_s L_s (+ λ_d L_d)`.
 - Seçilen değer bir ızgara sınırındaysa raporlanır; ızgara, sonuç görüldükten sonra genişletilmez.
 - `λ_d` ızgarası, koşudan önce doğrulama kümesinin 5 yamasında kısa bir ölçek koşusuyla denetlenir;
   değişirse koşudan önce `PROGRESS.md`'ye yazılır.
+- $\tau = 0{,}00756$ (Aşama 1a'da hesaplandı: 20 açılabilir olmayan gerçek yamanın medyan
+  $\mathcal{G}$'si 0,756; betik `experiments/phase1_tau.py`).
 
 Doğrulama birimi: 3 lr × 2 λ_s × (1 + 1 + 5 + 5) = 72. Test birimi: 4 kol × 5 seed × 3 parça = 60.
 
@@ -222,7 +256,8 @@ Doğrulama birimi: 3 lr × 2 λ_s × (1 + 1 + 5 + 5) = 72. Test birimi: 4 kol ×
 1. Son Chamfer hatası (Aşama 0'daki tanım).
 2. $\mathcal{G}$ (Bölüm 4.2).
 
-İkincil: seed std, Hausdorff ve 95. yüzdeliği, `d·sinθ`, drall, aile bazında tablolar.
+İkincil: seed std, Hausdorff ve 95. yüzdeliği, `d·sinθ`, drall, aile bazında tablolar; H için ardışık
+doğruların kesişme noktalarının yama aralığı içinde kalma oranı (Bölüm 3.4).
 
 ### 5.5 Karar kuralı (sonuçlardan önce sabit)
 
@@ -276,16 +311,18 @@ Aile bazında, özellikle silindirde (Bölüm 3.3), H'nin davranışı ayrıca i
 1. Katmanın çıktısı Plücker koşulunu ve $\theta \gg \varepsilon$ için karşılıklı moment koşulunu makine
    hassasiyetinde sağlar.
 2. Düzeltmenin büyüklüğü, ham doğrunun önceki doğruya en kısa uzaklığına eşittir.
-3. Koni doğruları katmandan değişmeden geçer; teğet açılabilirde değişim $K$ arttıkça küçülür.
+3. Koni ve silindir doğruları katmandan değişmeden geçer; teğet açılabilirde değişim $K$ arttıkça
+   $O(1/K^2)$ küçülür (tek çiftin hatası $O(1/K^3)$'tür, sıralı katman bunu biriktirir).
 4. İşaret değişimi katmanın ürettiği doğruları (doğru olarak) değiştirmez.
-5. Sert katmandan geçmiş doğruların A ara değeriyle kurulan yüzeyinde $\mathcal{G}$ makine hassasiyetinde
-   sıfırdır.
+5. Sert katmandan geçmiş doğruların A ara değeriyle kurulan yüzeyinde her dörtgen, rastgele doğrularda da
+   makine hassasiyetinde düzlemseldir; kesişme noktaları yama dışında kaldığında (bozulmuş koni doğruları)
+   $\mathcal{G}$ makine hassasiyetinde sıfırdır.
 6. $\mathcal{G}$: silindir ve koni ızgaralarında makine hassasiyetinde sıfır; teğet açılabilirde
    ızgara inceldikçe sıfıra yakınsar.
 7. $\mathcal{G}$: hiperbolik paraboloitte, $\int|K|\,dA$'nın sayısal kareleme (quadrature) değerine
    ızgara inceldikçe yakınsar.
-8. Gradyan sonludur ve sayısal türevle uyuşur; $\theta \in \{10\varepsilon, \varepsilon, 0{,}1\varepsilon\}$
-   çevresinde de denetlenir.
+8. Gradyan sonludur ve sayısal türevle uyuşur; $\sin\theta \in \{10\varepsilon, 0{,}5\varepsilon, 0{,}1\varepsilon, 0\}$
+   için de denetlenir (kırpmanın köşesi $\sin\theta = \varepsilon$'da türev tek yönlüdür).
 
 ### 7.3 Bilinen başarısızlık biçimleri
 
@@ -294,7 +331,7 @@ Aile bazında, özellikle silindirde (Bölüm 3.3), H'nin davranışı ayrıca i
 | Silindirde H'nin Chamfer'ı yüksek | $\theta \approx \varepsilon$ çevresinde düzeltme sıçraması | $\varepsilon$ testi (7.2/8); aile bazında tablo |
 | Hata sıra boyunca birikir | sıralı izdüşüm | ters sıra analizi; doğru 0'ın konumu incelenir |
 | PA/PC eşiğe inmez | `λ_d` ızgarası dar | ölçek koşusu (5.3); sonuç görüldükten sonra değiştirilmez |
-| H'de gradyan patlaması | $1/(\sin^2\theta + \varepsilon^2)$ çarpanı | gradyan kırpma yalnızca bütün kollara birlikte uygulanır |
+| H'de gradyan patlaması | $1/\max(\sin^2\theta, \varepsilon^2)$ çarpanı | gradyan kırpma yalnızca bütün kollara birlikte uygulanır |
 
 ---
 
