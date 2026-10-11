@@ -239,7 +239,9 @@ karşılaştırması görülmeden yapılır.
 
 ### 5.3 Ayar (yalnızca doğrulama kümesinde, seed 0)
 
-- `lr ∈ {3e-2, 1e-1, 3e-1}` × `λ_s ∈ {0, 1e-3}`; PA ve PC'de ayrıca `λ_d ∈ {1, 10, 1e2, 1e3, 1e4}` (öneri).
+- `lr ∈ {3e-2, 1e-1, 3e-1}` × `λ_s ∈ {1e-2, 1e-1, 1}`; PA ve PC'de ayrıca `λ_d` ızgarası (ölçek koşusuyla
+  sabitlenir). λ_s ızgarası Aşama 1a'daki katlanma tanısından sonra değiştirildi (sapma T5): λ_s = 0 ve 1e-3'te
+  yüzeyler doğrular arasında katlanır.
 - PA ve PC için: her (lr, λ_s) çiftinde, ortalama doğrulama $\mathcal{G}$'si $\tau$'nun altına inen
   **en küçük** `λ_d` alınır; bu yapılandırmalar arasından ortalama doğrulama Chamfer'ı en düşük olan seçilir.
   Hiçbir `λ_d` eşiğe inmiyorsa ortalama $\mathcal{G}$'si en düşük yapılandırma seçilir ve bu durum raporlanır.
@@ -250,7 +252,7 @@ karşılaştırması görülmeden yapılır.
 - $\tau = 0.00756$ (Aşama 1a'da hesaplandı: 20 açılabilir olmayan gerçek yamanın medyan
   $\mathcal{G}$'si 0.756; betik `experiments/phase1_tau.py`).
 
-Doğrulama birimi: 3 lr × 2 λ_s × (1 + 1 + 5 + 5) = 72. Test birimi: 4 kol × 5 seed × 3 parça = 60.
+Doğrulama birimi: 3 lr × 3 λ_s × (1 + 1 + 5 + 5) = 108. Test birimi: 2 başlangıç × 4 kol × 5 seed × 3 parça = 120.
 
 ### 5.4 Birincil ölçütler (test, yama başına beş seed ortalaması)
 
@@ -258,7 +260,9 @@ Doğrulama birimi: 3 lr × 2 λ_s × (1 + 1 + 5 + 5) = 72. Test birimi: 4 kol ×
 2. $\mathcal{G}$ (Bölüm 4.2).
 
 İkincil: seed std, Hausdorff ve 95. yüzdeliği, `d·sinθ`, drall, aile bazında tablolar; H için ardışık
-doğruların kesişme noktalarının yama aralığı içinde kalma oranı (Bölüm 3.4).
+doğruların kesişme noktalarının yama aralığı içinde kalma oranı (Bölüm 3.4); bütün kollarda normal dönüşü oranı
+(katlanma ölçüsü, T5): değerlendirme ızgarasında bir doğrunun iki yanındaki dörtgen normallerinin ters yönlü
+olduğu çiftlerin oranı.
 
 ### 5.5 Karar kuralı (sonuçlardan önce sabit)
 

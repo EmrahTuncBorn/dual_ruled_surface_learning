@@ -9,7 +9,8 @@ Arms on developable patches (cylinder, cone, tangent developable):
 The structure follows phase0.py: every unit of work is written atomically to its own file
 and skipped when present, and a run directory is bound to one git commit.
 
-  python experiments/phase1.py scale      # lambda_d scale check on 5 validation patches
+  python experiments/phase1.py scale      # lambda_d scale check on 5 validation patches (lambda_s 0)
+  python experiments/phase1.py scale2     # the same check at lambda_s 1e-1 (T5)
   python experiments/phase1.py smooth     # folding check: A0 and H over a wider lambda_s range
   python experiments/phase1.py all        # validation sweep -> selection -> test (both inits)
 """
@@ -35,7 +36,7 @@ OUT = ROOT / "results" / "phase1"
 K, S, U = 32, 4, 16
 STEPS, EVAL_EVERY = 1000, 10
 LRS = (3e-2, 1e-1, 3e-1)
-LAMBDA_S = (0.0, 1e-3)
+LAMBDA_S = (1e-2, 1e-1, 1.0)               # T5: lambda_s 0 and 1e-3 fold
 LAMBDA_D = (1.0, 1e1, 1e2, 1e3, 1e4)      # proposed in v3 5.3; fixed by the scale check
 SEEDS = (0, 1, 2, 3, 4)
 DATA_SEEDS = {"val": 3000, "test": 4000}
@@ -220,18 +221,20 @@ def bind(out):
 # Stages
 # ---------------------------------------------------------------------------
 
-def scale_check():
-    """PA and PC over a wide lambda_d range on 5 validation patches (lr 1e-1, lam_s 0, smooth init)."""
-    out = ROOT / "results" / "phase1_scale"
+def scale_check(lam_s=0.0, name="phase1_scale"):
+    """PA and PC over a wide lambda_d range on 5 validation patches (lr 1e-1, smooth init)."""
+    out = ROOT / "results" / name
     commit = bind(out)
     patches = [load_set("val", out)[i] for i in SCALE_PATCHES]
-    lines = ["| arm | lambda_d | chamfer | G | inside |", "|---|---|---|---|---|"]
+    keys = ("chamfer", "G", "inside", "flip")
+    lines = ["| arm | lambda_d | " + " | ".join(keys) + " |", "|---" * (len(keys) + 2) + "|"]
     configs = [("A0", 0.0), ("H", 0.0)] + [(arm, ld) for arm in ("PA", "PC") for ld in SCALE_LAMBDA_D]
     for arm, ld in configs:
-        r = run("val", arm, 0, 1e-1, 0.0, ld, "smooth", commit, f"{arm}_lamd{ld:g}", patches, out)
-        m = {k: np.mean([x[k] for x in r]) for k in ("chamfer", "G", "inside")}
-        lines.append(f"| {arm} | {ld:g} | {m['chamfer']:.3e} | {m['G']:.3e} | {m['inside']:.3f} |")
-    text = "\n".join(lines + ["", f"tau = {TAU}"])
+        r = run("val", arm, 0, 1e-1, lam_s, ld, "smooth", commit, f"{arm}_lamd{ld:g}", patches, out)
+        m = {k: np.mean([x[k] for x in r]) for k in keys}
+        lines.append(f"| {arm} | {ld:g} | " + " | ".join(f"{m[k]:.3e}" if k in ("chamfer", "G") else f"{m[k]:.3f}"
+                                                         for k in keys) + " |")
+    text = "\n".join(lines + ["", f"lambda_s = {lam_s}, tau = {TAU}"])
     (out / "report.md").write_text(text, encoding="utf-8")
     print(text, flush=True)
 
@@ -309,12 +312,15 @@ def test_runs(best, commit):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("stage", choices=["scale", "smooth", "all"])
+    ap.add_argument("stage", choices=["scale", "scale2", "smooth", "all"])
     ap.add_argument("--threads", type=int, default=8)
     args = ap.parse_args()
     torch.set_num_threads(args.threads)
     if args.stage == "scale":
         scale_check()
+        return
+    if args.stage == "scale2":
+        scale_check(1e-1, "phase1_scale_ls0.1")
         return
     if args.stage == "smooth":
         smooth_check()
