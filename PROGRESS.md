@@ -266,3 +266,24 @@ yeniden koşuldu.
   - Hiçbir yapılandırmada ortalama 𝒢 τ = 0.00756'ya inmez (en düşük A0 λ_s = 10'da 0.030, Chamfer 18 kat kötü). Ortalama, yama başına uç değerlere duyarlıdır: H λ_s = 1e-1'de yama değerleri 0.000, 0.536, 0.000, 0.080, 0.006'dır, medyan 0.006 ≤ τ. Ortalama ile medyan arasındaki bu fark not edildi; seçim kuralının (v3 5.3, ortalama) ve H önkoşulunun (v3 5.5, medyan) farklı istatistik kullandığı bu vesileyle görüldü. 5 yamayla A0–H karşılaştırması yapılmaz.
   - Aşama 1a kapanmadı. v3 5.3'te yapılacak değişiklik karara bağlanınca T5 olarak yazılacaktır; bu tanının sonuçlarını gördükten sonra yapılacağı için o kayıtta açıkça belirtilecektir.
 - **2026-10-11** — T5 onaylandı ve uygulandı (sapmalar tablosu). İlk altı Aşama 1a commit'i (`091d5b9`…`f98e01f`) onayla GitHub'a gönderildi. Sıradaki adım: PA ve PC için `λ_d` ölçek koşusu λ_s = 1e-1'de (`phase1.py scale2`, `results/phase1_scale_ls0.1`); `λ_d` ızgarası bu koşunun sonucuna göre sabitlenip Aşama 1a kapatılacaktır.
+- **2026-10-11** — `λ_d` ölçek koşusu λ_s = 1e-1'de yinelendi (`43f4485`; özet `results_summary/phase1_scale_ls0.1/`; 5 doğrulama yaması, lr 1e-1).
+
+  | Kol | λ_d | Chamfer | 𝒢 ortalama | 𝒢 medyan | Normal dönüşü |
+  |---|---|---|---|---|---|
+  | A0 | – | 4.42e-3 | 0.144 | 0.094 | 0.003 |
+  | H | – | 5.41e-3 | 0.125 | 0.006 | 0.010 |
+  | PA | 1 | 4.51e-3 | 0.112 | 0.050 | 0.002 |
+  | PA | 10 | 4.81e-3 | 0.104 | 0.029 | 0.002 |
+  | PA | 1e2 | 6.09e-3 | **0.020** | **0.003** | 0.000 |
+  | PA | 1e3 | 9.81e-3 | 0.533 | 0.386 | 0.018 |
+  | PA | 1e4 | 1.92e-2 | 0.673 | 0.457 | 0.040 |
+  | PC | 1e-2 – 1 | 1.85e-3 – 1.92e-3 | 1.01 – 1.03 | 0.43 – 0.45 | 0.001 |
+  | PC | 1e2 | 5.96e-3 | 1.10 | 1.28 | 0.000 |
+  | PC | 1e4 | 3.16e-2 | 6.98 | 5.13 | 0.029 |
+
+  - PA'da 𝒢, `λ_d` = 1e2'de en düşüktür; daha büyük `λ_d`'de yeniden artar ve katlanma geri gelir (λ_d ≥ 1e3). Ceza baskın olunca optimizasyon bozulmaktadır.
+  - PC'nin cezası 𝒢'yi küçük `λ_d`'de neredeyse hiç değiştirmez (yaklaşık 1.0); `λ_d` ≥ 1e3'te Chamfer 3e-2'ye çıkar ve yüzey çöker.
+  - Ortalama 𝒢 hiçbir kolda τ'ya inmez (en yakın PA, λ_d = 1e2: 0.020, τ'nun 2.6 katı). Medyanda PA (0.003) ve H (0.006) τ'nun altındadır. Bu nedenle Aşama 1b'de PA ve PC için v3 5.3'ün yedek kuralının (en düşük ortalama 𝒢, raporlanır) devreye girmesi beklenir; H'nin önkoşulu (medyan ≤ τ) 5 yamada sınırdadır.
+  - Bu 5 yamada yumuşak ceza (PA, λ_d = 1e2) sert katmana (H) benzer Chamfer ile daha düşük 𝒢 verir. 5 yamayla karar verilmez; not edilmiştir.
+  - `λ_d` ızgarası `{1e-1, 1, 10, 1e2, 1e3}` olarak sabitlendi: PA'nın en düşük noktası (1e2) ızgaranın içinde kalır, PC'nin düz bölgesi (≤ 1) ve iki kolun bozulmaya başladığı 1e3 kapsanır. İlk önerideki 1e4 iki kolda da bozuk olduğu için çıkarıldı, 1e-1 eklendi; birim sayısı değişmedi (doğrulama 108, test 120).
+  - **Aşama 1a tamamlandı.** Aşama 1b'ye geçiş onay bekliyor; geçişten önce ön kayıt yazılıp commit'lenecektir.

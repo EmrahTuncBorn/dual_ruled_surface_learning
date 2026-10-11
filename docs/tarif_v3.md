@@ -239,8 +239,8 @@ karşılaştırması görülmeden yapılır.
 
 ### 5.3 Ayar (yalnızca doğrulama kümesinde, seed 0)
 
-- `lr ∈ {3e-2, 1e-1, 3e-1}` × `λ_s ∈ {1e-2, 1e-1, 1}`; PA ve PC'de ayrıca `λ_d` ızgarası (ölçek koşusuyla
-  sabitlenir). λ_s ızgarası Aşama 1a'daki katlanma tanısından sonra değiştirildi (sapma T5): λ_s = 0 ve 1e-3'te
+- `lr ∈ {3e-2, 1e-1, 3e-1}` × `λ_s ∈ {1e-2, 1e-1, 1}`; PA ve PC'de ayrıca `λ_d ∈ {1e-1, 1, 10, 1e2, 1e3}`
+  (λ_s = 1e-1'deki ölçek koşusuyla sabitlendi). λ_s ızgarası Aşama 1a'daki katlanma tanısından sonra değiştirildi (sapma T5): λ_s = 0 ve 1e-3'te
   yüzeyler doğrular arasında katlanır.
 - PA ve PC için: her (lr, λ_s) çiftinde, ortalama doğrulama $\mathcal{G}$'si $\tau$'nun altına inen
   **en küçük** `λ_d` alınır; bu yapılandırmalar arasından ortalama doğrulama Chamfer'ı en düşük olan seçilir.
