@@ -173,6 +173,36 @@ değiştirmez; yalnız sınırlılığın ne kadar etkili olduğunu gösterir.
   Aşama 0 test satırları kullanılır. Karşılaştırma, aynı ölçüt ve aynı eşiklerle yapılır.
 - Bu kontrolde test kümesi ikinci kez kullanılmış olur; bu nedenle sonuç yalnız bilgi amaçlıdır.
 
+**Sonuçlar (`88ea95e`).** Yeniden üretilebilirlik denetimi geçti: lr 3e-2 birimleri Aşama 0 değerlerini
+aynen verdi (A 8,220e-4; B 7,501e-4; C λ 1e-3 6,369e-4). Üç temsilin seçimi de değişti; test üçü için
+yeniden koşuldu.
+
+| Temsil | Aşama 0 (lr, λ_s) | geniş ızgara (lr, λ_s) | doğrulama Chamfer | test ort. Chamfer | yakınsama | seed std |
+|---|---|---|---|---|---|---|
+| A | 3e-2, 0 | 1e-1, 0 | 7,12e-4 | 6,87e-4 | 334 | 7,68e-5 |
+| B | 3e-2, 0 | 3e-1, 0 | 5,92e-4 | 5,67e-4 | 650 | 3,46e-5 |
+| C | 3e-2, 1e-3 | 3e-1, 1e-3 | 4,97e-4 | 5,08e-4 | 117 | 8,86e-5 |
+
+| Ölçüt | Karşı | Oran A/X | Wilcoxon p | Hüküm |
+|---|---|---|---|---|
+| Chamfer | B | 1,145 | 6,5e-26 | A kötü |
+| yakınsama | B | 0,502 | 1,4e-34 | A iyi |
+| seed std | B | 1,398 | 8,8e-9 | A kötü |
+| Chamfer | C | 1,326 | 3,8e-31 | A kötü |
+| yakınsama | C | 3,064 | 1,7e-34 | A kötü |
+| seed std | C | 0,737 | 2,1e-6 | A iyi |
+
+**Yorum.**
+1. Daha büyük lr üç temsili de iyileştirdi (Chamfer %15–20 düştü), ama sıralama değişmedi: C < B < A.
+   A–C oranı neredeyse aynı kaldı (1,34 → 1,33). "A, C'den kötü" bulgusu ızgara sınırından kaynaklanmaz.
+2. A'da 1e-1 ile 3e-1 neredeyse eşittir (7,12e-4 ve 7,13e-4), yani A'nın ayarı doymuştur. B ve C'de en iyi
+   lr yine üst sınırdadır (3e-1); daha da büyük lr'ler bu iki temsili iyileştirirse aradaki fark büyür,
+   kapanmaz.
+3. Yakınsama adımı lr'ye güçlü biçimde bağlıdır (B'de 256 → 650): kosinüs azalmasıyla büyük lr'de kayıp
+   sona kadar düşmeye devam eder. Bu ölçüt temsiller arasında farklı lr'lerle karşılaştırıldığında
+   temsil etkisini lr etkisinden ayırmaz; ağırlığı düşük tutulmalıdır.
+4. Aşama 0 kararı (temsil ekseni zayıf) bu kontrolle desteklenir.
+
 ---
 
 ## Günlük
@@ -182,3 +212,4 @@ değiştirmez; yalnız sınırlılığın ne kadar etkili olduğunu gösterir.
 - **2026-10-10** — Chamfer hızlandırıldı: en yakın komşular KD-ağacıyla gradyansız bulunur, kayıp eşleşen çiftlerden hesaplanır (değer ve gradyan, referansla 1e-16 düzeyinde aynı). 50 yama için adım süresi 2,2 sn'den yaklaşık 0,25 sn'ye indi; ön kayıtlı yama sayısı korundu. Doğrulama kümesinden 10 yamada smoke test (kısa sağlama koşusu) yapıldı: üç temsil de 1000 adımda Chamfer'ı 5e-2'den yaklaşık 1e-3'e indirdi. Bu yalnız çalışırlık kontrolüdür, karar için kullanılmaz.
 - **2026-10-10** — İlk Aşama 0 koşusu 48 yapılandırmanın 12'sinde **durduruldu ve sonuçları silindi**. Nedenleri: koşu sürerken `phase0.py` değiştirilmişti (Hausdorff hesabı bellek nedeniyle KD-ağacına alındı; sayısal etkisi 1e-8), yani doğrulama ve test aşamaları farklı commit'lerle koşacaktı; ayrıca koşu kaldığı yerden devam edemiyordu. Düzeltmeler: kod, docstring'ler ve çıktılar İngilizceye çevrildi; koşu resumable yapıldı (her birim ayrı dosyaya atomik olarak yazılır, bitmiş birimler atlanır); koşu dizini `manifest.json` ile tek commit'e bağlandı (kirli çalışma ağacı ya da farklı commit reddedilir); her sonuç satırına commit hash'i yazılır ve analiz tek commit'ten gelmeyen satırları reddeder. Karışan etkenler notu ön kayda eklendi. Ön kaydın içeriği (veri, ölçütler, karar kuralı) değiştirilmedi.
 - **2026-10-11** — Aşama 0 tamamlandı (`e96bef1`). Karar: temsil ekseni zayıf. Ayrıntılar yukarıdaki "Aşama 0 sonuçları" bölümündedir.
+- **2026-10-11** — Genişletilmiş lr ızgarasıyla keşif kontrolü yapıldı (`88ea95e`). Sıralama değişmedi (C < B < A); A–C oranı 1,33. Karar desteklendi.
