@@ -1,0 +1,11 @@
+﻿val A0_lams0 chunk 0: chamfer=7.475e-04 G=9.456e+00 inside=0.400 (53 s)
+val A0_lams0.01 chunk 0: chamfer=1.188e-03 G=2.874e-01 inside=0.097 (35 s)
+val A0_lams0.1 chunk 0: chamfer=4.416e-03 G=1.443e-01 inside=0.097 (18 s)
+val A0_lams1 chunk 0: chamfer=9.223e-03 G=1.071e-01 inside=0.110 (28 s)
+val A0_lams10 chunk 0: chamfer=1.356e-02 G=3.012e-02 inside=0.097 (52 s)
+val H_lams0 chunk 0: chamfer=1.743e-03 G=2.693e+01 inside=0.516 (153 s)
+val H_lams0.01 chunk 0: chamfer=4.103e-03 G=9.227e-01 inside=0.168 (155 s)
+val H_lams0.1 chunk 0: chamfer=5.407e-03 G=1.245e-01 inside=0.039 (157 s)
+val H_lams1 chunk 0: chamfer=1.186e-02 G=1.691e-01 inside=0.071 (158 s)
+val H_lams10 chunk 0: chamfer=3.755e-02 G=1.238e-01 inside=0.084 (160 s)
+tau = 0.00756

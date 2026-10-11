@@ -245,3 +245,22 @@ yeniden koşuldu.
   - Aşama 1a kapanmadı: `λ_d` ızgarası bu durumda anlamlı biçimde sabitlenemez. Tasarım kararı bekleniyor.
 
 - **2026-10-11** — Katlanma tanısının planı (sonuçlar görülmeden yazıldı; keşif amaçlıdır, karar verisi değildir). Soru: düzgünlük terimi katlanmayı gideriyor mu, giderirken Chamfer ne kadar bozuluyor? Yalnız A0 ve H; doğrulama kümesinin ölçek koşusundaki 5 yaması; lr 1e-1, seed 0, düşük frekanslı başlangıç; λ_s ∈ {0, 1e-2, 1e-1, 1, 10} (λ_s = 0 karşılaştırma için yeniden koşulur). Ölçülenler: Chamfer, 𝒢, yama içindeki kesişme oranı ve iki katlanma ölçüsü (`fold_rates`, `experiments/phase1.py`): (1) yön değiştirme oranı: ardışık doğru orta noktalarının izlediği yolun geri döndüğü iç doğruların oranı; (2) normal dönüşü oranı: değerlendirme ızgarasında (S = 8, U = 64) bir doğrunun iki yanındaki dörtgen normallerinin ters yönlü olduğu çiftlerin oranı. Ölçülerin sağlaması: gerçek koni, silindir ve teğet açılabilir doğrularında yön değiştirme 0–0.03, normal dönüşü 0–0.011 (tepe noktası ve gerileme kenarı yakınındaki yozlaşmış dörtgenler); doğru sırası ikişer ikişer yer değiştirilmiş zikzakta 0.97–1.0 ve yaklaşık 0.12. Sonuç ne olursa olsun, v3 5.3'te yapılacak değişiklik Aşama 1b ön kaydından önce T5 sapması olarak ayrıca yazılacaktır.
+- **2026-10-11** — Katlanma tanısı yapıldı (`3084de4`; özet `results_summary/phase1_smooth/`; keşif amaçlıdır, karar verisi değildir). λ_s = 0 satırları ölçek koşusuyla birebir aynı çıktı.
+
+  | Kol | λ_s | Chamfer | 𝒢 ortalama | 𝒢 medyan | Normal dönüşü | Yön değiştirme | Yama içi kesişme |
+  |---|---|---|---|---|---|---|---|
+  | A0 | 0 | 7.5e-4 | 9.46 | 8.32 | 0.069 | 0.55 | 0.40 |
+  | A0 | 1e-2 | 1.19e-3 | 0.287 | 0.126 | 0.006 | 0.44 | 0.10 |
+  | A0 | 1e-1 | 4.42e-3 | 0.144 | 0.094 | 0.003 | 0.46 | 0.10 |
+  | A0 | 1 | 9.22e-3 | 0.107 | 0.029 | 0.000 | 0.61 | 0.11 |
+  | A0 | 10 | 1.36e-2 | 0.030 | 0.019 | 0.000 | 0.77 | 0.10 |
+  | H | 0 | 1.74e-3 | 26.9 | 25.3 | 0.113 | 0.66 | 0.52 |
+  | H | 1e-2 | 4.10e-3 | 0.923 | 0.336 | 0.018 | 0.46 | 0.17 |
+  | H | 1e-1 | 5.41e-3 | 0.125 | 0.006 | 0.010 | 0.48 | 0.04 |
+  | H | 1 | 1.19e-2 | 0.169 | 0.085 | 0.009 | 0.52 | 0.07 |
+  | H | 10 | 3.76e-2 | 0.124 | 0.044 | 0.009 | 0.66 | 0.08 |
+
+  - Doğrular arası katlanma (normal dönüşü) λ_s ≥ 1e-2'de giderilir: A0'da 0.069'dan 0.006 ve altına, H'de 0.113'ten 0.018 ve altına iner; gerçek açılabilir yüzeylerdeki taban 0–0.011'dir. Bu en küçük λ_s'de Chamfer bedeli A0'da 1.6 kat, H'de 2.4 kattır. 𝒢 30–200 kat düşer.
+  - **Önceki tanıda bir ölçüt hatası düzeltildi:** yön değiştirme oranı katlanmanın geçerli bir ölçüsü değildir. λ_s arttıkça katlanma kaybolurken bu oran düşmez, artar (A0'da 0.44'ten 0.77'ye). Orta nokta, doğru boyunca serbestçe kayabildiği için yüzeyin şeklini değil, aralıkların yerleşimini yansıtır. Bir önceki kayıttaki "doğrular ileri geri zikzak çizer" yorumu bu ölçüye dayanıyordu ve geri çekilir; katlanma bulgusu normal dönüşü ve 𝒢 ile geçerliliğini korur.
+  - Hiçbir yapılandırmada ortalama 𝒢 τ = 0.00756'ya inmez (en düşük A0 λ_s = 10'da 0.030, Chamfer 18 kat kötü). Ortalama, yama başına uç değerlere duyarlıdır: H λ_s = 1e-1'de yama değerleri 0.000, 0.536, 0.000, 0.080, 0.006'dır, medyan 0.006 ≤ τ. Ortalama ile medyan arasındaki bu fark not edildi; seçim kuralının (v3 5.3, ortalama) ve H önkoşulunun (v3 5.5, medyan) farklı istatistik kullandığı bu vesileyle görüldü. 5 yamayla A0–H karşılaştırması yapılmaz.
+  - Aşama 1a kapanmadı. v3 5.3'te yapılacak değişiklik karara bağlanınca T5 olarak yazılacaktır; bu tanının sonuçlarını gördükten sonra yapılacağı için o kayıtta açıkça belirtilecektir.
