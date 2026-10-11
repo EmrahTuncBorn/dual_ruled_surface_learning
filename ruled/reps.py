@@ -63,6 +63,11 @@ class DualRep:
     def lines(P):
         return dual_normalize(P[..., 0:3], P[..., 3:6])
 
+    @classmethod
+    def smooth_vars(cls, P):
+        a, m, _, _ = cls._aligned(P)
+        return torch.cat([a, m], -1)
+
 
 class DevelopableDualRep(DualRep):
     """A with the sequential hard developability layer applied to its lines (v3 Section 3).
@@ -77,11 +82,6 @@ class DevelopableDualRep(DualRep):
     def lines(cls, P):
         a, m0 = dual_normalize(P[..., 0:3], P[..., 3:6])
         return a, developable_lines(a, m0, cls.eps)
-
-    @classmethod
-    def smooth_vars(cls, P):
-        a, m, _, _ = cls._aligned(P)
-        return torch.cat([a, m], -1)
 
 
 class BaseDirRep:

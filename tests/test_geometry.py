@@ -147,6 +147,20 @@ def test_representations_round_trip():
         assert torch.allclose(la * s, a, atol=1e-10) and torch.allclose(lm * s, moment(p, a), atol=1e-10)
 
 
+def test_every_representation_has_full_interface():
+    from ruled.losses import smoothness
+    from ruled.reps import DevelopableDualRep
+    rng = np.random.default_rng(13)
+    a, p = random_lines(rng, 32)
+    a, p = T(a), T(p)
+    for rep in list(REPS.values()) + [DevelopableDualRep]:
+        P = rep.init(a, p, torch.full((32,), -0.5), torch.full((32,), 0.5))[None]
+        assert torch.isfinite(smoothness(rep, P)).all(), rep.name
+        assert torch.isfinite(surface_points(rep, P)).all(), rep.name
+        la, lm = rep.lines(P)
+        assert la.shape == lm.shape == (1, 32, 3), rep.name
+
+
 # 11
 @pytest.mark.parametrize("name", ["A", "B"])
 def test_sign_alignment_preserves_surface(name):
