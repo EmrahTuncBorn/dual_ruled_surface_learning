@@ -29,7 +29,7 @@ from ruled import data
 from ruled.geometry import angle_defect_total, dot, pair_metrics
 from ruled.losses import (chamfer, developability_A, developability_C, smoothness,
                           surface_grid, surface_points)
-from ruled.reps import DualRep, DevelopableDualRep, EndpointRep
+from ruled.reps import DualRep, DevelopableDualRep, EndpointRep, ReversedDevelopableDualRep
 
 ROOT = p0.ROOT
 OUT = ROOT / "results" / "phase1"
@@ -50,6 +50,9 @@ SCALE_LAMBDA_D = tuple(10.0 ** k for k in range(-2, 7))
 SMOOTH_LAMBDA_S = (0.0, 1e-2, 1e-1, 1.0, 1e1)
 
 ARMS = {"A0": (DualRep, None), "PA": (DualRep, "A"), "PC": (EndpointRep, "C"), "H": (DevelopableDualRep, None)}
+# Secondary analysis (v3 5.6): H with the layer reversed, test only, primary init, H's selected settings
+EXTRA_ARMS = {"Hrev": (ReversedDevelopableDualRep, None)}
+ALL_ARMS = {**ARMS, **EXTRA_ARMS}
 
 
 # ---------------------------------------------------------------------------
@@ -103,7 +106,7 @@ def init_params(rep, patches, seed, init):
 # ---------------------------------------------------------------------------
 
 def penalty(arm, rep, P):
-    kind = ARMS[arm][1]
+    kind = ALL_ARMS[arm][1]
     if kind == "A":
         return developability_A(rep, P)
     if kind == "C":
@@ -112,7 +115,7 @@ def penalty(arm, rep, P):
 
 
 def optimize(arm, patches, seed, lr, lam_s, lam_d, init, steps=STEPS):
-    rep = ARMS[arm][0]
+    rep = ALL_ARMS[arm][0]
     torch.manual_seed(seed)
     pts = torch.tensor(np.stack([p["points"] for p in patches]), dtype=torch.float32)
     P = init_params(rep, patches, seed, init).requires_grad_(True)
@@ -169,7 +172,7 @@ def fold_rates(rep, P, S_grid=8, U_grid=64):
 
 @torch.no_grad()
 def evaluate(arm, P, patches):
-    rep = ARMS[arm][0]
+    rep = ALL_ARMS[arm][0]
     ev = p0.evaluate(rep, P, patches)
     Pd = P.double()
     ev["G"] = angle_defect_total(surface_grid(rep, Pd)).numpy()
@@ -302,12 +305,13 @@ def validation_sweep(commit):
 
 
 def test_runs(best, commit):
-    """Primary init first, then the secondary robustness check with the same selections."""
-    for init in INITS:
-        for arm in ARMS:
-            b = best[arm]
-            for seed in SEEDS:
-                run("test", arm, seed, b["lr"], b["lam_s"], b["lam_d"], init, commit, f"{init}_{arm}_seed{seed}")
+    """Primary init, then the reversed layer, then the secondary init with the same selections."""
+    jobs = [(INITS[0], arm, arm) for arm in ARMS] + [(INITS[0], "Hrev", "H")]
+    jobs += [(INITS[1], arm, arm) for arm in ARMS]
+    for init, arm, cfg in jobs:
+        b = best[cfg]
+        for seed in SEEDS:
+            run("test", arm, seed, b["lr"], b["lam_s"], b["lam_d"], init, commit, f"{init}_{arm}_seed{seed}")
 
 
 def main():

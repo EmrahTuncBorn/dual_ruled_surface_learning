@@ -224,6 +224,10 @@ hâlidir.
 çıktısına daha yakındır. Hangisi seçilirse seçilsin bütün kollara aynı biçimde uygulanır ve seçim, kolların
 karşılaştırması görülmeden yapılır.
 
+**Karar (2026-10-11):** birincil koşu (ii) ile yapılır: doğru indisine göre $\cos(\pi j t)$, $j = 0..3$
+bileşenleri; doğru başına standart sapma yönde 0.1, konumda 0.05. (i) ikincil dayanıklılık analizi olarak,
+birincil koşuda seçilen ayarlarla raporlanır ve karara girmez.
+
 | Kol | Temsil | Açılabilirlik | Rolü |
 |---|---|---|---|
 | A0 | A | yok | başvuru (Aşama 0 koşulu) |

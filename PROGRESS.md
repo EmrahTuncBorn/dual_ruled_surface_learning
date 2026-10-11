@@ -220,6 +220,54 @@ yeniden koşuldu.
 
 ---
 
+## Aşama 1b — Ağsız açılabilirlik deneyi (ön kayıt, 2026-10-11)
+
+Bu bölüm koşudan önce yazılmış ve commit'lenmiştir. Tasarımın tamamı `docs/tarif_v3.md` Bölüm 5'tedir; burada
+sabitlenen değerler ve v3'e göre kesinleşen noktalar toplanır.
+
+**Soru.** Ağ olmadan, açılabilir yamalarda sert açılabilirlik katmanı (H), aynı açılabilirlik düzeyine ceza
+terimiyle ulaşan kollara (PA, PC) göre Chamfer hatasında kayıp ya da kazanç getirir mi?
+
+**Veri.** Yalnız açılabilir aileler (silindir, koni, teğet açılabilir). Doğrulama: veri seed'i 3000, aile başına
+10 (30 yama). Test: veri seed'i 4000, aile başına 40 (120 yama). Yama başına 1024 nokta, %1 gürültü.
+
+**Kollar.** A0 (A, ceza yok), PA (A + `Σ r_k²`), PC (C + `Σ V_k²`), H (A + sert katman). Hepsi K = 32 doğru,
+4 ara adım, doğru başına 16 nokta; Adam, 1000 adım, kosinüs azalması; kayıp `L_CD + λ_s L_s (+ λ_d L_d)`.
+
+**Başlangıç.** Birincil: düşük frekanslı bozulma (v3 5.2). İkincil: Aşama 0 başlangıcı, birincil koşuda seçilen
+ayarlarla.
+
+**Ayar (yalnız doğrulama, seed 0).** `lr ∈ {3e-2, 1e-1, 3e-1}`, `λ_s ∈ {1e-2, 1e-1, 1}` (T5),
+PA ve PC'de `λ_d ∈ {1e-1, 1, 10, 1e2, 1e3}`. Seçim kuralı v3 5.3'teki gibidir: PA ve PC'de her (lr, λ_s) için
+ortalama doğrulama 𝒢'si τ = 0.00756'nın altına inen en küçük `λ_d`, bunlar arasından en düşük ortalama Chamfer;
+hiçbiri inmezse en düşük ortalama 𝒢 seçilir ve raporlanır. A0 ve H'de en düşük ortalama Chamfer. 108 doğrulama
+birimi.
+
+**Ölçütler** (test, yama başına beş seed ortalaması). Birincil: son Chamfer hatası ve 𝒢. İkincil: seed std,
+Hausdorff ve 95. yüzdeliği, `d·sinθ`, drall, yama içi kesişme oranı, normal dönüşü oranı, aile tabloları.
+
+**Karar kuralı** (yalnız birincil başlangıç, v3 5.5). Önkoşul: H'nin yama başına 𝒢'lerinin medyanı ≤ τ.
+H–PA ve H–PC Chamfer'da karşılaştırılır; "anlamlı" D4'teki tanımdır (geometrik ortalama oranı ≤ 0.9 ya da
+≥ 1/0.9 ve eşleştirilmiş Wilcoxon p < 0.01). Güçlü: önkoşul sağlanır, H en az birine göre anlamlı biçimde iyi ve
+hiçbirine göre anlamlı biçimde kötü değil. Eşdeğer: önkoşul sağlanır, ikisine göre de anlamlı fark yok.
+Zayıf: diğer bütün durumlar. Çoklu karşılaştırma düzeltmesi yapılmaz (iki karşılaştırma; eşik zaten 0.01).
+
+**İkincil analizler (karara girmez).** (1) Aşama 0 başlangıcıyla aynı karşılaştırmalar. (2) Ters sıralı
+katman (Hrev, v3 5.6): katman son doğrudan başlar; yalnız birincil başlangıçta, H'nin seçilen ayarlarıyla;
+Chamfer'da H ile karşılaştırılır. (3) PA ya da PC τ'ya hiçbir `λ_d`'de inmezse bu, H lehine ayrıca raporlanır.
+
+**Karışan etkenler.** H–PA tek değişkenlidir. H–PC'de koordinatlar, ara değer şeması, `L_s` değişkenleri ve
+ceza biçimi birlikte değişir. λ_s ızgarası ve `λ_d` ızgarası, doğrulama kümesinin 5 yamasındaki tanı ve ölçek
+koşularından sonra sabitlendi (T5); bu 5 yama doğrulama kümesinin içindedir, test kümesine dokunulmadı.
+
+**Sonuçlardan önce yazılan beklenti.** Ölçek koşusuna göre PA ve PC'de ortalama 𝒢'nin τ'ya inmemesi ve yedek
+kuralın devreye girmesi beklenir; H'nin önkoşulu sınırdadır (5 yamada medyan 0.0064); 5 yamada PA (`λ_d` = 1e2),
+H'ye benzer Chamfer ile daha düşük 𝒢 vermiştir. "Zayıf" sonuç olasılığı gerçektir.
+
+**Koşu.** `python experiments/phase1.py all` (doğrulama, seçim, test: birincil 4 kol + Hrev, sonra ikincil
+4 kol; toplam 135 test birimi), `python experiments/phase1_analyze.py` (karar). Koşu dizini `results/phase1`
+tek commit'e bağlıdır; yerel işlemcide, kaldığı yerden sürdürülebilir biçimde koşar; tahmini süre 15–17 saat.
+
 ## Günlük
 
 - **2026-10-10** — Depo açıldı. v2 incelendi; S1–S8 kaydedildi. Aşama 0 ön kaydı yapıldı.
@@ -287,3 +335,4 @@ yeniden koşuldu.
   - Bu 5 yamada yumuşak ceza (PA, λ_d = 1e2) sert katmana (H) benzer Chamfer ile daha düşük 𝒢 verir. 5 yamayla karar verilmez; not edilmiştir.
   - `λ_d` ızgarası `{1e-1, 1, 10, 1e2, 1e3}` olarak sabitlendi: PA'nın en düşük noktası (1e2) ızgaranın içinde kalır, PC'nin düz bölgesi (≤ 1) ve iki kolun bozulmaya başladığı 1e3 kapsanır. İlk önerideki 1e4 iki kolda da bozuk olduğu için çıkarıldı, 1e-1 eklendi; birim sayısı değişmedi (doğrulama 108, test 120).
   - **Aşama 1a tamamlandı.** Aşama 1b'ye geçiş onay bekliyor; geçişten önce ön kayıt yazılıp commit'lenecektir.
+- **2026-10-11** — Aşama 1b onaylandı; `43f4485` ve `6d940f7` GitHub'a gönderildi. Ön kayıt yazıldı (yukarıda). Ters sıralı katman (`ReversedDevelopableDualRep`, kol Hrev) ve karar betiği `experiments/phase1_analyze.py` eklendi; betik sentetik satırlarda sınandı. v3 5.2'deki başlangıç kararı belgeye işlendi. 42 test geçti.

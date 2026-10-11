@@ -7,7 +7,7 @@ from ruled import data
 from ruled.geometry import (dot, dual_normalize, moment, project_coplanar, developable_lines,
                             angle_defect_total)
 from ruled.losses import developability_A, developability_C, surface_grid
-from ruled.reps import DualRep, DevelopableDualRep, EndpointRep
+from ruled.reps import DualRep, DevelopableDualRep, EndpointRep, ReversedDevelopableDualRep
 
 torch.set_default_dtype(torch.float64)
 T = lambda x: torch.as_tensor(np.ascontiguousarray(x), dtype=torch.float64)
@@ -104,11 +104,24 @@ def test_hard_layer_strips_are_planar():
     g = torch.Generator().manual_seed(5)
     a = torch.nn.functional.normalize(torch.randn(4, 32, 3, generator=g), dim=-1)
     P = DualRep.init(a, torch.randn(4, 32, 3, generator=g), torch.full((4, 32), -0.6), torch.full((4, 32), 0.6))
-    G = surface_grid(DevelopableDualRep, P)
-    A, B, C, D = G[..., :-1, :-1, :], G[..., 1:, :-1, :], G[..., :-1, 1:, :], G[..., 1:, 1:, :]
-    vol = dot(torch.cross(B - A, C - A, dim=-1), D - A).abs()
-    rel = vol / ((B - A).norm(dim=-1) * (C - A).norm(dim=-1) * (D - A).norm(dim=-1))
-    assert rel.max() < 1e-12
+    for rep in (DevelopableDualRep, ReversedDevelopableDualRep):
+        G = surface_grid(rep, P)
+        A, B, C, D = G[..., :-1, :-1, :], G[..., 1:, :-1, :], G[..., :-1, 1:, :], G[..., 1:, 1:, :]
+        vol = dot(torch.cross(B - A, C - A, dim=-1), D - A).abs()
+        rel = vol / ((B - A).norm(dim=-1) * (C - A).norm(dim=-1) * (D - A).norm(dim=-1))
+        assert rel.max() < 1e-12, rep.name
+
+
+def test_reversed_layer_keeps_last_line():
+    """The reversed layer keeps the last line and differs from H on generic lines."""
+    g = torch.Generator().manual_seed(14)
+    a = torch.nn.functional.normalize(torch.randn(2, 16, 3, generator=g), dim=-1)
+    P = DualRep.init(a, torch.randn(2, 16, 3, generator=g), torch.full((2, 16), -0.5), torch.full((2, 16), 0.5))
+    _, m0 = DualRep.lines(P)
+    _, mf = DevelopableDualRep.lines(P)
+    _, mr = ReversedDevelopableDualRep.lines(P)
+    assert torch.allclose(mr[:, -1], m0[:, -1]) and torch.allclose(mf[:, 0], m0[:, 0])
+    assert (mr - mf).abs().max() > 1e-3
 
 
 def test_hard_layer_surface_is_developable():

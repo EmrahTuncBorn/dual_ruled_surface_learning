@@ -5,6 +5,7 @@ Every representation uses 8 numbers per line (equal parameter count):
   B - base + direction : c(3), a_raw(3), v_min, w    v measured from c
   C - two endpoints    : q0(3), q1(3), unused, unused
   H - A with the hard developability layer (v3); not part of REPS
+  Hrev - H with the layer run from the last line to the first (v3 5.6); not part of REPS
 
 Common interface:
   init(a, p, v0, v1)        parameters from geometric lines (a unit, p a point on the line,
@@ -82,6 +83,16 @@ class DevelopableDualRep(DualRep):
     def lines(cls, P):
         a, m0 = dual_normalize(P[..., 0:3], P[..., 3:6])
         return a, developable_lines(a, m0, cls.eps)
+
+
+class ReversedDevelopableDualRep(DualRep):
+    """H with the sequential layer run in the opposite order (last line kept as given)."""
+    name = "Hrev"
+
+    @classmethod
+    def lines(cls, P):
+        a, m = DevelopableDualRep.lines(P.flip(-2))
+        return a.flip(-2), m.flip(-2)
 
 
 class BaseDirRep:
