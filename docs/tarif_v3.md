@@ -2,7 +2,7 @@
 
 **Sert açılabilirlik katmanı: pilot tasarımı ve uygulama tarifi**
 
-11 Ekim 2026 · Sürüm 3 · Önceki sürüm: `Regle_Yuzey_Ogrenme_Pilot_Sistem_Tarifi_v2.docx` (6 Ekim 2026)
+11 Ekim 2026 · Sürüm 3 · Önceki sürüm: `docs/Regle_Yuzey_Ogrenme_Pilot_Sistem_Tarifi_v2.docx` (6 Ekim 2026)
 
 ---
 
@@ -12,7 +12,7 @@
 (dayanak+yön, iki uç nokta) göre ölçülebilir biçimde iyileşir mi?
 
 **Aşama 0'ın yanıtı.** Ağsız deneyde hayır (Bölüm 2). Dual temsil (A), iki uç nokta temsiline (C) göre
-Chamfer hatasında anlamlı biçimde kötü çıktı; genişletilmiş lr ızgarasında da sıralama değişmedi.
+Chamfer hatasında anlamlı biçimde kötü çıktı; genişletilmiş öğrenme oranı (learning rate, lr) ızgarasında da sıralama değişmedi.
 Ön kayıtlı kurala göre temsil ekseni zayıftır.
 
 **v3'ün sorusu.** Dual dil çıktı koordinatı olarak bir üstünlük sağlamıyor; ancak bir yerde yapısal bir
@@ -40,7 +40,7 @@ sağlama testleri geçerlidir; burada tekrar edilmez.
 | D1 | Ana soru, temsil karşılaştırmasından sert açılabilirlik katmanına kaydırıldı. | Aşama 0: temsil ekseni zayıf (Bölüm 2). |
 | D2 | v2'nin 1. deneyi (beş ailede ağlı temsil karşılaştırması) kaldırıldı. Aşama 0 sonucu, olumsuz bulgu olarak raporlanır. | Ağsız deneyde fark C lehine; ağlı sürümün maliyeti, beklenen bilgi değerine göre yüksek. |
 | D3 | Birincil açılabilirlik ölçütü, ayrık toplam mutlak Gauss eğriliğidir (Bölüm 4). `d·sinθ` ve drall yalnızca ikincil olarak raporlanır. | `d·sinθ` dönme açısına bağlıdır (S3, Aşama 0'da gözlendi); drall silindirde tanımsızdır. |
-| D4 | "Anlamlı fark" tanımı Aşama 0'daki kuraldır: yama başına oranların geometrik ortalaması ≤ 0,9 ya da ≥ 1/0,9 **ve** eşleştirilmiş Wilcoxon p < 0,01. | v2'deki birleşik standart sapma kuralı, eşleştirilmiş tasarımı kullanmaz (S4). |
+| D4 | "Anlamlı fark" tanımı Aşama 0'daki kuraldır: yama başına oranların geometrik ortalaması ≤ 0.9 ya da ≥ 1/0.9 **ve** eşleştirilmiş Wilcoxon p < 0.01. | v2'deki birleşik standart sapma kuralı, eşleştirilmiş tasarımı kullanmaz (S4). |
 | D5 | Yakınsama hızı birincil ölçüt değildir. | Aşama 0 ek kontrolünde lr'ye güçlü biçimde bağlı çıktı; farklı lr'lerle ayarlanan yöntemlerde temsil etkisini ayırmaz. |
 | D6 | Önce ağsız deney yapılır; ağ yalnızca ağsız deney olumlu çıkarsa kurulur. | Aşama 0'ın ucuz ve ayırt edici olduğu görüldü. |
 | D7 | Kısıt katmanında sıfıra bölme koruması `max(‖a‖, 1e-12)` biçimindedir. | S8. |
@@ -54,10 +54,10 @@ Ayrıntılar `PROGRESS.md`'dedir; burada yalnızca v3'ün dayandığı bulgular 
 - **Kurulum.** Ağ yoktur; her yama için 32 doğru, aynı başlangıç yüzeyinden doğrudan optimize edildi.
   Beş aile, %1 gürültü, 200 test yaması, beş seed (rastgelelik tohumu). Ayarlar yalnızca doğrulama
   kümesinde seçildi.
-- **Birincil sonuç.** A/C oranlarının geometrik ortalaması: Chamfer 1,34; yakınsama adımı 2,21
-  (ikisi de A aleyhine, p < 1e-12); seed std 0,76 (A lehine). Karar: temsil ekseni zayıf.
+- **Birincil sonuç.** A/C oranlarının geometrik ortalaması: Chamfer 1.34; yakınsama adımı 2.21
+  (ikisi de A aleyhine, p < 1e-12); seed std 0.76 (A lehine). Karar: temsil ekseni zayıf.
 - **Ek kontrol (keşif amaçlı).** Seçilen lr ızgaranın sınırındaydı. Izgara genişletildi; üç temsil de
-  %15–20 iyileşti, sıralama değişmedi (C < B < A), A/C Chamfer oranı 1,33.
+  %15–20 iyileşti, sıralama değişmedi (C < B < A), A/C Chamfer oranı 1.33.
 - **Aileye bağlılık.** C genel ve hiperbolik paraboloit ailelerinde; A ve B koni ve silindirde daha iyi.
 - **Açılabilirlik.** Hiçbir temsil açılabilirliği kendiliğinden öğrenmedi. C'de `d·sinθ` bir mertebe
   küçük, drall ise büyük çıktı: `d·sinθ`'nın küçüklüğü açılabilirlikten değil, küçük dönme açısından gelir.
@@ -144,11 +144,11 @@ yamanın dışında kaldığında geçerlidir.
 Kesişme noktasının konumu kötü koşulludur: ardışık açısı $\theta$ olan doğrularda $\delta$ büyüklüğündeki
 bir konum hatası, kesişme noktasını yaklaşık $\delta/\theta$ kadar kaydırır. Sayısal örnekler:
 
-- Koni doğruları ($\theta \approx 0{,}047$), konumda $10^{-3}$ gürültü: kesişmelerin %0'ı aralık içinde,
-  $\mathcal{G} = 4\cdot 10^{-12}$. Gürültü $10^{-2}$: kesişmelerin %21'i aralık içinde, $\mathcal{G}$ en çok 0,79.
-- Aşama 0'ın başlangıcı (doğru başına bağımsız σ = 0,1 rad bozulma), açılabilir yamalarda: sert katmandan
-  sonra kesişmelerin %57–67'si aralık içinde; başlangıç $\mathcal{G}$'si 6,3–9,5 (A'nın başlangıcında da
-  6,3–9,5).
+- Koni doğruları ($\theta \approx 0.047$), konumda $10^{-3}$ gürültü: kesişmelerin %0'ı aralık içinde,
+  $\mathcal{G} = 4\cdot 10^{-12}$. Gürültü $10^{-2}$: kesişmelerin %21'i aralık içinde, $\mathcal{G}$ en çok 0.79.
+- Aşama 0'ın başlangıcı (doğru başına bağımsız σ = 0.1 rad bozulma), açılabilir yamalarda: sert katmandan
+  sonra kesişmelerin %57–67'si aralık içinde; başlangıç $\mathcal{G}$'si 6.3–9.5 (A'nın başlangıcında da
+  6.3–9.5).
 
 Sonuçları: (i) Aşama 1b'de "aralık içindeki kesişme oranı" H için ikincil ölçüt olarak raporlanır;
 (ii) başlangıç yüzeyinin seçimi H için belirleyicidir (Bölüm 5.2).
@@ -212,12 +212,13 @@ ailelerinden doğrulama seed'i 3000 ile aile başına 10 gerçek yama üretilir.
 
 ### 5.2 Kollar (arms)
 
+Kol (arm), deneyde karşılaştırılan yöntemlerden her biridir.
 Bütün kollar aynı başlangıç doğrularından, Adam ve kosinüs azalmasıyla 1000 adım optimize edilir.
 Kayıp `L_CD + λ_s L_s (+ λ_d L_d)`. H'nin başlangıç yüzeyi, aynı başlangıç doğrularının katmandan geçmiş
 hâlidir.
 
 **Başlangıç (açık karar, Aşama 1b ön kaydından önce verilir).** Aşama 0'daki doğru başına bağımsız bozulma
-(σ = 0,1 rad), H'de kesişmelerin %57–67'sini yamanın içine düşürür (Bölüm 3.4). Seçenekler:
+(σ = 0.1 rad), H'de kesişmelerin %57–67'sini yamanın içine düşürür (Bölüm 3.4). Seçenekler:
 (i) Aşama 0 başlangıcı, Aşama 0 ile tutarlıdır ama H'yi tekil bir yüzeyden başlatır;
 (ii) düşük frekanslı bozulma (doğru indisine göre düzgün, örneğin birkaç sinüs bileşeni), bir ağın düzgün
 çıktısına daha yakındır. Hangisi seçilirse seçilsin bütün kollara aynı biçimde uygulanır ve seçim, kolların
@@ -246,8 +247,8 @@ karşılaştırması görülmeden yapılır.
 - Seçilen değer bir ızgara sınırındaysa raporlanır; ızgara, sonuç görüldükten sonra genişletilmez.
 - `λ_d` ızgarası, koşudan önce doğrulama kümesinin 5 yamasında kısa bir ölçek koşusuyla denetlenir;
   değişirse koşudan önce `PROGRESS.md`'ye yazılır.
-- $\tau = 0{,}00756$ (Aşama 1a'da hesaplandı: 20 açılabilir olmayan gerçek yamanın medyan
-  $\mathcal{G}$'si 0,756; betik `experiments/phase1_tau.py`).
+- $\tau = 0.00756$ (Aşama 1a'da hesaplandı: 20 açılabilir olmayan gerçek yamanın medyan
+  $\mathcal{G}$'si 0.756; betik `experiments/phase1_tau.py`).
 
 Doğrulama birimi: 3 lr × 2 λ_s × (1 + 1 + 5 + 5) = 72. Test birimi: 4 kol × 5 seed × 3 parça = 60.
 
@@ -321,7 +322,7 @@ Aile bazında, özellikle silindirde (Bölüm 3.3), H'nin davranışı ayrıca i
    ızgara inceldikçe sıfıra yakınsar.
 7. $\mathcal{G}$: hiperbolik paraboloitte, $\int|K|\,dA$'nın sayısal kareleme (quadrature) değerine
    ızgara inceldikçe yakınsar.
-8. Gradyan sonludur ve sayısal türevle uyuşur; $\sin\theta \in \{10\varepsilon, 0{,}5\varepsilon, 0{,}1\varepsilon, 0\}$
+8. Gradyan sonludur ve sayısal türevle uyuşur; $\sin\theta \in \{10\varepsilon, 0.5\varepsilon, 0.1\varepsilon, 0\}$
    için de denetlenir (kırpmanın köşesi $\sin\theta = \varepsilon$'da türev tek yönlüdür).
 
 ### 7.3 Bilinen başarısızlık biçimleri
@@ -377,17 +378,6 @@ kapalı biçimli bir izdüşümle zorlayan bir yöntem, kinematik ya da mimari g
 
 ---
 
-## Ek: Yeni terimler
+## Ek: Terimler
 
-| Türkçe | English |
-|---|---|
-| sert katman | hard (constraint) layer |
-| ceza terimi | penalty term |
-| doğru demeti | pencil of lines |
-| karşılıklı moment | reciprocal product |
-| açı açığı | angle defect |
-| Gauss tasviri | Gauss image |
-| toplam mutlak eğrilik | total absolute curvature |
-| kol | arm (of an experiment) |
-| karışan etken | confound |
-| sayısal kareleme | numerical quadrature |
+Terimler ve yazım kuralları `GLOSSARY.md`'dedir.

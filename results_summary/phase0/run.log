@@ -1,0 +1,188 @@
+val A_lr0.001_lam0 chunk 0: chamfer=5.934e-03 (127 s)
+val A_lr0.001_lam0.001 chunk 0: chamfer=7.060e-03 (121 s)
+val A_lr0.001_lam0.01 chunk 0: chamfer=9.612e-03 (133 s)
+val A_lr0.001_lam0.1 chunk 0: chamfer=1.398e-02 (127 s)
+val A_lr0.003_lam0 chunk 0: chamfer=2.429e-03 (117 s)
+val A_lr0.003_lam0.001 chunk 0: chamfer=3.238e-03 (110 s)
+val A_lr0.003_lam0.01 chunk 0: chamfer=4.655e-03 (106 s)
+val A_lr0.003_lam0.1 chunk 0: chamfer=7.618e-03 (107 s)
+val A_lr0.01_lam0 chunk 0: chamfer=1.113e-03 (103 s)
+val A_lr0.01_lam0.001 chunk 0: chamfer=1.436e-03 (102 s)
+val A_lr0.01_lam0.01 chunk 0: chamfer=2.747e-03 (103 s)
+val A_lr0.01_lam0.1 chunk 0: chamfer=5.019e-03 (105 s)
+val A_lr0.03_lam0 chunk 0: chamfer=8.220e-04 (102 s)
+val A_lr0.03_lam0.001 chunk 0: chamfer=9.113e-04 (103 s)
+val A_lr0.03_lam0.01 chunk 0: chamfer=1.787e-03 (103 s)
+val A_lr0.03_lam0.1 chunk 0: chamfer=4.352e-03 (106 s)
+val B_lr0.001_lam0 chunk 0: chamfer=4.579e-03 (97 s)
+val B_lr0.001_lam0.001 chunk 0: chamfer=5.660e-03 (97 s)
+val B_lr0.001_lam0.01 chunk 0: chamfer=8.517e-03 (99 s)
+val B_lr0.001_lam0.1 chunk 0: chamfer=1.431e-02 (101 s)
+val B_lr0.003_lam0 chunk 0: chamfer=2.076e-03 (99 s)
+val B_lr0.003_lam0.001 chunk 0: chamfer=2.834e-03 (97 s)
+val B_lr0.003_lam0.01 chunk 0: chamfer=4.211e-03 (94 s)
+val B_lr0.003_lam0.1 chunk 0: chamfer=7.493e-03 (97 s)
+val B_lr0.01_lam0 chunk 0: chamfer=9.259e-04 (92 s)
+val B_lr0.01_lam0.001 chunk 0: chamfer=1.521e-03 (93 s)
+val B_lr0.01_lam0.01 chunk 0: chamfer=2.640e-03 (96 s)
+val B_lr0.01_lam0.1 chunk 0: chamfer=4.989e-03 (95 s)
+val B_lr0.03_lam0 chunk 0: chamfer=7.501e-04 (93 s)
+val B_lr0.03_lam0.001 chunk 0: chamfer=7.527e-04 (92 s)
+val B_lr0.03_lam0.01 chunk 0: chamfer=1.734e-03 (93 s)
+val B_lr0.03_lam0.1 chunk 0: chamfer=3.978e-03 (94 s)
+val C_lr0.001_lam0 chunk 0: chamfer=4.309e-03 (84 s)
+val C_lr0.001_lam0.001 chunk 0: chamfer=5.151e-03 (86 s)
+val C_lr0.001_lam0.01 chunk 0: chamfer=8.136e-03 (87 s)
+val C_lr0.001_lam0.1 chunk 0: chamfer=2.295e-02 (91 s)
+val C_lr0.003_lam0 chunk 0: chamfer=1.953e-03 (83 s)
+val C_lr0.003_lam0.001 chunk 0: chamfer=2.246e-03 (85 s)
+val C_lr0.003_lam0.01 chunk 0: chamfer=3.742e-03 (86 s)
+val C_lr0.003_lam0.1 chunk 0: chamfer=9.939e-03 (88 s)
+val C_lr0.01_lam0 chunk 0: chamfer=8.732e-04 (85 s)
+val C_lr0.01_lam0.001 chunk 0: chamfer=1.130e-03 (84 s)
+val C_lr0.01_lam0.01 chunk 0: chamfer=2.318e-03 (85 s)
+val C_lr0.01_lam0.1 chunk 0: chamfer=4.858e-03 (208 s)
+val C_lr0.03_lam0 chunk 0: chamfer=7.366e-04 (214 s)
+val C_lr0.03_lam0.001 chunk 0: chamfer=6.369e-04 (215 s)
+val C_lr0.03_lam0.01 chunk 0: chamfer=1.043e-03 (217 s)
+val C_lr0.03_lam0.1 chunk 0: chamfer=3.716e-03 (182 s)
+{
+  "A": {
+    "lr": 0.03,
+    "lam": 0.0,
+    "val_chamfer": 0.0008220362943147609
+  },
+  "B": {
+    "lr": 0.03,
+    "lam": 0.0,
+    "val_chamfer": 0.0007500827028802007
+  },
+  "C": {
+    "lr": 0.03,
+    "lam": 0.001,
+    "val_chamfer": 0.0006368720122786618
+  }
+}
+test A_seed0 chunk 0: chamfer=8.065e-04 (215 s)
+test A_seed0 chunk 1: chamfer=1.186e-03 (224 s)
+test A_seed0 chunk 2: chamfer=7.610e-04 (229 s)
+test A_seed0 chunk 3: chamfer=5.519e-04 (224 s)
+test A_seed1 chunk 0: chamfer=7.999e-04 (223 s)
+test A_seed1 chunk 1: chamfer=1.141e-03 (223 s)
+test A_seed1 chunk 2: chamfer=8.262e-04 (223 s)
+test A_seed1 chunk 3: chamfer=5.429e-04 (223 s)
+test A_seed2 chunk 0: chamfer=7.571e-04 (225 s)
+test A_seed2 chunk 1: chamfer=1.120e-03 (227 s)
+test A_seed2 chunk 2: chamfer=8.062e-04 (225 s)
+test A_seed2 chunk 3: chamfer=5.411e-04 (143 s)
+test A_seed3 chunk 0: chamfer=8.010e-04 (78 s)
+test A_seed3 chunk 1: chamfer=1.202e-03 (78 s)
+test A_seed3 chunk 2: chamfer=7.442e-04 (80 s)
+test A_seed3 chunk 3: chamfer=5.438e-04 (84 s)
+test A_seed4 chunk 0: chamfer=7.537e-04 (90 s)
+test A_seed4 chunk 1: chamfer=1.352e-03 (98 s)
+test A_seed4 chunk 2: chamfer=7.719e-04 (99 s)
+test A_seed4 chunk 3: chamfer=5.524e-04 (99 s)
+test B_seed0 chunk 0: chamfer=7.089e-04 (91 s)
+test B_seed0 chunk 1: chamfer=1.055e-03 (91 s)
+test B_seed0 chunk 2: chamfer=6.554e-04 (91 s)
+test B_seed0 chunk 3: chamfer=4.655e-04 (91 s)
+test B_seed1 chunk 0: chamfer=6.954e-04 (91 s)
+test B_seed1 chunk 1: chamfer=1.061e-03 (91 s)
+test B_seed1 chunk 2: chamfer=6.468e-04 (91 s)
+test B_seed1 chunk 3: chamfer=4.764e-04 (91 s)
+test B_seed2 chunk 0: chamfer=7.004e-04 (91 s)
+test B_seed2 chunk 1: chamfer=1.047e-03 (91 s)
+test B_seed2 chunk 2: chamfer=6.667e-04 (131 s)
+test B_seed2 chunk 3: chamfer=4.880e-04 (208 s)
+test B_seed3 chunk 0: chamfer=7.058e-04 (208 s)
+test B_seed3 chunk 1: chamfer=1.003e-03 (208 s)
+test B_seed3 chunk 2: chamfer=6.654e-04 (133 s)
+test B_seed3 chunk 3: chamfer=4.868e-04 (139 s)
+test B_seed4 chunk 0: chamfer=7.000e-04 (190 s)
+test B_seed4 chunk 1: chamfer=1.019e-03 (209 s)
+test B_seed4 chunk 2: chamfer=6.532e-04 (214 s)
+test B_seed4 chunk 3: chamfer=4.801e-04 (201 s)
+test C_seed0 chunk 0: chamfer=5.439e-04 (178 s)
+test C_seed0 chunk 1: chamfer=1.152e-03 (180 s)
+test C_seed0 chunk 2: chamfer=1.060e-03 (179 s)
+test C_seed0 chunk 3: chamfer=3.598e-04 (179 s)
+test C_seed1 chunk 0: chamfer=8.301e-04 (179 s)
+test C_seed1 chunk 1: chamfer=1.103e-03 (179 s)
+test C_seed1 chunk 2: chamfer=1.194e-03 (180 s)
+test C_seed1 chunk 3: chamfer=3.842e-04 (178 s)
+test C_seed2 chunk 0: chamfer=6.718e-04 (179 s)
+test C_seed2 chunk 1: chamfer=1.090e-03 (179 s)
+test C_seed2 chunk 2: chamfer=9.920e-04 (178 s)
+test C_seed2 chunk 3: chamfer=4.840e-04 (179 s)
+test C_seed3 chunk 0: chamfer=6.791e-04 (179 s)
+test C_seed3 chunk 1: chamfer=1.178e-03 (20719 s)
+--- resumed 2026-10-11T08:48:40+03:00
+{
+  "A": {
+    "lr": 0.03,
+    "lam": 0.0,
+    "val_chamfer": 0.0008220362943147609
+  },
+  "B": {
+    "lr": 0.03,
+    "lam": 0.0,
+    "val_chamfer": 0.0007500827028802007
+  },
+  "C": {
+    "lr": 0.03,
+    "lam": 0.001,
+    "val_chamfer": 0.0006368720122786618
+  }
+}
+test C_seed3 chunk 2: chamfer=1.169e-03 (65 s)
+test C_seed3 chunk 3: chamfer=4.773e-04 (67 s)
+test C_seed4 chunk 0: chamfer=5.487e-04 (69 s)
+test C_seed4 chunk 1: chamfer=1.224e-03 (74 s)
+test C_seed4 chunk 2: chamfer=9.466e-04 (77 s)
+test C_seed4 chunk 3: chamfer=4.652e-04 (76 s)
+done
+Commit: `e96bef16b65d3ddf9771cc26b39c17e2dc86c406`
+
+| Metric | vs | geo-mean ratio A/X | Wilcoxon p | Verdict |
+|---|---|---|---|---|
+| chamfer | B | 1.104 | 2.55e-21 | no difference |
+| conv | B | 0.982 | 7.51e-01 | no difference |
+| seed_std | B | 1.274 | 5.84e-05 | A worse |
+| chamfer | C | 1.342 | 2.05e-13 | A worse |
+| conv | C | 2.213 | 1.61e-32 | A worse |
+| seed_std | C | 0.757 | 1.01e-05 | A better |
+
+Final Chamfer per family (mean, x1e-4):
+
+| Family | A | B | C |
+|---|---|---|---|
+| cone | 10.432 | 8.449 | 13.355 |
+| cylinder | 13.314 | 11.361 | 14.550 |
+| general | 6.957 | 6.502 | 4.840 |
+| hypar | 5.199 | 4.652 | 3.774 |
+| tangent | 5.501 | 4.988 | 4.863 |
+
+Mean primary metrics:
+
+| Rep | chamfer | conv (steps) | seed_std |
+|---|---|---|---|
+| A | 8.280e-04 | 254 | 1.034e-04 |
+| B | 7.191e-04 | 256 | 6.974e-05 |
+| C | 8.277e-04 | 127 | 2.128e-04 |
+
+Secondary metrics on developable families (mean):
+
+| Family | Rep | d sin(theta) | drall d/theta |
+|---|---|---|---|
+| cylinder | A | 4.69e-02 | 5.98e-01 |
+| cylinder | B | 4.36e-02 | 5.14e-01 |
+| cylinder | C | 5.11e-03 | 1.17e+00 |
+| cone | A | 3.68e-02 | 5.16e-01 |
+| cone | B | 3.13e-02 | 5.11e-01 |
+| cone | C | 4.24e-03 | 7.60e-01 |
+| tangent | A | 1.94e-02 | 4.08e-01 |
+| tangent | B | 1.88e-02 | 3.57e-01 |
+| tangent | C | 2.36e-03 | 4.63e-01 |
+
+**Decision: representation axis WEAK**

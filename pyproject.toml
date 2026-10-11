@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ruled"
+version = "0.3.0"
+description = "Learning ruled surfaces as dual spherical curves"
+requires-python = ">=3.12"
+
+[tool.setuptools]
+packages = ["ruled"]

@@ -1,6 +1,7 @@
 # Geliştirme günlüğü
 
-Referans belge: `Regle_Yuzey_Ogrenme_Pilot_Sistem_Tarifi_v2.docx` (6 Ekim 2026, Sürüm 2), depoda sürümlenir.
+Referans belge: `docs/tarif_v3.md` (11 Ekim 2026, Sürüm 3). Önceki sürüm `docs/Regle_Yuzey_Ogrenme_Pilot_Sistem_Tarifi_v2.docx`
+(6 Ekim 2026, Sürüm 2) de depoda sürümlenir. Terimler ve yazım kuralları `GLOSSARY.md`'dedir.
 v2'deki "sabit" maddelere dokunan her değişiklik, ilgili sonuç görülmeden **önce** buraya tarihli
 olarak yazılır ve commit'lenir.
 
@@ -18,8 +19,20 @@ olarak yazılır ve commit'lenir.
 | S6 | 2026-10-10 | `L_s`, işaret hizalamasından **sonra** hesaplanır. | belirsizlik giderme | uygulandı |
 | S7 | 2026-10-10 | İlgili çalışmalara eklenecekler (künyeler doğrulanmadı): Pottmann & Wallner *Computational Line Geometry*; Chen & Pottmann, regle yüzeyle yaklaşım; Pottmann–Hofer–Odehnal–Wallner, çizgi geometrisiyle yeniden yapılandırma; Liu et al. 2006 conical meshes; Stein–Grinspun–Crane 2018; Tang et al. 2016; Zhou et al. 2019 rotation representations; Point2Cyl; Vector Neurons. | literatür | açık |
 | S8 | 2026-10-10 | Sıfıra bölme koruması: paydaya `+1e-8` eklemek yerine `max(‖a‖, 1e-12)` kullanılır. Toplama biçimi bağıl 1e-8 hata bırakıyor ve 14.7'deki makine hassasiyeti testlerini bozuyordu. | uygulama | uygulandı |
-| S9 | 2026-10-11 | v3 belgesi yazıldı (`docs/tarif_v3.md`). Ana soru, temsil karşılaştırmasından Plücker koordinatlarındaki sert açılabilirlik katmanına kaydırıldı; v2'nin 1. deneyi kaldırıldı. Bundan sonra referans belge v3'tür. | yeni sürüm | yazıldı, Aşama 1a onay bekliyor |
+| S9 | 2026-10-11 | v3 belgesi yazıldı (`docs/tarif_v3.md`). Ana soru, temsil karşılaştırmasından Plücker koordinatlarındaki sert açılabilirlik katmanına kaydırıldı; v2'nin 1. deneyi kaldırıldı. Bundan sonra referans belge v3'tür. | yeni sürüm | yazıldı; Aşama 1a 2026-10-11'de onaylandı, sürüyor |
 
+
+## v3'ten sapmalar
+
+v3'teki "sabit" maddelere ve tanımlanmış testlere dokunan her değişiklik, ilgili sonuç görülmeden **önce**
+buraya tarihli olarak yazılır ve commit'lenir. Sonuç görüldükten sonra yapılan değişiklik bu durumu açıkça belirtir.
+
+| # | Tarih | Değişiklik | Tür | Durum |
+|---|---|---|---|---|
+| T1 | 2026-10-11 | Sert katmanın paydası `sin²θ + ε²` yerine `max(sin²θ, ε²)` (v3 3.3). İlk biçim büyük açılarda da `ε²/sin²θ` oranında kaçak bırakıyordu; yeni biçim `sinθ ≥ ε` için tamdır ve sıfıra sürekli iner. Gradyan testindeki açı kümesi kırpma köşesinden uzak tutuldu: `sinθ ∈ {10ε, 0.5ε, 0.1ε, 0}`. Kod yazılmadan, hiçbir koşu yapılmadan değiştirildi. | uygulama | uygulandı |
+| T2 | 2026-10-11 | 7.2'deki iki testin iddiası, testler **başarısız olduktan sonra** değiştirildi. (3) Teğet açılabilirde düzeltmenin `K` ikiye katlanınca 4 kat küçülmesi beklenmişti; ölçülen oran 4.0'dır (sıralı katman tek çiftin `O(1/K³)` hatasını `O(1/K²)`'ye biriktirir), eşik 3 kata çekildi. (5) "Sert katmandan geçmiş yüzeyde 𝒢 makine hassasiyetinde sıfır" iddiası rastgele doğrularda yanlış çıktı (𝒢 = 9.5–19.1): şeritler düzlemseldir (düzlemsizlik < 2e-14) ama kesişme noktası yama aralığına düşebilir. İddia daraltıldı: düzlemsellik her durumda, 𝒢 ≈ 0 kesişmeler yama dışındayken. Bulgu v3 3.4'e yazıldı. | test / iddia | uygulandı |
+| T3 | 2026-10-11 | v3'e eklenenler: 3.4 (gerileme kenarının yamaya düşmesi), 5.2'de başlangıç yüzeyi açık kararı, 5.4'te H için ikincil ölçüt (aralık içindeki kesişme oranı), 5.3'te τ = 0.00756. | tasarım | uygulandı; başlangıç kararı açık |
+| T4 | 2026-10-11 | Ondalık ayırıcı noktaya çevrildi (PROGRESS, v3); v3'teki terim tablosu `GLOSSARY.md`'ye taşındı; v2 belgesi `docs/` altına taşındı. İçerik değişikliği yoktur. | yazım | uygulandı |
 ---
 
 ## Aşama 0 — Ağsız temsil deneyi (ön kayıt, 2026-10-10)
@@ -44,7 +57,7 @@ Aynı seed üç temsilde aynı başlangıç yüzeyini verir.
 
 **Optimizasyon.** Adam, 1000 adım, kosinüs azalması. Kayıp `L_CD + λ_s L_s`; `L_s` her temsilin kendi
 değişkenlerinde (v2 14.4), işaret hizalamasından sonra. `L_d` yoktur.
-Ayar: her temsil için `lr ∈ {1e-3, 3e-3, 1e-2, 3e-2}` × `λ_s ∈ {0, 1e-3, 1e-2, 1e-1}`;
+Ayar: her temsil için öğrenme oranı (learning rate) `lr ∈ {1e-3, 3e-3, 1e-2, 3e-2}` × `λ_s ∈ {0, 1e-3, 1e-2, 1e-1}`;
 yalnızca doğrulama kümesinde ve seed 0 ile, ortalama son Chamfer hatasına göre seçilir.
 
 **Birincil ölçütler** (test kümesinde, yama başına, beş seed'in ortalaması):
@@ -89,26 +102,26 @@ Ham çıktılar `results/phase0/` altındadır (sürümlenmez); `report.md` ve `
 
 | Temsil | lr | λ_s | Doğrulama Chamfer |
 |---|---|---|---|
-| A | 3e-2 | 0 | 8,22e-4 |
-| B | 3e-2 | 0 | 7,50e-4 |
-| C | 3e-2 | 1e-3 | 6,37e-4 |
+| A | 3e-2 | 0 | 8.22e-4 |
+| B | 3e-2 | 0 | 7.50e-4 |
+| C | 3e-2 | 1e-3 | 6.37e-4 |
 
 **Birincil ölçütler** (test, 200 yama, beş seed'in ortalaması; oran = A/X oranlarının geometrik ortalaması):
 
 | Ölçüt | Karşı | Oran A/X | Wilcoxon p | Hüküm |
 |---|---|---|---|---|
-| Chamfer | B | 1,104 | 2,6e-21 | fark yok (eşik 1,111'in altında) |
-| yakınsama adımı | B | 0,982 | 0,75 | fark yok |
-| seed std | B | 1,274 | 5,8e-5 | A kötü |
-| Chamfer | C | 1,342 | 2,1e-13 | **A kötü** |
-| yakınsama adımı | C | 2,213 | 1,6e-32 | **A kötü** |
-| seed std | C | 0,757 | 1,0e-5 | **A iyi** |
+| Chamfer | B | 1.104 | 2.6e-21 | fark yok (eşik 1.111'in altında) |
+| yakınsama adımı | B | 0.982 | 0.75 | fark yok |
+| seed std | B | 1.274 | 5.8e-5 | A kötü |
+| Chamfer | C | 1.342 | 2.1e-13 | **A kötü** |
+| yakınsama adımı | C | 2.213 | 1.6e-32 | **A kötü** |
+| seed std | C | 0.757 | 1.0e-5 | **A iyi** |
 
 | Temsil | ort. Chamfer | ort. yakınsama (adım) | ort. seed std |
 |---|---|---|---|
-| A | 8,28e-4 | 254 | 1,03e-4 |
-| B | 7,19e-4 | 256 | 6,97e-5 |
-| C | 8,28e-4 | 127 | 2,13e-4 |
+| A | 8.28e-4 | 254 | 1.03e-4 |
+| B | 7.19e-4 | 256 | 6.97e-5 |
+| C | 8.28e-4 | 127 | 2.13e-4 |
 
 **Karar (ön kayıtlı kurala göre): temsil ekseni zayıf.** A, C'ye karşı Chamfer ve yakınsama hızında
 anlamlı biçimde kötü, yalnız seed kararlılığında anlamlı biçimde iyidir. Kural "hiçbirinde kötü değil"
@@ -118,22 +131,22 @@ koşulunu istediği için sonuç "zayıf"tır.
 
 | Aile | A | B | C |
 |---|---|---|---|
-| koni | 10,43 | 8,45 | 13,36 |
-| silindir | 13,31 | 11,36 | 14,55 |
-| genel | 6,96 | 6,50 | 4,84 |
-| hiperbolik paraboloit | 5,20 | 4,65 | 3,77 |
-| teğet açılabilir | 5,50 | 4,99 | 4,86 |
+| koni | 10.43 | 8.45 | 13.36 |
+| silindir | 13.31 | 11.36 | 14.55 |
+| genel | 6.96 | 6.50 | 4.84 |
+| hiperbolik paraboloit | 5.20 | 4.65 | 3.77 |
+| teğet açılabilir | 5.50 | 4.99 | 4.86 |
 
 **İkincil ölçütler** (açılabilir aileler, ortalama; `d·sinθ` ve d mutlak değerdir):
 
 | Aile | Temsil | d·sinθ | drall d/θ |
 |---|---|---|---|
-| silindir | A / B / C | 4,7e-2 / 4,4e-2 / 5,1e-3 | 0,60 / 0,51 / 1,17 |
-| koni | A / B / C | 3,7e-2 / 3,1e-2 / 4,2e-3 | 0,52 / 0,51 / 0,76 |
-| teğet | A / B / C | 1,9e-2 / 1,9e-2 / 2,4e-3 | 0,41 / 0,36 / 0,46 |
+| silindir | A / B / C | 4.7e-2 / 4.4e-2 / 5.1e-3 | 0.60 / 0.51 / 1.17 |
+| koni | A / B / C | 3.7e-2 / 3.1e-2 / 4.2e-3 | 0.52 / 0.51 / 0.76 |
+| teğet | A / B / C | 1.9e-2 / 1.9e-2 / 2.4e-3 | 0.41 / 0.36 / 0.46 |
 
 **Gözlemler.**
-1. Aritmetik ortalamada A ve C'nin Chamfer'ı eşittir (8,28e-4); fark ailelere göre yön değiştirir.
+1. Aritmetik ortalamada A ve C'nin Chamfer'ı eşittir (8.28e-4); fark ailelere göre yön değiştirir.
    C, genel ve hiperbolik paraboloit ailelerinde; B ve A ise koni ve silindirde daha iyidir.
    Yama başına oranların geometrik ortalaması C lehinedir. Tek bir "en iyi temsil" yoktur;
    etki aileye bağlıdır.
@@ -153,7 +166,7 @@ koşulunu istediği için sonuç "zayıf"tır.
   bileşenler ayrılmamıştır.
 - Test koşusu bellek yetersizliği nedeniyle 54/60 birimde kesildi ve aynı commit'ten kaldığı yerden
   sürdürüldü. Bitmiş birimler atlandığı ve dosyalar atomik yazıldığı için sonuçlar etkilenmez.
-  Kesintiden önceki son birimin süresi (20.719 sn) bilgisayarın uykuya geçmesinden kaynaklanır.
+  Kesintiden önceki son birimin süresi (20 719 sn, yaklaşık 5.8 saat; değer `results/phase0_run.log`'dan doğrulandı) bilgisayarın uykuya geçmesinden kaynaklanır.
 
 **Sonraki adım.** Ön kayda göre katkı, değişmez tabanlı kayıp/üretim ve hesaplama katmanı
 eksenine kaydırılır ve v3 belgesi yazılır. Ondan önce aşağıdaki keşif kontrolü yapılır.
@@ -175,28 +188,28 @@ değiştirmez; yalnız sınırlılığın ne kadar etkili olduğunu gösterir.
 - Bu kontrolde test kümesi ikinci kez kullanılmış olur; bu nedenle sonuç yalnız bilgi amaçlıdır.
 
 **Sonuçlar (`88ea95e`).** Yeniden üretilebilirlik denetimi geçti: lr 3e-2 birimleri Aşama 0 değerlerini
-aynen verdi (A 8,220e-4; B 7,501e-4; C λ 1e-3 6,369e-4). Üç temsilin seçimi de değişti; test üçü için
+aynen verdi (A 8.220e-4; B 7.501e-4; C λ 1e-3 6.369e-4). Üç temsilin seçimi de değişti; test üçü için
 yeniden koşuldu.
 
 | Temsil | Aşama 0 (lr, λ_s) | geniş ızgara (lr, λ_s) | doğrulama Chamfer | test ort. Chamfer | yakınsama | seed std |
 |---|---|---|---|---|---|---|
-| A | 3e-2, 0 | 1e-1, 0 | 7,12e-4 | 6,87e-4 | 334 | 7,68e-5 |
-| B | 3e-2, 0 | 3e-1, 0 | 5,92e-4 | 5,67e-4 | 650 | 3,46e-5 |
-| C | 3e-2, 1e-3 | 3e-1, 1e-3 | 4,97e-4 | 5,08e-4 | 117 | 8,86e-5 |
+| A | 3e-2, 0 | 1e-1, 0 | 7.12e-4 | 6.87e-4 | 334 | 7.68e-5 |
+| B | 3e-2, 0 | 3e-1, 0 | 5.92e-4 | 5.67e-4 | 650 | 3.46e-5 |
+| C | 3e-2, 1e-3 | 3e-1, 1e-3 | 4.97e-4 | 5.08e-4 | 117 | 8.86e-5 |
 
 | Ölçüt | Karşı | Oran A/X | Wilcoxon p | Hüküm |
 |---|---|---|---|---|
-| Chamfer | B | 1,145 | 6,5e-26 | A kötü |
-| yakınsama | B | 0,502 | 1,4e-34 | A iyi |
-| seed std | B | 1,398 | 8,8e-9 | A kötü |
-| Chamfer | C | 1,326 | 3,8e-31 | A kötü |
-| yakınsama | C | 3,064 | 1,7e-34 | A kötü |
-| seed std | C | 0,737 | 2,1e-6 | A iyi |
+| Chamfer | B | 1.145 | 6.5e-26 | A kötü |
+| yakınsama | B | 0.502 | 1.4e-34 | A iyi |
+| seed std | B | 1.398 | 8.8e-9 | A kötü |
+| Chamfer | C | 1.326 | 3.8e-31 | A kötü |
+| yakınsama | C | 3.064 | 1.7e-34 | A kötü |
+| seed std | C | 0.737 | 2.1e-6 | A iyi |
 
 **Yorum.**
 1. Daha büyük lr üç temsili de iyileştirdi (Chamfer %15–20 düştü), ama sıralama değişmedi: C < B < A.
-   A–C oranı neredeyse aynı kaldı (1,34 → 1,33). "A, C'den kötü" bulgusu ızgara sınırından kaynaklanmaz.
-2. A'da 1e-1 ile 3e-1 neredeyse eşittir (7,12e-4 ve 7,13e-4), yani A'nın ayarı doymuştur. B ve C'de en iyi
+   A–C oranı neredeyse aynı kaldı (1.34 → 1.33). "A, C'den kötü" bulgusu ızgara sınırından kaynaklanmaz.
+2. A'da 1e-1 ile 3e-1 neredeyse eşittir (7.12e-4 ve 7.13e-4), yani A'nın ayarı doymuştur. B ve C'de en iyi
    lr yine üst sınırdadır (3e-1); daha da büyük lr'ler bu iki temsili iyileştirirse aradaki fark büyür,
    kapanmaz.
 3. Yakınsama adımı lr'ye güçlü biçimde bağlıdır (B'de 256 → 650): kosinüs azalmasıyla büyük lr'de kayıp
@@ -210,16 +223,17 @@ yeniden koşuldu.
 
 - **2026-10-10** — Depo açıldı. v2 incelendi; S1–S8 kaydedildi. Aşama 0 ön kaydı yapıldı.
 - **2026-10-10** — Çekirdek kod yazıldı: `ruled/geometry.py`, `ruled/reps.py`, `ruled/data.py`, `ruled/losses.py`. v2 14.7 testleri (Blaschke q testi hariç; çatı yalnız analiz içindir) ve S1 testleri: 20/20 geçti. Aşama 0 betiği `experiments/phase0.py`, değerlendirmesi `experiments/phase0_analyze.py` olarak yazıldı.
-- **2026-10-10** — Chamfer hızlandırıldı: en yakın komşular KD-ağacıyla gradyansız bulunur, kayıp eşleşen çiftlerden hesaplanır (değer ve gradyan, referansla 1e-16 düzeyinde aynı). 50 yama için adım süresi 2,2 sn'den yaklaşık 0,25 sn'ye indi; ön kayıtlı yama sayısı korundu. Doğrulama kümesinden 10 yamada smoke test (kısa sağlama koşusu) yapıldı: üç temsil de 1000 adımda Chamfer'ı 5e-2'den yaklaşık 1e-3'e indirdi. Bu yalnız çalışırlık kontrolüdür, karar için kullanılmaz.
-- **2026-10-10** — İlk Aşama 0 koşusu 48 yapılandırmanın 12'sinde **durduruldu ve sonuçları silindi**. Nedenleri: koşu sürerken `phase0.py` değiştirilmişti (Hausdorff hesabı bellek nedeniyle KD-ağacına alındı; sayısal etkisi 1e-8), yani doğrulama ve test aşamaları farklı commit'lerle koşacaktı; ayrıca koşu kaldığı yerden devam edemiyordu. Düzeltmeler: kod, docstring'ler ve çıktılar İngilizceye çevrildi; koşu resumable yapıldı (her birim ayrı dosyaya atomik olarak yazılır, bitmiş birimler atlanır); koşu dizini `manifest.json` ile tek commit'e bağlandı (kirli çalışma ağacı ya da farklı commit reddedilir); her sonuç satırına commit hash'i yazılır ve analiz tek commit'ten gelmeyen satırları reddeder. Karışan etkenler notu ön kayda eklendi. Ön kaydın içeriği (veri, ölçütler, karar kuralı) değiştirilmedi.
+- **2026-10-10** — Chamfer hızlandırıldı: en yakın komşular KD-ağacıyla gradyansız bulunur, kayıp eşleşen çiftlerden hesaplanır (değer ve gradyan, referansla 1e-16 düzeyinde aynı). 50 yama için adım süresi 2.2 sn'den yaklaşık 0.25 sn'ye indi; ön kayıtlı yama sayısı korundu. Doğrulama kümesinden 10 yamada smoke test (kısa sağlama koşusu) yapıldı: üç temsil de 1000 adımda Chamfer'ı 5e-2'den yaklaşık 1e-3'e indirdi. Bu yalnız çalışırlık kontrolüdür, karar için kullanılmaz.
+- **2026-10-10** — İlk Aşama 0 koşusu 48 yapılandırmanın 12'sinde **durduruldu ve sonuçları silindi**. Nedenleri: koşu sürerken `phase0.py` değiştirilmişti (Hausdorff hesabı bellek nedeniyle KD-ağacına alındı; sayısal etkisi 1e-8), yani doğrulama ve test aşamaları farklı commit'lerle koşacaktı; ayrıca koşu kaldığı yerden devam edemiyordu. Düzeltmeler: kod, docstring'ler ve çıktılar İngilizceye çevrildi; koşu kaldığı yerden sürdürülebilir (resumable) yapıldı (her birim, yani bir temsil-ayar-seed-parça koşusu, ayrı dosyaya atomik olarak yazılır, bitmiş birimler atlanır); koşu dizini `manifest.json` ile tek commit'e bağlandı (kirli çalışma ağacı ya da farklı commit reddedilir); her sonuç satırına commit hash'i yazılır ve analiz tek commit'ten gelmeyen satırları reddeder. Karışan etkenler notu ön kayda eklendi. Ön kaydın içeriği (veri, ölçütler, karar kuralı) değiştirilmedi.
 - **2026-10-11** — Aşama 0 tamamlandı (`e96bef1`). Karar: temsil ekseni zayıf. Ayrıntılar yukarıdaki "Aşama 0 sonuçları" bölümündedir.
-- **2026-10-11** — Genişletilmiş lr ızgarasıyla keşif kontrolü yapıldı (`88ea95e`). Sıralama değişmedi (C < B < A); A–C oranı 1,33. Karar desteklendi.
+- **2026-10-11** — Genişletilmiş lr ızgarasıyla keşif kontrolü yapıldı (`88ea95e`). Sıralama değişmedi (C < B < A); A–C oranı 1.33. Karar desteklendi.
 - **2026-10-11** — v3 belgesi `docs/tarif_v3.md` olarak yazıldı. Sert izdüşümün kapalı biçimi (düzeltme büyüklüğü = en kısa uzaklık) ve kesişen doğruların ara değerinin demette kalması, 1000 rastgele çiftte sayısal olarak sınandı (hata < 3e-14).
 - **2026-10-11** — Depo GitHub'da özel olarak açıldı; gönderimler aşama sonlarında onayla yapılır.
 - **2026-10-11** — Aşama 1a (kısmi): sert katman (`project_coplanar`, `developable_lines`, `DevelopableDualRep`), açı açığı ölçütü (`angle_defect_total`), cezalar (`developability_A`, `developability_C`) ve v3 7.2 testleri yazıldı; toplam 40 test geçti. `DualRep` yalnızca yeniden düzenlendi, Aşama 0 testleri değişmeden geçti.
   - Düzenlileştirme biçimi değiştirildi: payda `sin²θ + ε²` yerine `max(sin²θ, ε²)`. İlk biçim büyük açılarda da `ε²/sin²θ` oranında kaçak bırakıyordu; yeni biçim `sinθ ≥ ε` için tamdır.
   - Ölçüt sağlaması: silindir ve konide 𝒢 < 1e-10; teğet açılabilirde ızgara iki kat inceldikçe yaklaşık 16 kat küçülür; hiperbolik paraboloit ve genel ailede sayısal karelemeye birinci mertebeden yakınsar (256×256 ızgarada bağıl hata < %2).
-  - Teğet açılabilirde katmanın düzeltmesi `O(1/K²)` küçülür (oran 4,0); tek çiftin hatası `O(1/K³)`'tür, sıralı katman bunu biriktirir. Testin başlangıçtaki 4 kat eşiği sınırdaydı, 3 kata çekildi.
-  - **Olumsuz bulgu (v3 Bölüm 3.4):** katmanın garantisi yereldir. Her şerit düzlemseldir (dörtgen düzlemsizliği < 2e-14), ama ardışık doğruların kesişme noktası yama aralığına düşerse şerit kendini keser ve yüzey tekil olur. Kesişme noktası `konum hatası / θ` oranında kötü koşulludur: koni doğrularında 1e-2 konum gürültüsü kesişmelerin %21'ini aralığa sokar (𝒢 en çok 0,79), 1e-3 gürültüde hiçbiri girmez (𝒢 = 4e-12). Aşama 0'ın başlangıcı (doğru başına bağımsız σ = 0,1 rad) açılabilir yamalarda kesişmelerin %57–67'sini aralığa sokar.
-  - τ = 0,00756 hesaplandı (`experiments/phase1_tau.py`; açılabilir olmayan 20 gerçek yamanın medyan 𝒢'si 0,756).
+  - Teğet açılabilirde katmanın düzeltmesi `O(1/K²)` küçülür (oran 4.0); tek çiftin hatası `O(1/K³)`'tür, sıralı katman bunu biriktirir. Testin başlangıçtaki 4 kat eşiği sınırdaydı, 3 kata çekildi.
+  - **Olumsuz bulgu (v3 Bölüm 3.4):** katmanın garantisi yereldir. Her şerit düzlemseldir (dörtgen düzlemsizliği < 2e-14), ama ardışık doğruların kesişme noktası yama aralığına düşerse şerit kendini keser ve yüzey tekil olur. Kesişme noktası `konum hatası / θ` oranında kötü koşulludur: koni doğrularında 1e-2 konum gürültüsü kesişmelerin %21'ini aralığa sokar (𝒢 en çok 0.79), 1e-3 gürültüde hiçbiri girmez (𝒢 = 4e-12). Aşama 0'ın başlangıcı (doğru başına bağımsız σ = 0.1 rad) açılabilir yamalarda kesişmelerin %57–67'sini aralığa sokar.
+  - τ = 0.00756 hesaplandı (`experiments/phase1_tau.py`; açılabilir olmayan 20 gerçek yamanın medyan 𝒢'si 0.756).
   - Açık karar: Aşama 1b'nin başlangıç yüzeyi (v3 Bölüm 5.2). `λ_d` ölçek koşusu ve `experiments/phase1.py` bu karara bağlıdır.
+- **2026-10-11** — Depo düzeni gözden geçirildi (sapma T4). `pyproject.toml` eklendi; `pip install -e .` ile `ruled` paketi her dizinden içe aktarılır, betikler `PYTHONPATH` olmadan çalışır (`python experiments/phase0.py --help` repo dışından denendi). Sabitlenmiş `requirements.txt` (torch 2.14.1, numpy 2.5.3, scipy 1.18.1, matplotlib 3.11.2, pytest 9.1.1), `.gitattributes` (LF) ve `.gitignore` eklemeleri yapıldı. `README.md`, `RELATED_WORK.md` ve `GLOSSARY.md` yazıldı. Künyeler web aramasıyla denetlendi: 11'i doğrulandı, 1'i kısmen doğrulandı (2011 tarihli dual kuaterniyon makalesi: DOI ve içerik uyuşuyor, başlık ve yazarlar doğrulanamadı), 1'i bulunamadı ("Piecewise developable modeling via implicit neural deformation and feature-guided cutting"); 6'sı bilinen künye olarak işaretlendi. Biten koşuların özet dosyaları `results_summary/` altına alındı; tam sonuçlar `results/archives/phase0_e96bef1_lrext_88ea95e.zip` olarak arşivlendi (200 dosya, 57 MB) ve Drive'a yüklenmek üzere bekliyor. Bundan sonra Aşama 1'deki kollar (arms; karşılaştırılan yöntemler) A0, PA, PC ve H olarak anılır.

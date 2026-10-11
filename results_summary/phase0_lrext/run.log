@@ -1,0 +1,118 @@
+val A_lr0.03_lam0 chunk 0: chamfer=8.220e-04 (102 s)
+val A_lr0.03_lam0.001 chunk 0: chamfer=9.113e-04 (94 s)
+val A_lr0.1_lam0 chunk 0: chamfer=7.121e-04 (94 s)
+val A_lr0.1_lam0.001 chunk 0: chamfer=7.797e-04 (93 s)
+val A_lr0.3_lam0 chunk 0: chamfer=7.128e-04 (94 s)
+val A_lr0.3_lam0.001 chunk 0: chamfer=7.907e-04 (93 s)
+val B_lr0.03_lam0 chunk 0: chamfer=7.501e-04 (87 s)
+val B_lr0.03_lam0.001 chunk 0: chamfer=7.527e-04 (86 s)
+val B_lr0.1_lam0 chunk 0: chamfer=6.002e-04 (86 s)
+val B_lr0.1_lam0.001 chunk 0: chamfer=6.637e-04 (86 s)
+val B_lr0.3_lam0 chunk 0: chamfer=5.918e-04 (86 s)
+val B_lr0.3_lam0.001 chunk 0: chamfer=6.448e-04 (85 s)
+val C_lr0.03_lam0 chunk 0: chamfer=7.366e-04 (77 s)
+val C_lr0.03_lam0.001 chunk 0: chamfer=6.369e-04 (77 s)
+val C_lr0.1_lam0 chunk 0: chamfer=6.213e-04 (77 s)
+val C_lr0.1_lam0.001 chunk 0: chamfer=5.724e-04 (77 s)
+val C_lr0.3_lam0 chunk 0: chamfer=6.019e-04 (78 s)
+val C_lr0.3_lam0.001 chunk 0: chamfer=4.970e-04 (77 s)
+{
+  "A": {
+    "lr": 0.1,
+    "lam": 0.0,
+    "val_chamfer": 0.0007121312131980316
+  },
+  "B": {
+    "lr": 0.3,
+    "lam": 0.0,
+    "val_chamfer": 0.0005917901938639274
+  },
+  "C": {
+    "lr": 0.3,
+    "lam": 0.001,
+    "val_chamfer": 0.000496978534381447
+  }
+}
+changed selections: ['A', 'B', 'C']
+test A_seed0 chunk 0: chamfer=6.920e-04 (93 s)
+test A_seed0 chunk 1: chamfer=8.807e-04 (93 s)
+test A_seed0 chunk 2: chamfer=6.160e-04 (94 s)
+test A_seed0 chunk 3: chamfer=4.617e-04 (93 s)
+test A_seed1 chunk 0: chamfer=6.867e-04 (93 s)
+test A_seed1 chunk 1: chamfer=9.510e-04 (93 s)
+test A_seed1 chunk 2: chamfer=6.834e-04 (93 s)
+test A_seed1 chunk 3: chamfer=4.804e-04 (93 s)
+test A_seed2 chunk 0: chamfer=6.765e-04 (93 s)
+test A_seed2 chunk 1: chamfer=9.366e-04 (93 s)
+test A_seed2 chunk 2: chamfer=6.192e-04 (93 s)
+test A_seed2 chunk 3: chamfer=4.620e-04 (93 s)
+test A_seed3 chunk 0: chamfer=6.894e-04 (93 s)
+test A_seed3 chunk 1: chamfer=9.468e-04 (93 s)
+test A_seed3 chunk 2: chamfer=6.135e-04 (93 s)
+test A_seed3 chunk 3: chamfer=4.929e-04 (93 s)
+test A_seed4 chunk 0: chamfer=6.995e-04 (93 s)
+test A_seed4 chunk 1: chamfer=1.019e-03 (93 s)
+test A_seed4 chunk 2: chamfer=6.440e-04 (93 s)
+test A_seed4 chunk 3: chamfer=4.804e-04 (93 s)
+test B_seed0 chunk 0: chamfer=5.987e-04 (86 s)
+test B_seed0 chunk 1: chamfer=7.028e-04 (86 s)
+test B_seed0 chunk 2: chamfer=5.351e-04 (87 s)
+test B_seed0 chunk 3: chamfer=4.288e-04 (87 s)
+test B_seed1 chunk 0: chamfer=6.046e-04 (87 s)
+test B_seed1 chunk 1: chamfer=7.267e-04 (86 s)
+test B_seed1 chunk 2: chamfer=5.230e-04 (88 s)
+test B_seed1 chunk 3: chamfer=4.299e-04 (86 s)
+test B_seed2 chunk 0: chamfer=5.924e-04 (86 s)
+test B_seed2 chunk 1: chamfer=7.216e-04 (86 s)
+test B_seed2 chunk 2: chamfer=5.201e-04 (86 s)
+test B_seed2 chunk 3: chamfer=4.320e-04 (86 s)
+test B_seed3 chunk 0: chamfer=5.911e-04 (86 s)
+test B_seed3 chunk 1: chamfer=7.270e-04 (86 s)
+test B_seed3 chunk 2: chamfer=5.339e-04 (87 s)
+test B_seed3 chunk 3: chamfer=4.264e-04 (87 s)
+test B_seed4 chunk 0: chamfer=5.851e-04 (87 s)
+test B_seed4 chunk 1: chamfer=7.013e-04 (86 s)
+test B_seed4 chunk 2: chamfer=5.245e-04 (86 s)
+test B_seed4 chunk 3: chamfer=4.309e-04 (86 s)
+test C_seed0 chunk 0: chamfer=5.594e-04 (77 s)
+test C_seed0 chunk 1: chamfer=6.743e-04 (76 s)
+test C_seed0 chunk 2: chamfer=4.550e-04 (77 s)
+test C_seed0 chunk 3: chamfer=3.771e-04 (77 s)
+test C_seed1 chunk 0: chamfer=5.043e-04 (77 s)
+test C_seed1 chunk 1: chamfer=6.360e-04 (77 s)
+test C_seed1 chunk 2: chamfer=5.122e-04 (76 s)
+test C_seed1 chunk 3: chamfer=3.995e-04 (78 s)
+test C_seed2 chunk 0: chamfer=5.179e-04 (77 s)
+test C_seed2 chunk 1: chamfer=6.288e-04 (76 s)
+test C_seed2 chunk 2: chamfer=4.512e-04 (77 s)
+test C_seed2 chunk 3: chamfer=3.719e-04 (80 s)
+test C_seed3 chunk 0: chamfer=5.090e-04 (78 s)
+test C_seed3 chunk 1: chamfer=6.655e-04 (82 s)
+test C_seed3 chunk 2: chamfer=4.677e-04 (77 s)
+test C_seed3 chunk 3: chamfer=3.778e-04 (76 s)
+test C_seed4 chunk 0: chamfer=5.140e-04 (76 s)
+test C_seed4 chunk 1: chamfer=6.365e-04 (77 s)
+test C_seed4 chunk 2: chamfer=5.024e-04 (76 s)
+test C_seed4 chunk 3: chamfer=3.947e-04 (77 s)
+Exploratory: wider lr grid. Does not change the Phase 0 decision.
+
+| Rep | Phase 0 (lr, lam) | wide grid (lr, lam) | val chamfer | test rows from |
+|---|---|---|---|---|
+| A | 0.03, 0 | 0.1, 0 | 7.121e-04 | 88ea95e |
+| B | 0.03, 0 | 0.3, 0 | 5.918e-04 | 88ea95e |
+| C | 0.03, 0.001 | 0.3, 0.001 | 4.970e-04 | 88ea95e |
+
+| Metric | vs | geo-mean ratio A/X | Wilcoxon p | Verdict |
+|---|---|---|---|---|
+| chamfer | B | 1.145 | 6.53e-26 | A worse |
+| conv | B | 0.502 | 1.43e-34 | A better |
+| seed_std | B | 1.398 | 8.76e-09 | A worse |
+| chamfer | C | 1.326 | 3.78e-31 | A worse |
+| conv | C | 3.064 | 1.71e-34 | A worse |
+| seed_std | C | 0.737 | 2.05e-06 | A better |
+
+| Rep | chamfer | conv (steps) | seed_std |
+|---|---|---|---|
+| A | 6.866e-04 | 334 | 7.684e-05 |
+| B | 5.668e-04 | 650 | 3.456e-05 |
+| C | 5.078e-04 | 117 | 8.858e-05 |

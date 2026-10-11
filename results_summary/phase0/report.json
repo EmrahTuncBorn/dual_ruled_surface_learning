@@ -1,0 +1,34 @@
+{
+  "chamfer_vs_B": {
+    "ratio": 1.1039535916690302,
+    "p": 2.5549912866837437e-21,
+    "verdict": "no difference"
+  },
+  "conv_vs_B": {
+    "ratio": 0.9817019250764918,
+    "p": 0.751362222322996,
+    "verdict": "no difference"
+  },
+  "seed_std_vs_B": {
+    "ratio": 1.2740288901813537,
+    "p": 5.838602873311664e-05,
+    "verdict": "A worse"
+  },
+  "chamfer_vs_C": {
+    "ratio": 1.342421451504995,
+    "p": 2.0510708036704183e-13,
+    "verdict": "A worse"
+  },
+  "conv_vs_C": {
+    "ratio": 2.213039663912157,
+    "p": 1.6071565223609744e-32,
+    "verdict": "A worse"
+  },
+  "seed_std_vs_C": {
+    "ratio": 0.7574194821370648,
+    "p": 1.0063901205507952e-05,
+    "verdict": "A better"
+  },
+  "decision": "representation axis WEAK",
+  "commit": "e96bef16b65d3ddf9771cc26b39c17e2dc86c406"
+}
