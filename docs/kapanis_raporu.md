@@ -1,6 +1,7 @@
 # Plücker koordinatlarında regle ve açılabilir yüzey uydurma: kapanış raporu
 
-Emrah Tunç · 2026-10-13 · Depo: EmrahTuncBorn/dual_ruled_surface_learning (commit `5bef525`)
+Emrah Tunç · 2026-10-13 · Depo: EmrahTuncBorn/dual_ruled_surface_learning (commit `5bef525`) ·
+Claude Code yardımıyla hazırlanmıştır (Bölüm 11).
 
 ## 1. Özet
 
@@ -341,6 +342,16 @@ açılabilirliği ile H'nin uydurma doğruluğu arasındaki ödünleşimi bir ar
 
 Tam sonuçlar `results/archives/` altında zip olarak arşivlenmiştir. Ayrıntılı günlük `PROGRESS.md`'de, tasarım
 `docs/tarif_v3.md`'de, terimler `GLOSSARY.md`'de, kaynaklar `RELATED_WORK.md`'dedir.
+
+## 11. Yapay zekâ yardımı beyanı
+
+Bu proje, Anthropic'in yapay zekâ destekli kodlama aracı Claude Code yardımıyla yürütülmüştür. Kodun yazılması,
+birim testleri, deney betiklerinin koşturulması ve analizi, literatür taraması, günlük (`PROGRESS.md`) ve tasarım
+belgeleri ile bu rapor araçla birlikte hazırlanmıştır. Araştırma hedefi, her aşamaya geçiş, ön kayıtların ve
+sapmaların onaylanması, projenin kapatılması kararı ve sonuçların gönderilmesi yazar tarafından yapılmıştır.
+Raporda verilen bütün sayılar, depodaki commit'lere bağlı koşuların çıktılarından alınmıştır ve Bölüm 10'daki
+komutlarla yeniden üretilebilir. Literatür bilgileri web aramasıyla denetlenmiştir; doğrulanamayan künyeler
+`RELATED_WORK.md`'de ayrıca işaretlidir.
 
 ## Kaynaklar
 
