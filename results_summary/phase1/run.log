@@ -1,0 +1,344 @@
+val A0_lr0.03_lams0.01_lamd0 chunk 0: chamfer=1.196e-03 G=7.433e-01 inside=0.166 (68 s)
+val A0_lr0.03_lams0.1_lamd0 chunk 0: chamfer=2.427e-03 G=2.008e-01 inside=0.086 (67 s)
+val A0_lr0.03_lams1_lamd0 chunk 0: chamfer=5.265e-03 G=6.196e-02 inside=0.062 (68 s)
+val A0_lr0.1_lams0.01_lamd0 chunk 0: chamfer=1.190e-03 G=2.840e-01 inside=0.109 (72 s)
+val A0_lr0.1_lams0.1_lamd0 chunk 0: chamfer=2.563e-03 G=1.093e-01 inside=0.073 (52 s)
+val A0_lr0.1_lams1_lamd0 chunk 0: chamfer=5.787e-03 G=6.103e-02 inside=0.063 (55 s)
+val A0_lr0.3_lams0.01_lamd0 chunk 0: chamfer=1.145e-03 G=2.868e-01 inside=0.085 (53 s)
+val A0_lr0.3_lams0.1_lamd0 chunk 0: chamfer=3.335e-03 G=2.727e-01 inside=0.104 (55 s)
+val A0_lr0.3_lams1_lamd0 chunk 0: chamfer=1.007e-02 G=3.437e-01 inside=0.155 (63 s)
+val PA_lr0.03_lams0.01_lamd0.1 chunk 0: chamfer=1.197e-03 G=5.034e-01 inside=0.142 (70 s)
+val PA_lr0.03_lams0.01_lamd1 chunk 0: chamfer=1.255e-03 G=4.453e-01 inside=0.126 (73 s)
+val PA_lr0.03_lams0.01_lamd10 chunk 0: chamfer=1.988e-03 G=3.688e-01 inside=0.101 (78 s)
+val PA_lr0.03_lams0.01_lamd100 chunk 0: chamfer=2.619e-03 G=1.461e-01 inside=0.041 (79 s)
+val PA_lr0.03_lams0.01_lamd1000 chunk 0: chamfer=3.520e-03 G=2.590e-02 inside=0.012 (79 s)
+val PA_lr0.03_lams0.1_lamd0.1 chunk 0: chamfer=2.439e-03 G=2.054e-01 inside=0.090 (79 s)
+val PA_lr0.03_lams0.1_lamd1 chunk 0: chamfer=2.377e-03 G=1.221e-01 inside=0.069 (79 s)
+val PA_lr0.03_lams0.1_lamd10 chunk 0: chamfer=2.458e-03 G=7.433e-02 inside=0.029 (81 s)
+val PA_lr0.03_lams0.1_lamd100 chunk 0: chamfer=3.176e-03 G=5.501e-02 inside=0.015 (78 s)
+val PA_lr0.03_lams0.1_lamd1000 chunk 0: chamfer=4.377e-03 G=5.941e-04 inside=0.001 (76 s)
+val PA_lr0.03_lams1_lamd0.1 chunk 0: chamfer=5.257e-03 G=6.312e-02 inside=0.063 (76 s)
+val PA_lr0.03_lams1_lamd1 chunk 0: chamfer=5.263e-03 G=5.980e-02 inside=0.059 (85 s)
+val PA_lr0.03_lams1_lamd10 chunk 0: chamfer=5.414e-03 G=4.554e-02 inside=0.053 (78 s)
+val PA_lr0.03_lams1_lamd100 chunk 0: chamfer=5.516e-03 G=9.724e-03 inside=0.016 (73 s)
+val PA_lr0.03_lams1_lamd1000 chunk 0: chamfer=5.958e-03 G=1.352e-04 inside=0.000 (77 s)
+val PA_lr0.1_lams0.01_lamd0.1 chunk 0: chamfer=1.338e-03 G=2.831e-01 inside=0.103 (88 s)
+val PA_lr0.1_lams0.01_lamd1 chunk 0: chamfer=1.481e-03 G=1.614e-01 inside=0.082 (69 s)
+val PA_lr0.1_lams0.01_lamd10 chunk 0: chamfer=2.016e-03 G=1.191e-01 inside=0.061 (68 s)
+val PA_lr0.1_lams0.01_lamd100 chunk 0: chamfer=3.156e-03 G=1.289e-01 inside=0.055 (68 s)
+val PA_lr0.1_lams0.01_lamd1000 chunk 0: chamfer=5.778e-03 G=5.023e-01 inside=0.100 (70 s)
+val PA_lr0.1_lams0.1_lamd0.1 chunk 0: chamfer=2.556e-03 G=1.056e-01 inside=0.070 (68 s)
+val PA_lr0.1_lams0.1_lamd1 chunk 0: chamfer=2.724e-03 G=1.104e-01 inside=0.072 (68 s)
+val PA_lr0.1_lams0.1_lamd10 chunk 0: chamfer=3.011e-03 G=8.630e-02 inside=0.046 (68 s)
+val PA_lr0.1_lams0.1_lamd100 chunk 0: chamfer=3.975e-03 G=3.720e-02 inside=0.020 (69 s)
+val PA_lr0.1_lams0.1_lamd1000 chunk 0: chamfer=7.414e-03 G=2.355e-01 inside=0.091 (70 s)
+val PA_lr0.1_lams1_lamd0.1 chunk 0: chamfer=5.758e-03 G=6.061e-02 inside=0.065 (69 s)
+val PA_lr0.1_lams1_lamd1 chunk 0: chamfer=5.831e-03 G=5.680e-02 inside=0.056 (69 s)
+val PA_lr0.1_lams1_lamd10 chunk 0: chamfer=5.997e-03 G=4.205e-02 inside=0.046 (69 s)
+val PA_lr0.1_lams1_lamd100 chunk 0: chamfer=5.954e-03 G=3.041e-02 inside=0.026 (69 s)
+val PA_lr0.1_lams1_lamd1000 chunk 0: chamfer=9.327e-03 G=1.360e-02 inside=0.019 (70 s)
+val PA_lr0.3_lams0.01_lamd0.1 chunk 0: chamfer=1.108e-03 G=3.475e-01 inside=0.101 (67 s)
+val PA_lr0.3_lams0.01_lamd1 chunk 0: chamfer=1.693e-03 G=2.494e-01 inside=0.086 (67 s)
+val PA_lr0.3_lams0.01_lamd10 chunk 0: chamfer=3.383e-03 G=3.132e-01 inside=0.072 (68 s)
+val PA_lr0.3_lams0.01_lamd100 chunk 0: chamfer=8.870e-03 G=7.882e-01 inside=0.087 (70 s)
+val PA_lr0.3_lams0.01_lamd1000 chunk 0: chamfer=2.823e-02 G=1.943e+00 inside=0.091 (73 s)
+val PA_lr0.3_lams0.1_lamd0.1 chunk 0: chamfer=3.398e-03 G=2.533e-01 inside=0.104 (68 s)
+val PA_lr0.3_lams0.1_lamd1 chunk 0: chamfer=3.661e-03 G=2.659e-01 inside=0.098 (68 s)
+val PA_lr0.3_lams0.1_lamd10 chunk 0: chamfer=4.753e-03 G=2.208e-01 inside=0.085 (68 s)
+val PA_lr0.3_lams0.1_lamd100 chunk 0: chamfer=1.699e-02 G=6.014e-01 inside=0.119 (70 s)
+val PA_lr0.3_lams0.1_lamd1000 chunk 0: chamfer=4.512e-02 G=1.566e+00 inside=0.137 (74 s)
+val PA_lr0.3_lams1_lamd0.1 chunk 0: chamfer=1.007e-02 G=3.590e-01 inside=0.162 (70 s)
+val PA_lr0.3_lams1_lamd1 chunk 0: chamfer=9.863e-03 G=3.349e-01 inside=0.158 (71 s)
+val PA_lr0.3_lams1_lamd10 chunk 0: chamfer=1.179e-02 G=3.139e-01 inside=0.149 (70 s)
+val PA_lr0.3_lams1_lamd100 chunk 0: chamfer=3.307e-02 G=6.202e-01 inside=0.183 (73 s)
+val PA_lr0.3_lams1_lamd1000 chunk 0: chamfer=7.633e-02 G=1.103e+00 inside=0.177 (76 s)
+val PC_lr0.03_lams0.01_lamd0.1 chunk 0: chamfer=1.166e-03 G=1.606e+00 inside=0.225 (56 s)
+val PC_lr0.03_lams0.01_lamd1 chunk 0: chamfer=1.306e-03 G=1.590e+00 inside=0.206 (56 s)
+val PC_lr0.03_lams0.01_lamd10 chunk 0: chamfer=1.768e-03 G=1.399e+00 inside=0.177 (56 s)
+val PC_lr0.03_lams0.01_lamd100 chunk 0: chamfer=2.360e-03 G=1.202e+00 inside=0.161 (56 s)
+val PC_lr0.03_lams0.01_lamd1000 chunk 0: chamfer=4.921e-03 G=5.820e-01 inside=0.115 (57 s)
+val PC_lr0.03_lams0.1_lamd0.1 chunk 0: chamfer=2.420e-03 G=6.031e-01 inside=0.153 (56 s)
+val PC_lr0.03_lams0.1_lamd1 chunk 0: chamfer=2.465e-03 G=5.598e-01 inside=0.132 (57 s)
+val PC_lr0.03_lams0.1_lamd10 chunk 0: chamfer=2.509e-03 G=5.122e-01 inside=0.110 (57 s)
+val PC_lr0.03_lams0.1_lamd100 chunk 0: chamfer=2.831e-03 G=5.777e-01 inside=0.105 (56 s)
+val PC_lr0.03_lams0.1_lamd1000 chunk 0: chamfer=5.825e-03 G=2.444e-01 inside=0.043 (58 s)
+val PC_lr0.03_lams1_lamd0.1 chunk 0: chamfer=5.264e-03 G=3.566e-01 inside=0.106 (57 s)
+val PC_lr0.03_lams1_lamd1 chunk 0: chamfer=5.313e-03 G=3.347e-01 inside=0.100 (57 s)
+val PC_lr0.03_lams1_lamd10 chunk 0: chamfer=5.370e-03 G=2.714e-01 inside=0.070 (57 s)
+val PC_lr0.03_lams1_lamd100 chunk 0: chamfer=6.189e-03 G=1.377e-01 inside=0.039 (57 s)
+val PC_lr0.03_lams1_lamd1000 chunk 0: chamfer=7.525e-03 G=5.417e-02 inside=0.008 (58 s)
+val PC_lr0.1_lams0.01_lamd0.1 chunk 0: chamfer=1.115e-03 G=1.780e+00 inside=0.212 (56 s)
+val PC_lr0.1_lams0.01_lamd1 chunk 0: chamfer=1.555e-03 G=1.554e+00 inside=0.178 (56 s)
+val PC_lr0.1_lams0.01_lamd10 chunk 0: chamfer=1.275e-03 G=2.301e+00 inside=0.204 (56 s)
+val PC_lr0.1_lams0.01_lamd100 chunk 0: chamfer=3.185e-03 G=4.136e+00 inside=0.230 (57 s)
+val PC_lr0.1_lams0.01_lamd1000 chunk 0: chamfer=1.128e-02 G=9.614e+00 inside=0.404 (60 s)
+val PC_lr0.1_lams0.1_lamd0.1 chunk 0: chamfer=2.129e-03 G=6.314e-01 inside=0.140 (56 s)
+val PC_lr0.1_lams0.1_lamd1 chunk 0: chamfer=2.141e-03 G=6.464e-01 inside=0.131 (56 s)
+val PC_lr0.1_lams0.1_lamd10 chunk 0: chamfer=2.411e-03 G=5.811e-01 inside=0.123 (58 s)
+val PC_lr0.1_lams0.1_lamd100 chunk 0: chamfer=3.982e-03 G=7.546e-01 inside=0.088 (57 s)
+val PC_lr0.1_lams0.1_lamd1000 chunk 0: chamfer=1.201e-02 G=2.956e+00 inside=0.217 (60 s)
+val PC_lr0.1_lams1_lamd0.1 chunk 0: chamfer=4.969e-03 G=3.717e-01 inside=0.099 (57 s)
+val PC_lr0.1_lams1_lamd1 chunk 0: chamfer=5.035e-03 G=3.706e-01 inside=0.092 (57 s)
+val PC_lr0.1_lams1_lamd10 chunk 0: chamfer=5.012e-03 G=2.967e-01 inside=0.068 (57 s)
+val PC_lr0.1_lams1_lamd100 chunk 0: chamfer=6.228e-03 G=1.716e-01 inside=0.058 (58 s)
+val PC_lr0.1_lams1_lamd1000 chunk 0: chamfer=1.149e-02 G=7.970e-01 inside=0.076 (60 s)
+val PC_lr0.3_lams0.01_lamd0.1 chunk 0: chamfer=8.940e-04 G=2.362e+00 inside=0.252 (56 s)
+val PC_lr0.3_lams0.01_lamd1 chunk 0: chamfer=8.165e-04 G=3.659e+00 inside=0.286 (57 s)
+val PC_lr0.3_lams0.01_lamd10 chunk 0: chamfer=2.142e-03 G=9.077e+00 inside=0.378 (57 s)
+val PC_lr0.3_lams0.01_lamd100 chunk 0: chamfer=1.623e-02 G=1.610e+01 inside=0.416 (63 s)
+val PC_lr0.3_lams0.01_lamd1000 chunk 0: chamfer=1.031e-01 G=3.556e+01 inside=0.434 (72 s)
+val PC_lr0.3_lams0.1_lamd0.1 chunk 0: chamfer=2.181e-03 G=1.015e+00 inside=0.183 (56 s)
+val PC_lr0.3_lams0.1_lamd1 chunk 0: chamfer=1.954e-03 G=1.458e+00 inside=0.181 (56 s)
+val PC_lr0.3_lams0.1_lamd10 chunk 0: chamfer=2.783e-03 G=3.171e+00 inside=0.257 (57 s)
+val PC_lr0.3_lams0.1_lamd100 chunk 0: chamfer=1.480e-02 G=8.380e+00 inside=0.353 (62 s)
+val PC_lr0.3_lams0.1_lamd1000 chunk 0: chamfer=7.699e-02 G=1.866e+01 inside=0.415 (70 s)
+val PC_lr0.3_lams1_lamd0.1 chunk 0: chamfer=4.982e-03 G=6.254e-01 inside=0.145 (58 s)
+val PC_lr0.3_lams1_lamd1 chunk 0: chamfer=5.066e-03 G=6.873e-01 inside=0.145 (58 s)
+val PC_lr0.3_lams1_lamd10 chunk 0: chamfer=6.153e-03 G=4.391e+00 inside=0.262 (59 s)
+val PC_lr0.3_lams1_lamd100 chunk 0: chamfer=2.223e-02 G=3.642e+00 inside=0.316 (63 s)
+val PC_lr0.3_lams1_lamd1000 chunk 0: chamfer=7.108e-02 G=1.011e+01 inside=0.414 (70 s)
+val H_lr0.03_lams0.01_lamd0 chunk 0: chamfer=2.648e-03 G=7.783e-01 inside=0.166 (117 s)
+val H_lr0.03_lams0.1_lamd0 chunk 0: chamfer=4.000e-03 G=1.277e-01 inside=0.049 (118 s)
+val H_lr0.03_lams1_lamd0 chunk 0: chamfer=7.216e-03 G=5.780e-02 inside=0.032 (119 s)
+val H_lr0.1_lams0.01_lamd0 chunk 0: chamfer=2.426e-03 G=1.149e+00 inside=0.166 (117 s)
+val H_lr0.1_lams0.1_lamd0 chunk 0: chamfer=3.833e-03 G=2.509e-01 inside=0.076 (118 s)
+val H_lr0.1_lams1_lamd0 chunk 0: chamfer=8.734e-03 G=1.037e-01 inside=0.065 (120 s)
+val H_lr0.3_lams0.01_lamd0 chunk 0: chamfer=3.423e-03 G=3.622e+00 inside=0.252 (117 s)
+val H_lr0.3_lams0.1_lamd0 chunk 0: chamfer=6.897e-03 G=2.042e+00 inside=0.188 (118 s)
+val H_lr0.3_lams1_lamd0 chunk 0: chamfer=2.419e-02 G=2.653e+00 inside=0.226 (121 s)
+{
+  "A0": {
+    "lr": 0.3,
+    "lam_s": 0.01,
+    "lam_d": 0.0,
+    "val_chamfer": 0.0011445105382936545,
+    "reached_tau": null
+  },
+  "PA": {
+    "lr": 0.03,
+    "lam_s": 0.1,
+    "lam_d": 1000.0,
+    "val_chamfer": 0.004377203051445486,
+    "val_G": 0.0005941219102868859,
+    "reached_tau": true
+  },
+  "PC": {
+    "lr": 0.03,
+    "lam_s": 1.0,
+    "lam_d": 1000.0,
+    "val_chamfer": 0.00752529870516558,
+    "val_G": 0.05417174412742263,
+    "reached_tau": false
+  },
+  "H": {
+    "lr": 0.1,
+    "lam_s": 0.01,
+    "lam_d": 0.0,
+    "val_chamfer": 0.0024260359548513386,
+    "reached_tau": null
+  }
+}
+test smooth_A0_seed0 chunk 0: chamfer=1.872e-03 G=3.183e-01 inside=0.100 (100 s)
+test smooth_A0_seed0 chunk 1: chamfer=1.106e-03 G=2.825e-01 inside=0.100 (100 s)
+test smooth_A0_seed0 chunk 2: chamfer=5.913e-04 G=3.219e-01 inside=0.082 (49 s)
+test smooth_A0_seed1 chunk 0: chamfer=1.791e-03 G=3.186e-01 inside=0.106 (99 s)
+test smooth_A0_seed1 chunk 1: chamfer=1.096e-03 G=3.706e-01 inside=0.102 (100 s)
+test smooth_A0_seed1 chunk 2: chamfer=7.150e-04 G=3.086e-01 inside=0.100 (49 s)
+test smooth_A0_seed2 chunk 0: chamfer=1.522e-03 G=2.961e-01 inside=0.106 (99 s)
+test smooth_A0_seed2 chunk 1: chamfer=1.202e-03 G=3.780e-01 inside=0.111 (99 s)
+test smooth_A0_seed2 chunk 2: chamfer=6.373e-04 G=3.423e-01 inside=0.127 (49 s)
+test smooth_A0_seed3 chunk 0: chamfer=1.515e-03 G=3.342e-01 inside=0.110 (99 s)
+test smooth_A0_seed3 chunk 1: chamfer=1.245e-03 G=2.588e-01 inside=0.079 (99 s)
+test smooth_A0_seed3 chunk 2: chamfer=7.202e-04 G=4.315e-01 inside=0.144 (49 s)
+test smooth_A0_seed4 chunk 0: chamfer=1.755e-03 G=2.876e-01 inside=0.090 (100 s)
+test smooth_A0_seed4 chunk 1: chamfer=1.423e-03 G=2.905e-01 inside=0.083 (100 s)
+test smooth_A0_seed4 chunk 2: chamfer=7.144e-04 G=3.153e-01 inside=0.102 (48 s)
+test smooth_PA_seed0 chunk 0: chamfer=5.288e-03 G=4.936e-03 inside=0.003 (106 s)
+test smooth_PA_seed0 chunk 1: chamfer=5.063e-03 G=3.086e-03 inside=0.002 (106 s)
+test smooth_PA_seed0 chunk 2: chamfer=2.392e-03 G=2.561e-02 inside=0.010 (83 s)
+test smooth_PA_seed1 chunk 0: chamfer=5.318e-03 G=5.122e-03 inside=0.002 (233 s)
+test smooth_PA_seed1 chunk 1: chamfer=5.281e-03 G=6.265e-03 inside=0.003 (234 s)
+test smooth_PA_seed1 chunk 2: chamfer=2.545e-03 G=5.288e-02 inside=0.021 (46 s)
+test smooth_PA_seed2 chunk 0: chamfer=5.223e-03 G=7.624e-03 inside=0.006 (92 s)
+test smooth_PA_seed2 chunk 1: chamfer=5.258e-03 G=9.387e-03 inside=0.008 (93 s)
+test smooth_PA_seed2 chunk 2: chamfer=2.342e-03 G=4.453e-02 inside=0.023 (47 s)
+test smooth_PA_seed3 chunk 0: chamfer=5.234e-03 G=6.400e-03 inside=0.003 (102 s)
+test smooth_PA_seed3 chunk 1: chamfer=5.343e-03 G=3.187e-02 inside=0.008 (189 s)
+test smooth_PA_seed3 chunk 2: chamfer=2.630e-03 G=5.929e-02 inside=0.026 (117 s)
+test smooth_PA_seed4 chunk 0: chamfer=5.419e-03 G=1.357e-03 inside=0.001 (248 s)
+test smooth_PA_seed4 chunk 1: chamfer=5.253e-03 G=1.158e-02 inside=0.006 (220 s)
+test smooth_PA_seed4 chunk 2: chamfer=2.558e-03 G=2.200e-02 inside=0.010 (118 s)
+test smooth_PC_seed0 chunk 0: chamfer=9.792e-03 G=2.354e-04 inside=0.000 (198 s)
+test smooth_PC_seed0 chunk 1: chamfer=9.690e-03 G=8.106e-02 inside=0.015 (212 s)
+test smooth_PC_seed0 chunk 2: chamfer=6.687e-03 G=3.706e-01 inside=0.102 (104 s)
+test smooth_PC_seed1 chunk 0: chamfer=9.283e-03 G=2.510e-04 inside=0.001 (216 s)
+test smooth_PC_seed1 chunk 1: chamfer=9.253e-03 G=8.105e-02 inside=0.017 (222 s)
+test smooth_PC_seed1 chunk 2: chamfer=6.724e-03 G=3.527e-01 inside=0.090 (108 s)
+test smooth_PC_seed2 chunk 0: chamfer=9.981e-03 G=2.369e-04 inside=0.000 (221 s)
+test smooth_PC_seed2 chunk 1: chamfer=1.054e-02 G=7.922e-02 inside=0.015 (85 s)
+test smooth_PC_seed2 chunk 2: chamfer=6.710e-03 G=3.301e-01 inside=0.066 (49 s)
+
+=== resumed 2026-10-11T23:00:11 ===
+{
+  "A0": {
+    "lr": 0.3,
+    "lam_s": 0.01,
+    "lam_d": 0.0,
+    "val_chamfer": 0.0011445105382936545,
+    "reached_tau": null
+  },
+  "PA": {
+    "lr": 0.03,
+    "lam_s": 0.1,
+    "lam_d": 1000.0,
+    "val_chamfer": 0.004377203051445486,
+    "val_G": 0.0005941219102868859,
+    "reached_tau": true
+  },
+  "PC": {
+    "lr": 0.03,
+    "lam_s": 1.0,
+    "lam_d": 1000.0,
+    "val_chamfer": 0.00752529870516558,
+    "val_G": 0.05417174412742263,
+    "reached_tau": false
+  },
+  "H": {
+    "lr": 0.1,
+    "lam_s": 0.01,
+    "lam_d": 0.0,
+    "val_chamfer": 0.0024260359548513386,
+    "reached_tau": null
+  }
+}
+test smooth_PC_seed3 chunk 0: chamfer=9.799e-03 G=6.237e-04 inside=0.000 (117 s)
+test smooth_PC_seed3 chunk 1: chamfer=9.513e-03 G=9.060e-02 inside=0.023 (107 s)
+test smooth_PC_seed3 chunk 2: chamfer=6.785e-03 G=3.152e-01 inside=0.082 (49 s)
+test smooth_PC_seed4 chunk 0: chamfer=9.926e-03 G=2.275e-04 inside=0.001 (194 s)
+test smooth_PC_seed4 chunk 1: chamfer=9.409e-03 G=1.014e-01 inside=0.023 (236 s)
+test smooth_PC_seed4 chunk 2: chamfer=5.830e-03 G=2.938e-01 inside=0.073 (113 s)
+test smooth_H_seed0 chunk 0: chamfer=3.072e-03 G=9.159e-01 inside=0.141 (386 s)
+test smooth_H_seed0 chunk 1: chamfer=2.470e-03 G=1.098e+00 inside=0.148 (391 s)
+test smooth_H_seed0 chunk 2: chamfer=1.499e-03 G=8.008e-01 inside=0.118 (243 s)
+test smooth_H_seed1 chunk 0: chamfer=3.152e-03 G=1.724e+00 inside=0.176 (388 s)
+test smooth_H_seed1 chunk 1: chamfer=2.974e-03 G=1.120e+00 inside=0.155 (392 s)
+test smooth_H_seed1 chunk 2: chamfer=1.576e-03 G=7.039e-01 inside=0.100 (244 s)
+test smooth_H_seed2 chunk 0: chamfer=3.345e-03 G=2.290e+00 inside=0.205 (394 s)
+test smooth_H_seed2 chunk 1: chamfer=3.359e-03 G=1.505e+00 inside=0.153 (398 s)
+test smooth_H_seed2 chunk 2: chamfer=1.643e-03 G=1.785e+00 inside=0.182 (248 s)
+test smooth_H_seed3 chunk 0: chamfer=3.051e-03 G=1.096e+00 inside=0.155 (401 s)
+test smooth_H_seed3 chunk 1: chamfer=3.100e-03 G=8.646e-01 inside=0.134 (399 s)
+test smooth_H_seed3 chunk 2: chamfer=1.377e-03 G=5.392e-01 inside=0.095 (249 s)
+
+=== resumed 2026-10-12T20:54:14 ===
+{
+  "A0": {
+    "lr": 0.3,
+    "lam_s": 0.01,
+    "lam_d": 0.0,
+    "val_chamfer": 0.0011445105382936545,
+    "reached_tau": null
+  },
+  "PA": {
+    "lr": 0.03,
+    "lam_s": 0.1,
+    "lam_d": 1000.0,
+    "val_chamfer": 0.004377203051445486,
+    "val_G": 0.0005941219102868859,
+    "reached_tau": true
+  },
+  "PC": {
+    "lr": 0.03,
+    "lam_s": 1.0,
+    "lam_d": 1000.0,
+    "val_chamfer": 0.00752529870516558,
+    "val_G": 0.05417174412742263,
+    "reached_tau": false
+  },
+  "H": {
+    "lr": 0.1,
+    "lam_s": 0.01,
+    "lam_d": 0.0,
+    "val_chamfer": 0.0024260359548513386,
+    "reached_tau": null
+  }
+}
+test smooth_H_seed4 chunk 0: chamfer=3.105e-03 G=1.259e+00 inside=0.152 (317 s)
+test smooth_H_seed4 chunk 1: chamfer=2.442e-03 G=1.015e+00 inside=0.143 (394 s)
+test smooth_H_seed4 chunk 2: chamfer=1.618e-03 G=8.965e-01 inside=0.119 (222 s)
+test smooth_Hrev_seed0 chunk 0: chamfer=2.783e-03 G=1.406e+00 inside=0.182 (368 s)
+test smooth_Hrev_seed0 chunk 1: chamfer=2.816e-03 G=1.382e+00 inside=0.146 (367 s)
+test smooth_Hrev_seed0 chunk 2: chamfer=1.534e-03 G=1.115e+00 inside=0.153 (223 s)
+test smooth_Hrev_seed1 chunk 0: chamfer=2.958e-03 G=1.888e+00 inside=0.197 (381 s)
+test smooth_Hrev_seed1 chunk 1: chamfer=2.808e-03 G=1.368e+00 inside=0.166 (398 s)
+test smooth_Hrev_seed1 chunk 2: chamfer=1.849e-03 G=1.155e+00 inside=0.139 (231 s)
+test smooth_Hrev_seed2 chunk 0: chamfer=3.153e-03 G=1.830e+00 inside=0.195 (386 s)
+test smooth_Hrev_seed2 chunk 1: chamfer=3.080e-03 G=1.568e+00 inside=0.165 (389 s)
+test smooth_Hrev_seed2 chunk 2: chamfer=1.356e-03 G=1.309e+00 inside=0.142 (237 s)
+test smooth_Hrev_seed3 chunk 0: chamfer=2.651e-03 G=8.240e-01 inside=0.144 (376 s)
+test smooth_Hrev_seed3 chunk 1: chamfer=2.543e-03 G=8.795e-01 inside=0.117 (378 s)
+test smooth_Hrev_seed3 chunk 2: chamfer=1.248e-03 G=5.785e-01 inside=0.116 (235 s)
+test smooth_Hrev_seed4 chunk 0: chamfer=2.968e-03 G=9.390e-01 inside=0.139 (378 s)
+test smooth_Hrev_seed4 chunk 1: chamfer=2.770e-03 G=8.303e-01 inside=0.131 (195 s)
+test smooth_Hrev_seed4 chunk 2: chamfer=1.465e-03 G=9.081e-01 inside=0.126 (94 s)
+test phase0_A0_seed0 chunk 0: chamfer=2.528e-03 G=1.871e-01 inside=0.077 (105 s)
+test phase0_A0_seed0 chunk 1: chamfer=2.195e-03 G=1.908e-01 inside=0.072 (118 s)
+test phase0_A0_seed0 chunk 2: chamfer=8.151e-04 G=1.962e-01 inside=0.090 (59 s)
+test phase0_A0_seed1 chunk 0: chamfer=2.026e-03 G=1.789e-01 inside=0.066 (125 s)
+test phase0_A0_seed1 chunk 1: chamfer=1.883e-03 G=1.465e-01 inside=0.071 (113 s)
+test phase0_A0_seed1 chunk 2: chamfer=8.581e-04 G=1.802e-01 inside=0.090 (55 s)
+test phase0_A0_seed2 chunk 0: chamfer=1.946e-03 G=2.003e-01 inside=0.080 (117 s)
+test phase0_A0_seed2 chunk 1: chamfer=1.617e-03 G=2.152e-01 inside=0.092 (112 s)
+test phase0_A0_seed2 chunk 2: chamfer=9.407e-04 G=1.625e-01 inside=0.063 (54 s)
+test phase0_A0_seed3 chunk 0: chamfer=2.253e-03 G=2.352e-01 inside=0.078 (111 s)
+test phase0_A0_seed3 chunk 1: chamfer=1.912e-03 G=1.834e-01 inside=0.070 (118 s)
+test phase0_A0_seed3 chunk 2: chamfer=9.267e-04 G=2.031e-01 inside=0.085 (56 s)
+test phase0_A0_seed4 chunk 0: chamfer=2.145e-03 G=2.321e-01 inside=0.104 (116 s)
+test phase0_A0_seed4 chunk 1: chamfer=2.277e-03 G=1.894e-01 inside=0.070 (115 s)
+test phase0_A0_seed4 chunk 2: chamfer=7.249e-04 G=1.812e-01 inside=0.077 (59 s)
+test phase0_PA_seed0 chunk 0: chamfer=7.279e-03 G=9.377e-03 inside=0.010 (133 s)
+test phase0_PA_seed0 chunk 1: chamfer=7.104e-03 G=4.675e-03 inside=0.003 (142 s)
+test phase0_PA_seed0 chunk 2: chamfer=3.661e-03 G=1.073e-03 inside=0.003 (61 s)
+test phase0_PA_seed1 chunk 0: chamfer=6.810e-03 G=2.877e-04 inside=0.001 (128 s)
+test phase0_PA_seed1 chunk 1: chamfer=6.173e-03 G=1.863e-03 inside=0.002 (132 s)
+test phase0_PA_seed1 chunk 2: chamfer=3.251e-03 G=5.264e-04 inside=0.000 (63 s)
+test phase0_PA_seed2 chunk 0: chamfer=6.992e-03 G=9.137e-04 inside=0.002 (130 s)
+test phase0_PA_seed2 chunk 1: chamfer=6.575e-03 G=2.094e-03 inside=0.002 (129 s)
+test phase0_PA_seed2 chunk 2: chamfer=3.199e-03 G=5.191e-03 inside=0.005 (64 s)
+test phase0_PA_seed3 chunk 0: chamfer=6.973e-03 G=1.434e-03 inside=0.001 (133 s)
+test phase0_PA_seed3 chunk 1: chamfer=6.751e-03 G=1.320e-03 inside=0.001 (130 s)
+test phase0_PA_seed3 chunk 2: chamfer=3.249e-03 G=1.463e-02 inside=0.005 (61 s)
+test phase0_PA_seed4 chunk 0: chamfer=6.957e-03 G=9.205e-04 inside=0.001 (127 s)
+test phase0_PA_seed4 chunk 1: chamfer=6.789e-03 G=1.061e-02 inside=0.002 (128 s)
+test phase0_PA_seed4 chunk 2: chamfer=3.681e-03 G=4.190e-03 inside=0.003 (63 s)
+test phase0_PC_seed0 chunk 0: chamfer=1.534e-02 G=2.427e-04 inside=0.000 (116 s)
+test phase0_PC_seed0 chunk 1: chamfer=1.870e-02 G=1.438e-03 inside=0.003 (113 s)
+test phase0_PC_seed0 chunk 2: chamfer=1.665e-02 G=1.243e-02 inside=0.005 (54 s)
+test phase0_PC_seed1 chunk 0: chamfer=1.384e-02 G=2.389e-04 inside=0.000 (110 s)
+test phase0_PC_seed1 chunk 1: chamfer=1.590e-02 G=2.703e-02 inside=0.010 (103 s)
+test phase0_PC_seed1 chunk 2: chamfer=1.430e-02 G=1.332e-01 inside=0.040 (48 s)
+test phase0_PC_seed2 chunk 0: chamfer=1.450e-02 G=3.467e-04 inside=0.001 (102 s)
+test phase0_PC_seed2 chunk 1: chamfer=1.684e-02 G=9.899e-03 inside=0.006 (108 s)
+test phase0_PC_seed2 chunk 2: chamfer=1.393e-02 G=5.657e-02 inside=0.026 (48 s)
+test phase0_PC_seed3 chunk 0: chamfer=1.457e-02 G=1.992e-04 inside=0.000 (101 s)
+test phase0_PC_seed3 chunk 1: chamfer=1.691e-02 G=9.062e-03 inside=0.005 (101 s)
+test phase0_PC_seed3 chunk 2: chamfer=1.523e-02 G=2.147e-02 inside=0.011 (47 s)
+test phase0_PC_seed4 chunk 0: chamfer=1.521e-02 G=1.767e-04 inside=0.000 (100 s)
+test phase0_PC_seed4 chunk 1: chamfer=1.775e-02 G=1.894e-03 inside=0.002 (100 s)
+test phase0_PC_seed4 chunk 2: chamfer=1.383e-02 G=2.081e-02 inside=0.008 (48 s)
+test phase0_H_seed0 chunk 0: chamfer=3.159e-03 G=2.699e-01 inside=0.089 (160 s)
+test phase0_H_seed0 chunk 1: chamfer=3.108e-03 G=2.451e-01 inside=0.075 (161 s)
+test phase0_H_seed0 chunk 2: chamfer=1.152e-03 G=3.062e-01 inside=0.082 (101 s)
+test phase0_H_seed1 chunk 0: chamfer=3.467e-03 G=2.949e-01 inside=0.090 (161 s)
+test phase0_H_seed1 chunk 1: chamfer=2.913e-03 G=2.145e-01 inside=0.072 (161 s)
+test phase0_H_seed1 chunk 2: chamfer=1.086e-03 G=2.354e-01 inside=0.065 (100 s)
+test phase0_H_seed2 chunk 0: chamfer=3.112e-03 G=2.384e-01 inside=0.083 (160 s)
+test phase0_H_seed2 chunk 1: chamfer=3.220e-03 G=2.701e-01 inside=0.073 (161 s)
+test phase0_H_seed2 chunk 2: chamfer=1.136e-03 G=1.222e-01 inside=0.047 (103 s)
+test phase0_H_seed3 chunk 0: chamfer=3.082e-03 G=2.641e-01 inside=0.082 (161 s)
+test phase0_H_seed3 chunk 1: chamfer=2.848e-03 G=2.316e-01 inside=0.067 (161 s)
+test phase0_H_seed3 chunk 2: chamfer=1.138e-03 G=2.146e-01 inside=0.061 (102 s)
+test phase0_H_seed4 chunk 0: chamfer=3.061e-03 G=3.421e-01 inside=0.100 (160 s)
+test phase0_H_seed4 chunk 1: chamfer=2.939e-03 G=2.662e-01 inside=0.081 (160 s)
+test phase0_H_seed4 chunk 2: chamfer=1.153e-03 G=3.285e-01 inside=0.095 (101 s)
+done

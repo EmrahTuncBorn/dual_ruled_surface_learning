@@ -336,3 +336,26 @@ tek commit'e bağlıdır; yerel işlemcide, kaldığı yerden sürdürülebilir 
   - `λ_d` ızgarası `{1e-1, 1, 10, 1e2, 1e3}` olarak sabitlendi: PA'nın en düşük noktası (1e2) ızgaranın içinde kalır, PC'nin düz bölgesi (≤ 1) ve iki kolun bozulmaya başladığı 1e3 kapsanır. İlk önerideki 1e4 iki kolda da bozuk olduğu için çıkarıldı, 1e-1 eklendi; birim sayısı değişmedi (doğrulama 108, test 120).
   - **Aşama 1a tamamlandı.** Aşama 1b'ye geçiş onay bekliyor; geçişten önce ön kayıt yazılıp commit'lenecektir.
 - **2026-10-11** — Aşama 1b onaylandı; `43f4485` ve `6d940f7` GitHub'a gönderildi. Ön kayıt yazıldı (yukarıda). Ters sıralı katman (`ReversedDevelopableDualRep`, kol Hrev) ve karar betiği `experiments/phase1_analyze.py` eklendi; betik sentetik satırlarda sınandı. v3 5.2'deki başlangıç kararı belgeye işlendi. 42 test geçti.
+- **2026-10-13** — Aşama 1b tamamlandı (`ca3da26`; özet `results_summary/phase1/`, tam sonuçlar `results/archives/phase1_ca3da26.zip`, 251 dosya, 18 MB). Koşu iki kez, bilgisayarın belleği azaldığında Claude Code tarafından durduruldu ve kaldığı yerden sürdürüldü; biten birimler yeniden hesaplanmadı (log'da 135 test satırı, yineleme yok). Son bölüm kullanıcının PowerShell 5.1 penceresinde koşuldu; log'un bu kısmı UTF-16 yazıldığı için UTF-8'e çevrildi, ham hali arşive konuldu. Ön kayıtta test birimi sayısı bir yerde 120 olarak yazılmıştı; Hrev'in 15 birimiyle doğrusu 135'tir.
+
+  Doğrulamada seçilen ayarlar: A0 lr 0.3, λ_s 1e-2; PA lr 0.03, λ_s 0.1, λ_d 1e3 (ortalama 𝒢 τ'ya ulaştı); PC lr 0.03, λ_s 1, λ_d 1e3 (ulaşmadı, yedek kural); H lr 0.1, λ_s 1e-2.
+
+  Test, birincil başlatma (120 yama, 5 seed ortalaması):
+
+  | Kol | Chamfer | 𝒢 ortalama | 𝒢 medyan | Normal dönüşü | Yama içi kesişme |
+  |---|---|---|---|---|---|
+  | A0 | 1.32e-3 | 0.319 | 0.261 | 0.009 | 0.101 |
+  | PA | 4.81e-3 | 0.0141 | 1.2e-4 | 0.001 | 0.007 |
+  | PC | 9.19e-3 | 0.0917 | 2.2e-4 | 0.000 | 0.022 |
+  | H | 2.76e-3 | 1.231 | 1.134 | 0.019 | 0.151 |
+  | Hrev | 2.63e-3 | 1.245 | 1.103 | 0.019 | 0.154 |
+
+  - **Karar (v3 5.5): zayıf, önkoşul sağlanamadı.** H'nin medyan 𝒢'si 1.134'tür, τ = 0.00756'nın yaklaşık 150 katı. Chamfer karşılaştırması karar kuralına girmez; raporlanır: H, PA'dan (oran 0.726) ve PC'den (0.368) daha iyi, A0'dan (2.08) daha kötü uydurur, bütün p < 1e-12.
+  - İkincil başlatmada (Aşama 0 başlangıcı, yalnız raporlanır) sonuç aynıdır: H'nin medyan 𝒢'si 0.153.
+  - Ters sıralı katman (Hrev) H'den farklı değildir (Chamfer oranı 0.982, p = 0.51); katmanın yönü sonucu belirlemez.
+  - Ön kayıttaki beklenti ("PA ortalamada τ'ya ulaşamaz, yedek kurala düşer") tutmadı: PA doğrulamada ulaştı. Testte PA'nın ortalaması τ'nun 1.9 katı, medyanı τ'nun 60'ta biridir.
+  - **Keşif amaçlı (sonuçlar görüldükten sonra yapıldı, karar verisi değildir):**
+    - Mekanizma: H'nin test yamalarında ardışık doğruların kesişme noktası yamaya düşmediğinde 𝒢 ≤ τ oranı 0.98 (birincil, 51/600 yama-seed) ve 0.95'tir (ikincil, 154/600); düştüğünde 0.01 ve 0.04'tür. Sert katman şeritleri düzlemsel tutar, ama kesişme yamaya girince şerit kendini keser ve 𝒢 büyür (Aşama 1a'daki "garanti yereldir" bulgusunun ölçekli doğrulaması). Birincil başlatmada H'nin 𝒢'si katmansız A0'ınkinden de büyüktür (oran 4.1).
+    - Seçim kuralının etkisi: H doğrulamada hiçbir ayarda ortalama 𝒢 ≤ τ'ya ulaşmadı (en düşük 0.058, lr 0.03, λ_s 1). H, PA gibi "medyan 𝒢 ≤ τ olan ayarlar arasında en düşük Chamfer" kuralıyla seçilseydi lr 0.03, λ_s 0.1 seçilirdi (doğrulama Chamfer 4.00e-3, medyan 𝒢 ≈ 0); PA'nın doğrulama Chamfer'ı 4.38e-3'tür, oran 0.91. Bu, 0.9 eşiğinin hemen üstündedir; yani seçim değişse de sonucun en iyi hâli "eşdeğer" olurdu. Bu ayar testte koşulmadı.
+  - Literatür taraması yapıldı (`RELATED_WORK.md`, açık soru yanıtlandı): ardışık doğruları Plücker koordinatlarında kapalı biçimle kesiştiren önceki bir çalışma bulunmadı; ancak koşul klasik ayrık açılabilir tanımıdır ve katman, sabit yönlerde iki afin kısıta en küçük normlu izdüşümdür. `dual_normalize`'ın (S1) formülü Odehnal (2008) denklem 4 ile aynıdır ve kaynak gösterilmelidir.
+  - Projenin devamı (Aşama 2) ya da kapanışı kullanıcının kararına bırakıldı.

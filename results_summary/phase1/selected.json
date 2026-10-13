@@ -1,0 +1,33 @@
+{
+  "A0": {
+    "lr": 0.3,
+    "lam_s": 0.01,
+    "lam_d": 0.0,
+    "val_chamfer": 0.0011445105382936545,
+    "reached_tau": null
+  },
+  "PA": {
+    "lr": 0.03,
+    "lam_s": 0.1,
+    "lam_d": 1000.0,
+    "val_chamfer": 0.004377203051445486,
+    "val_G": 0.0005941219102868859,
+    "reached_tau": true
+  },
+  "PC": {
+    "lr": 0.03,
+    "lam_s": 1.0,
+    "lam_d": 1000.0,
+    "val_chamfer": 0.00752529870516558,
+    "val_G": 0.05417174412742263,
+    "reached_tau": false
+  },
+  "H": {
+    "lr": 0.1,
+    "lam_s": 0.01,
+    "lam_d": 0.0,
+    "val_chamfer": 0.0024260359548513386,
+    "reached_tau": null
+  },
+  "commit": "ca3da264ab25c3a0855b8ef186ad818c213a3c5a"
+}

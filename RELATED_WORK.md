@@ -3,7 +3,8 @@
 References collected in v2 Section 13, PROGRESS.md S7 and v3 Section 9.
 
 Verification status:
-- **verified (search)** — title, authors and venue confirmed by a web search on 2026-10-11.
+- **verified (read)** — the full text was read on 2026-10-12; the role column states what it contains.
+- **verified (search)** — title, authors and venue confirmed by a web search on 2026-10-11 or 2026-10-12.
 - **verified (known)** — a standard reference whose details were not searched again in this pass.
 - **partly verified** — the work exists, but a detail (title, authors) could not be confirmed.
 - **unverified** — no matching work was found; do not cite until confirmed.
@@ -15,6 +16,10 @@ Verification status:
 | H. Pottmann, J. Wallner. *Computational Line Geometry.* Springer, 2001. | verified (known) | Plücker coordinates, pencils of lines, reciprocal product |
 | H. Chen, H. Pottmann. Approximation by ruled surfaces. *J. Comput. Appl. Math.* 102(1):143–156, 1999. | verified (search) | fitting a line sequence, then a smooth ruled surface; optimisation baseline |
 | H. Pottmann, M. Hofer, B. Odehnal, J. Wallner. Line geometry for 3D shape understanding and reconstruction. *ECCV 2004*, LNCS 3021, 297–309. | verified (search) | line-space approximation for recognising developable and other surfaces |
+| H. Pottmann, J. Wallner. Approximation algorithms for developable surfaces. *Computer Aided Geometric Design* 16:539–556, 1999. | verified (search) | dual representation: a developable as a curve of planes |
+| B. Odehnal. Subdivision algorithms for ruled surfaces. *Journal for Geometry and Graphics* 12(1):1–18, 2008. | verified (read) | closest line to a six-vector by Gram–Schmidt (his eq. 4) is the formula of our `dual_normalize` (S1) and must be cited for it; the exact projection onto the Klein quadric needs a quartic; his projection does not preserve torsal rulings |
+| J. Wallner. Ruled surfaces and developable surfaces. Lecture notes, TU Graz (undated). | verified (read) | discrete developable = successive lines coplanar (attributed to Sauer, 1970); after subdivision, coplanarity is restored by black-box nonlinear optimisation |
+| A. Bartoli, P. Sturm. Structure-from-motion using lines: representation, triangulation and bundle adjustment. *CVIU* 100(3), 2005. | verified (search) | Plücker correction onto the Klein quadric; orthonormal line parameterisation |
 | İ. Arslan Güven, S. Kaya Nurkan, M. K. Karacan. Ruled Weingarten surfaces related to dual spherical curves. *General Mathematics Notes* 24(2):10–17, 2014; arXiv:1307.2716. | verified (search) | mathematical background (Study map, curvature); no learning |
 | Rational point-line motion design with dual quaternions, unifying ruled-surface design and five-axis tool paths. *Science China Technological Sciences*, 2011, doi:10.1007/s11431-011-4609-4. | partly verified | v2 cites it as "Kinematic generation of ruled surface based on rational motion of point-line"; the DOI and content match, the exact title and authors were not confirmed |
 
@@ -22,12 +27,15 @@ Verification status:
 
 | Reference | Status | Role here |
 |---|---|---|
-| Y. Liu, H. Pottmann, J. Wallner, Y.-L. Yang, W. Wang. Geometric modeling with conical meshes and developable surfaces. *ACM TOG* 25(3):681–689, 2006 (SIGGRAPH). | verified (search) | planar-quad strips as discrete developables; closest to the hard layer |
-| C. Tang, P. Bo, J. Wallner, H. Pottmann. Interactive design of developable surfaces. *ACM TOG* 35(2), article 12, 2016. | verified (search) | developability as quadratic constraints in a solver |
+| Y. Liu, H. Pottmann, J. Wallner, Y.-L. Yang, W. Wang. Geometric modeling with conical meshes and developable surfaces. *ACM TOG* 25(3):681–689, 2006 (SIGGRAPH). | verified (search) | planar-quad strips as discrete developables, restored by optimisation after subdivision; the same condition as the hard layer, enforced iteratively on points |
+| C. Tang, P. Bo, J. Wallner, H. Pottmann. Interactive design of developable surfaces. *ACM TOG* 35(2), article 12, 2016. | verified (search) | verified (read): developability as coplanarity of de Boor derivative points (their eq. 2, a cubic determinant) or, with an auxiliary normal, as quadratic equations (eqs. 3–4), solved by guided projection; the cubic form is the quantity our PC penalty squares, and they report it converges about an order of magnitude worse than the quadratic form |
 | O. Stein, E. Grinspun, K. Crane. Developability of triangle meshes. *ACM TOG* 37(4), article 77, 2018. | verified (search) | discrete developability energy; metric context for the angle defect |
+| C. Tang, X. Sun, A. Gomes, J. Wallner, H. Pottmann. Form-finding with polyhedral meshes made simple. *ACM TOG* 33(4), 2014, doi:10.1145/2601097.2601213. | verified (search) | guided projection for quadratic constraints; the solver behind Tang et al. 2016 |
+| M. Peternell. Developable surface fitting to point clouds. *Computer Aided Geometric Design*, 2004. | partly verified | dual (tangent-plane) fitting with Laguerre geometry; volume and pages not confirmed |
+| Q. Dong, R. Xu, P. Wang, S. Chen, S. Xin, X. Jia, W. Wang, C. Tu. NeurCADRecon: neural representation for reconstructing CAD surfaces by enforcing zero Gaussian curvature. *ACM TOG* 43(4), 2024, doi:10.1145/3658171. | verified (search) | neural SDF with a soft zero-Gaussian-curvature loss |
 | P. Selvaraju. Developability approximation for neural implicits through rank minimization. arXiv:2308.03900, 2023. | verified (search) | soft developability for neural implicits; baseline after a positive Phase 1 |
 | Y. Pan, Z. Xu, B. Wang, B. Deng. Piecewise ruled approximation for freeform mesh surfaces. *ACM TOG*, 2025; arXiv:2501.15258. | verified (search) | optimisation baseline for ruled approximation |
-| "Piecewise developable modeling via implicit neural deformation and feature-guided cutting" (v2 Section 13). | unverified | no work with this title was found; a related work is *Symmetric piecewise developable approximations*, Computer Graphics Forum 43, 2024, doi:10.1111/cgf.15242 |
+| K. Wu, Z.-Y. Zhao, Z. Zhang, L. Liu, X.-M. Fu. Piecewise developable modeling via implicit neural deformation and feature-guided cutting. | partly verified | found only as a bibliography entry (arXiv:2608.15933); venue not confirmed; related: *Symmetric piecewise developable approximations*, Computer Graphics Forum 43, 2024, doi:10.1111/cgf.15242 |
 
 ## Learning on lines and representations
 
@@ -41,7 +49,23 @@ Verification status:
 | C. Deng et al. Vector Neurons. *ICCV 2021*. | verified (known) | built-in rotation equivariance (deliberately not used, v2 Section 5) |
 | D. Kozlov, M. Bakulin, S. Pavlov, A. Zuev, M. Krylova, I. Kharchikov. Learning properties of holomorphic neural networks of dual variables. *ICASSP 2023*. | verified (search) | dual-number networks; no line geometry |
 
-## Open question for the paper
+## Learning with hard constraints
+
+| Reference | Status | Role here |
+|---|---|---|
+| P. L. Donti, D. Rolnick, J. Z. Kolter. DC3: a learning method for optimization with hard constraints. *ICLR 2021*. | verified (search) | completion and unrolled correction for hard constraints |
+| Y. Min, N. Azizan. HardNet: hard-constrained neural networks with universal approximation guarantees. arXiv:2410.10807, 2024. | partly verified | closed-form projection layer for input-dependent affine constraints; authors from memory, not confirmed by the search |
+
+## Open question for the paper (searched 2026-10-12)
 
 Is there earlier work that enforces the intersection of consecutive lines as a closed-form projection
-in Plücker coordinates (kinematics, architectural geometry, or learning)? Not yet searched.
+in Plücker coordinates (kinematics, architectural geometry, or learning)?
+
+No such work was found in geometry processing, kinematics, line-based structure from motion or learning.
+Its parts are standard. The condition is the classical discrete developable (Sauer; Pottmann and Wallner).
+For fixed directions it is linear in the moment, so `project_coplanar` is the minimum-norm correction onto
+two affine constraints (Plücker and reciprocal), a special case of an affine projection layer (as in
+HardNet) applied sequentially. Geometry work enforces the same condition iteratively on points (Liu et al.
+2006; Tang et al. 2014, 2016). Learning work on developability uses soft curvature losses (NeurCADRecon,
+Selvaraju, Wu et al.); none predicts rulings. The layer can be described as a simple construction, not as a
+methodological contribution in its own right.

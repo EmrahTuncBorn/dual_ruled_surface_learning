@@ -7,3 +7,7 @@ results/
 .ipynb_checkpoints/
 *.egg-info/
 build/
+
+# personal study notes (kept out of the repo)
+DERIN_INCELEME.md
+DERIN_INCELEME.docx

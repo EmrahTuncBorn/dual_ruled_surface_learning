@@ -1,0 +1,38 @@
+{
+  "smooth": {
+    "prereq": false,
+    "H_median_G": 1.1341897723160672,
+    "decision": "weak (prerequisite failed)",
+    "chamfer_H_vs_PA": {
+      "ratio": 0.7256554880410875,
+      "p": 1.325982530633398e-13,
+      "verdict": "A better"
+    },
+    "chamfer_H_vs_PC": {
+      "ratio": 0.3680689418286496,
+      "p": 1.8476078774774247e-20,
+      "verdict": "A better"
+    }
+  },
+  "phase0": {
+    "prereq": false,
+    "H_median_G": 0.1531110708148809,
+    "decision": "weak (prerequisite failed)",
+    "chamfer_H_vs_PA": {
+      "ratio": 0.37389942485402156,
+      "p": 2.022200629440464e-21,
+      "verdict": "A better"
+    },
+    "chamfer_H_vs_PC": {
+      "ratio": 0.14259844533649296,
+      "p": 1.9719517121524354e-21,
+      "verdict": "A better"
+    }
+  },
+  "Hrev_vs_H_chamfer": {
+    "ratio": 0.9822486742772593,
+    "p": 0.5126498008526214,
+    "verdict": "no difference"
+  },
+  "commit": "ca3da264ab25c3a0855b8ef186ad818c213a3c5a"
+}
