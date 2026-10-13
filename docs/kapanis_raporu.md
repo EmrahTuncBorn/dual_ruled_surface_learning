@@ -351,7 +351,7 @@ belgeleri ile bu rapor araçla birlikte hazırlanmıştır. Araştırma hedefi, 
 sapmaların onaylanması, projenin kapatılması kararı ve sonuçların gönderilmesi yazar tarafından yapılmıştır.
 Raporda verilen bütün sayılar, depodaki commit'lere bağlı koşuların çıktılarından alınmıştır ve Bölüm 10'daki
 komutlarla yeniden üretilebilir. Literatür bilgileri web aramasıyla denetlenmiştir; doğrulanamayan künyeler
-`RELATED_WORK.md`'de ayrıca işaretlidir.
+`RELATED_WORK.md`'de ayrıca işaretlidir. Rapor, yazar tarafından okunmuş ve gözden geçirilmiştir.
 
 ## Kaynaklar
 
