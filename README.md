@@ -61,9 +61,18 @@ RELATED_WORK.md   references and their verification status
 
 ## Status
 
+The project was closed after Phase 1b (2026-10-13). Both pre-registered decisions were negative; see the
+closing report `docs/kapanis_raporu.md` (Turkish) and `PROGRESS.md`.
+
 | Phase | Content | Status |
 |---|---|---|
 | 0 | Network-free representation experiment | done: representation axis weak |
-| 1a | Hard layer, angle-defect metric, penalties, tests | in progress: 40 tests pass, tau computed; initialisation to be decided |
-| 1b | Network-free developability experiment | not started (pre-registration first) |
-| 2 | Network pilot (only after a positive Phase 1b) | not started |
+| 1a | Hard layer, angle-defect metric, penalties, tests | done: 42 tests pass, tau = 0.00756 |
+| 1b | Network-free developability experiment | done: weak (median angle defect of H 1.134 > tau) |
+| 2 | Network pilot (only after a positive Phase 1b) | not started; project closed |
+
+The work was carried out with the help of Claude Code (see Section 11 of the closing report).
+
+## License
+
+MIT, see `LICENSE`.
